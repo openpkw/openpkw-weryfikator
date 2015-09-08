@@ -70,9 +70,9 @@
                 <version>2.3</version>
                 <configuration>
                     <archive>
-                        <manifest>
-<!--                            <dependencies>org.slf4j</dependencies> -->
-                        </manifest>
+                        <manifestEntries>
+                            <Dependencies>org.slf4j</Dependencies>
+                        </manifestEntries>
                     </archive>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
