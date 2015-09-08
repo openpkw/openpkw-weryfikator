@@ -71,7 +71,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <Dependencies>org.slf4j</Dependencies>
+<!--                            <dependencies>org.slf4j</dependencies> -->
                         </manifest>
                     </archive>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
