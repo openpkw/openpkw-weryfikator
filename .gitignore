@@ -1,3 +1,16 @@
 /target/
 .project
 .classpath
+
+#Intellij Idea files
+.idea
+openpkw.iml
+openpkw-services.iml
+openpkw-rest.iml
+openpkw-repositories.iml
+openpkw-model.iml
+openpkw-core.iml
+openpkw-etc.iml
+
+
+
