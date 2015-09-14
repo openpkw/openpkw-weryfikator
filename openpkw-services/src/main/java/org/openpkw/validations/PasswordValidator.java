@@ -1,5 +1,9 @@
 package org.openpkw.validations;
 
+/**
+ * Edit by Jacek Feliksiak on 14.08.2015.
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
