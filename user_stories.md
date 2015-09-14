@@ -17,8 +17,8 @@ Jest to lista minimalnych wymagań by obsłużyć nadchodzące wybory.
 ### Administrator
 * A-1 : Jako administrator mogę zalogować się do systemu i uzyskać dostęp do (GUI)
 * A-2 : Jako administrator definiuję / importuję komisje obwodowe (nr komisji, adres, przynależność do komisji okręgowej)
-* -A-3 : Jako administrator definiuję / importuję komisje okręgowe (nr komisji oraz adresy)
-* -A-4 : Jako administrator jestem w stanie dokonać wirtualnego podziału państwa na okręgi i obwody wyborcze 
+* A-3 : Jako administrator definiuję / importuję komisje okręgowe (nr komisji oraz adresy)
+* A-4 : Jako administrator jestem w stanie dokonać wirtualnego podziału państwa na okręgi i obwody wyborcze 
 * A-5 : Jako administrator jestem w stanie dodać pojedyncze konto użytkownika w przeglądarce
 * A-6 : Jako administrator jestem w stanie wykonać import listy użytkowników z pliku CSV
 * A-7 : Jako administrator chcę wykonać import komisji okręgowych bezpośrednio z pliku CSV 
@@ -55,21 +55,6 @@ S-1 System powinien zapisac do bazy danych - dane przekazne przez aplikacje mobi
 S-2 System musi przetworzyc odebrane dane z protokołow wyborczych ( Algorytm rodzialu mandatów)
 S-3 Dane beda pobierane z zaproponowanych zródel
 
-
-### Technologia
-* T-1 : Wykonanie dokumentacji REST API w swagger.io 
-* T-2 : Integracja SFL4J jako loggera
-* -T-3 : Migracja z EclipseLink na Hibernate +envers 
-* -T-4 : Generowanie E-Mail 
-* -T-5 : Rozbicie kolumny `name` w bazie danych na `firstname` i `lastname` 
-* -T-6 : Autoryzacja SPRING SECURITY
-* -T-7 : Logowanie dla REST 
-* -T-8 : Serwis REST pozwalający na rejestrację nowego użytkownika. 
-* -T-9 : Serwis REST pozwalający na sprawdzenie czy adres E-Mail jest dostępny. 
-* -T-11 DB Odwzorowanie koncepcji 'group' i 'permission'.
-* -T-13 Dodanie do systemu koncepcji grup użytkowników. Definicja następujących grupy wolontariusz, operator, administrator,gosc  
-* -T-14 Rozbudowa serwisu REST dla klienta obwodowego
-* -T-15 Rozbudowa serwisu REST dla klienta dashboard 
 
 
 
