@@ -16,6 +16,8 @@
   - mvn clean install
 - Rozproszenie aplikacji na serwerze
   - Zalogować się do konsoli administracyjnej, a potem Deployments/Add/Upload a new deployment/Next/Browse.../Znaleźć plik war /openpkw-weryfikator/openpkw-rest/target/
+- Sprawdzenie czy aplikacja się rozproszyła
+  - Postmanem (lub innym klientem REST) wysłać na adres http://localhost:8080/openpkw/test/echo POST z nagłówkiem Content-Type=application/json i body {"test":"OpenPKW Weryfikator zawojuje świat"} 
 
 **Podstawowa instalacja komponentów serwera Wildfly**
 
