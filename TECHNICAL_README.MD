@@ -4,7 +4,7 @@
 
 - Ściągnąć i zainstalować:
   - Java 8 (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-  - WildFly 9 (http://wildfly.org/downloads/)
+  - WildFly 9.0.1.Final (http://download.jboss.org/wildfly/9.0.1.Final/wildfly-9.0.1.Final.zip)
 - Konfiguracja WildFly
   - Uruchomić serwer (/bin/standalone.bat)
   - Sprawdzić czy uruchomił się poprawnie (np. czy wszystkie standardowe porty tcp były wolne: 8080, 9990, 9999 itd.)
