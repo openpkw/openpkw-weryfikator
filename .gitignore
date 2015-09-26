@@ -1,6 +1,7 @@
 /target/
 .project
 .classpath
+.settings/
 
 #Intellij Idea files
 .idea
