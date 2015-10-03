@@ -162,7 +162,7 @@ do swojego środowiska.
 Plik openpkw-queue.cli odpowiada za założenie kolejki zgodnej z JMS do przesyłania komunikatów.
  
 
-** Środowiska
+# Środowiska
 
 - TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
 - UAT (ręczne testy integracyjne i regresyjne): brak
