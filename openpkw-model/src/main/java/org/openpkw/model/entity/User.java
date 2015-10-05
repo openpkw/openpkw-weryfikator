@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by Karol Dzięgiel on 8/26/2015.
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "OPEN_PKW_USER")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 6814143181739850328L;

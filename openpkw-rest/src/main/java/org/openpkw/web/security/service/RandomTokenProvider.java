@@ -64,4 +64,9 @@ public class RandomTokenProvider implements TokenProvider {
         SecurityToken securityToken = securityTokenRepository.findOne(userDetails.getUsername());
         return expires >= System.currentTimeMillis() && securityToken!= null && signature.equals(securityToken.getToken());
     }
+
+    @Override
+    public void logout(UserDetails user) {
+        securityTokenRepository.delete(user.getUsername());
+    }
 }

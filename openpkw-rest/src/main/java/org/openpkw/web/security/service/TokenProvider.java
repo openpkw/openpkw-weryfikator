@@ -15,4 +15,5 @@ public interface TokenProvider {
 
     boolean validateToken(String authToken, UserDetails userDetails);
 
+    void logout(UserDetails user);
 }

@@ -14,25 +14,26 @@ import javax.inject.Inject;
  * @author Sebastian.Pogorzelski
  */
 @OpenPKWAPIController
+@RequestMapping(value="/healthCheck")
 public class HealthCheckController {
 
     @Inject
     private UserRepository userRepository;
 
-    @RequestMapping(value = "/healthCheck/simpleTest", method = RequestMethod.GET)
-    public ResponseEntity<Object> simpleTest() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = "/simpleTest", method = RequestMethod.GET)
+    public ResponseEntity<String> simpleTest() {
+        return new ResponseEntity<>("HealthCheck Simple Test OK", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/healthCheck/dataTest", method = RequestMethod.GET)
-    public ResponseEntity<Object> dataTest() {
+    @RequestMapping(value = "/dataTest", method = RequestMethod.GET)
+    public ResponseEntity<String> dataTest() {
         userRepository.findOne(1l);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("HealthCheck Data Test OK", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/healthCheck/securityTest", method = RequestMethod.GET)
-    public ResponseEntity<Object> securityTest() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = "/securityTest", method = RequestMethod.GET)
+    public ResponseEntity<String> securityTest() {
+        return new ResponseEntity<>("HealthCheck Security Test OK", HttpStatus.OK);
     }
 
 

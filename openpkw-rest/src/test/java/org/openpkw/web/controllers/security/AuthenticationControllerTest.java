@@ -35,7 +35,7 @@ public class AuthenticationControllerTest extends AbstractTestNGSpringContextTes
         assertThat(isAuthenticate()).isFalse();
 
         //WHEN
-        authenticationController.authorize("admin@openpkw.pl", "admin");
+        authenticationController.authenticate("admin@openpkw.pl", "admin");
 
         //THEN
         assertThat(isAuthenticate()).isTrue();
@@ -49,7 +49,7 @@ public class AuthenticationControllerTest extends AbstractTestNGSpringContextTes
         assertThat(isAuthenticate()).isFalse();
 
         //WHEN
-        authenticationController.authorize("admin", "admin");
+        authenticationController.authenticate("admin", "admin");
 
         //THEN in exception
     }
@@ -61,7 +61,7 @@ public class AuthenticationControllerTest extends AbstractTestNGSpringContextTes
         assertThat(isAuthenticate()).isFalse();
 
         //WHEN
-        authenticationController.authorize("admin", "wrong_password");
+        authenticationController.authenticate("admin", "wrong_password");
 
         //THEN in exception
     }
@@ -71,7 +71,7 @@ public class AuthenticationControllerTest extends AbstractTestNGSpringContextTes
         //GIVEN
         SecurityContextHolder.clearContext();
         assertThat(isAuthenticate()).isFalse();
-        authenticationController.authorize("admin@openpkw.pl", "admin");
+        authenticationController.authenticate("admin@openpkw.pl", "admin");
 
         //WHEN
         authenticationController.logout();

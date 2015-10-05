@@ -60,19 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .authorizeRequests()
-                .antMatchers("/api/echo").permitAll()   // echo isn't secured
+                .antMatchers("/api/authenticate").permitAll()   // echo isn't secured
+                .antMatchers("/healthCheck/securityTest").authenticated()
                 .antMatchers("/api/**").authenticated()
-            .and()
+                .and()
                 .apply(new StatelessTokenConfigurer(userDetailsService, tokenProvider));
     }
 
-//    @Bean
-//    public TokenProvider tokenProvider(){
-//        String secret =  "mySecretXAuthSecret";
-//        int validityInSeconds = 3600;
-//        //TODO change to parameters from property
-//        return new DefaultTokenProvider(secret, validityInSeconds);
-//    }
 
     @Bean(name="openPkwAuthenticationManager")
     @Override
