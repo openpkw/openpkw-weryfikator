@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class EchoController {
 
     @RequestMapping(value = "/echo", method = RequestMethod.POST)
-    public Map echo(@RequestBody Map object) {
+    public Map<String, String> echo(@RequestBody Map<String, String> object) {
 
         return object;
     }
