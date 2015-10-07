@@ -1,9 +1,15 @@
 package org.openpkw.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Karol Dzięgiel on 8/27/2015.
@@ -30,12 +36,6 @@ public class Protocol {
     @OneToOne
     @JoinColumn(name = "peripheral_committee_id")
     private PeripheralCommittee peripheralCommittee;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "protocol")
-    private List<Photo> photos;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "protocol")
-    private List<Question> questions;
 
     public Long getProtocolID() {
         return protocolID;
@@ -77,19 +77,4 @@ public class Protocol {
         this.peripheralCommittee = peripheralCommittee;
     }
 
-    public List<Photo> getPhotos() {
-        return photos;
-    }
-
-    public void setPhotos(List<Photo> photos) {
-        this.photos = photos;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
 }
