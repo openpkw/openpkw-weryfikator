@@ -7,7 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.file.LineMapper;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.batch.item.file.LineMapper;
  */
 public class CsvParser<T> {
 
-    private final static Logger log = Logger.getLogger(CsvParser.class);
+    private final static Logger log = LoggerFactory.getLogger(CsvParser.class);
 
     private LineMapper<T> lineMapper;
     private String charset;
@@ -58,7 +59,7 @@ public class CsvParser<T> {
             try {
                 br.close();
             } catch (Exception ex) {
-                log.warn(ex);
+                log.warn("Failed to close output.", ex);
             }
         }
 

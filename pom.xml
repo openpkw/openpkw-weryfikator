@@ -6,7 +6,6 @@
     <artifactId>openpkw</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <modules>
-        <module>openpkw-core</module>
         <module>openpkw-model</module>
         <module>openpkw-repositories</module>
         <module>openpkw-services</module>

@@ -59,7 +59,7 @@ public class PeripheralCommitteeCsvParserTest {
         Assert.assertEquals(result.get(0).getName(), "Muzeum Miejskie \"Saturn");
     }
 
-    @Test(expectedExceptions = {FileNotFoundException.class})
+    @Test(expectedExceptions = {RuntimeException.class})
     public void shouldThrowExceptionWhenFileNotFound() throws Exception {
         File tmpFile = new File("unknown");
         csvParser.parse(tmpFile);

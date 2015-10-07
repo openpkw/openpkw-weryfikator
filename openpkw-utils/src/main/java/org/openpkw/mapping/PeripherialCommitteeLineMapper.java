@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PeripherialCommitteeLineMapper extends DefaultLineMapper<PeripheralCommittee> {
+
     public static final Logger LOGGER = LoggerFactory.getLogger(PeripheralCommitteeFieldSetMapper.class);
 
     public PeripherialCommitteeLineMapper() {
