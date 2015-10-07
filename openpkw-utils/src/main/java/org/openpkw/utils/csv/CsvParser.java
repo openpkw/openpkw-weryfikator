@@ -1,4 +1,4 @@
-package org.openpkw.services;
+package org.openpkw.utils.csv;
 
 import org.springframework.batch.item.file.LineMapper;
 

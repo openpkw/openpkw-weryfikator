@@ -1,7 +1,8 @@
-package org.openpkw.services;
+package org.openpkw.utils;
 
 import org.openpkw.mapping.PeripherialCommitteeLineMapper;
 import org.openpkw.model.entity.PeripheralCommittee;
+import org.openpkw.utils.csv.PeripheralCommitteeCsvParser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

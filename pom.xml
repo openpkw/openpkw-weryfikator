@@ -13,6 +13,7 @@
         <module>openpkw-rest</module>
         <module>openpkw-etc</module>
         <module>openpkw-test</module>
+        <module>openpkw-utils</module>
     </modules>
     <packaging>pom</packaging>
     <name>openpkw</name>

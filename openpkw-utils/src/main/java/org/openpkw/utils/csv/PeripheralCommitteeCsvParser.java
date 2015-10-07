@@ -1,4 +1,4 @@
-package org.openpkw.services;
+package org.openpkw.utils.csv;
 
 import org.openpkw.mapping.PeripherialCommitteeLineMapper;
 import org.openpkw.model.entity.PeripheralCommittee;
