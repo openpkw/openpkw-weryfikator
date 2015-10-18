@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openpkw</groupId>
     <artifactId>openpkw</artifactId>
@@ -13,7 +12,8 @@
         <module>openpkw-etc</module>
         <module>openpkw-test</module>
         <module>openpkw-utils</module>
-    </modules>
+    <module>openpkw-utils-csv</module>
+  </modules>
     <packaging>pom</packaging>
     <name>openpkw</name>
 
@@ -41,7 +41,7 @@
                 <wildfly.management.host>localhost</wildfly.management.host>
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
-                <wildfly.management.password></wildfly.management.password>
+                <wildfly.management.password/>
             </properties>
         </profile>
         <profile>
@@ -56,7 +56,7 @@
                 <wildfly.management.host>dobromir.openpkw.pl</wildfly.management.host>
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
-                <wildfly.management.password></wildfly.management.password>
+                <wildfly.management.password/>
             </properties>
         </profile>
     </profiles>
