@@ -3,25 +3,25 @@ package org.openpkw.utils.csv.json;
 import java.util.List;
 
 public class PeripheryVoteResults {
-    private int teritorialCode;
-    private int peripheryNumber;
+    private String teritorialCode;
+    private long peripheryNumber;
     private VotingCards votingCards;
     private CorrespondenceVoting correspondenceVoting;
     private List<Committee> committeesList;
 
-    public int getTeritorialCode() {
+    public String getTeritorialCode() {
         return teritorialCode;
     }
 
-    public void setTeritorialCode(int teritorialCode) {
+    public void setTeritorialCode(String teritorialCode) {
         this.teritorialCode = teritorialCode;
     }
 
-    public int getPeripheryNumber() {
+    public long getPeripheryNumber() {
         return peripheryNumber;
     }
 
-    public void setPeripheryNumber(int peripheryNumber) {
+    public void setPeripheryNumber(long peripheryNumber) {
         this.peripheryNumber = peripheryNumber;
     }
 
