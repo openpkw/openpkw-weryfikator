@@ -10,9 +10,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+
 import au.com.bytecode.opencsv.CSVReader;
 import org.openpkw.utils.csv.json.*;
-import org.codehaus.jackson.map.ObjectMapper;
 
 public class Main {
 
@@ -30,20 +33,43 @@ public class Main {
     public final static int INDEX_TERITORIAL_CODE = 1;
     public final static int INDEX_PERIPHERY_NUMBER = 5;
 
-    
-    public final static int INDEX_CARDS_FROM_BALLOT_BOX=16;
-    public final static int INDEX_CARDS_FROM_ENVELOPES=17;
-    public final static int INDEX_INVALID_CARD=18;
-    public final static int INDEX_INVALID_VOTES=20;
-    public final static int INDEX_VALID_CARD=19;
-    public final static int INDEX_VALID_VOTES=21;
-    
+    public final static int INDEX_CARDS_FROM_BALLOT_BOX = 16;
+    public final static int INDEX_CARDS_FROM_ENVELOPES = 17;
+    public final static int INDEX_INVALID_CARD = 18;
+    public final static int INDEX_INVALID_VOTES = 20;
+    public final static int INDEX_VALID_CARD = 19;
+    public final static int INDEX_VALID_VOTES = 21;
+    public final static String URL_ADDRESS = "http://localhost";
+
     public static void main(String[] args) {
-        loadPeripheryVotesFromCsv(new File(EXAMPLE_CSV_FILE));
+        try {
+            List<PeripheryVote> peripheryVoteList = loadPeripheryVotesFromCsv(new File(EXAMPLE_CSV_FILE));
+            for (PeripheryVote peripheryVote : peripheryVoteList)
+                sendPeripheryVote(peripheryVote);
+        } catch (Exception ex) {
+            log.error("main()", ex);
+        }
+    }
+
+    private static void sendPeripheryVote(PeripheryVote peripheryVote) throws Exception {
+
+        Client client = Client.create();
+
+        WebResource webResource = client.resource(URL_ADDRESS);
+
+        ClientResponse response = webResource.type("application/json").post(ClientResponse.class, peripheryVote);
+
+        if (response.getStatus() != 201) {
+            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+        }
+
+        System.out.println("Output from Server .... \n");
+        String output = response.getEntity(String.class);
+        System.out.println(output);
 
     }
 
-    public static HashMap<Committee, HashMap<Integer, Candidate>> getMapCandidate(List<String[]> listAllFieldInFile) {
+    private static HashMap<Committee, HashMap<Integer, Candidate>> getMapCandidate(List<String[]> listAllFieldInFile) {
         HashMap<Committee, HashMap<Integer, Candidate>> hashMapCandidate = new HashMap<Committee, HashMap<Integer, Candidate>>();
         String isCandidateText = "Razem";
         String isCommitteeString = "\"=\"";
@@ -75,34 +101,31 @@ public class Main {
 
     }
 
-    
-    public static String getStringFromCsv(List<String[]> listAllFieldInFile , int line , int column)
-    {
+    private static String getStringFromCsv(List<String[]> listAllFieldInFile, int line, int column) {
         return listAllFieldInFile.get(line)[column].replace('=', ' ').replace('\"', ' ').trim();
     }
 
-    public static Long getLongFromCsv(List<String[]> listAllFieldInFile , int line , int column)
-    {
+    private static Long getLongFromCsv(List<String[]> listAllFieldInFile, int line, int column) {
         return Long.parseLong(listAllFieldInFile.get(line)[column]);
     }
-    
-    public static PeripheryVote getPeripheryVote(int line, HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate, List<String[]> listAllFieldInFile) {
+
+    private static PeripheryVote getPeripheryVote(int line, HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate, List<String[]> listAllFieldInFile) {
         PeripheryVote peripheryVote = new PeripheryVote();
         PeripheryVoteResults peripheryVoteResults = new PeripheryVoteResults();
         ArrayList<Committee> committeesList = new ArrayList<Committee>();
         peripheryVoteResults.setCommitteesList(committeesList);
 
-        peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile,line,INDEX_PERIPHERY_NUMBER));
-        peripheryVoteResults.setTeritorialCode(getStringFromCsv(listAllFieldInFile,line,INDEX_TERITORIAL_CODE));
+        peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile, line, INDEX_PERIPHERY_NUMBER));
+        peripheryVoteResults.setTeritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TERITORIAL_CODE));
         VotingCards votingCards = new VotingCards();
-        votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile,line,INDEX_CARDS_FROM_BALLOT_BOX));
-        votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile,line,INDEX_CARDS_FROM_ENVELOPES));
-        votingCards.setInvalidCards(getLongFromCsv(listAllFieldInFile,line,INDEX_INVALID_CARD));
-        votingCards.setInvalidVotes(getLongFromCsv(listAllFieldInFile,line,INDEX_INVALID_VOTES));
-        votingCards.setValidCards(getLongFromCsv(listAllFieldInFile,line,INDEX_VALID_CARD));
-        votingCards.setValidVotes(getLongFromCsv(listAllFieldInFile,line,INDEX_VALID_VOTES));
+        votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_BALLOT_BOX));
+        votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_ENVELOPES));
+        votingCards.setInvalidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_INVALID_CARD));
+        votingCards.setInvalidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_INVALID_VOTES));
+        votingCards.setValidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_VALID_CARD));
+        votingCards.setValidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_VALID_VOTES));
         peripheryVoteResults.setVotingCards(votingCards);
-        
+
         for (Object key : mapCandidate.keySet().toArray()) {
             Committee committeeFromMap = (Committee) key;
             Committee committee = new Committee();
@@ -131,7 +154,7 @@ public class Main {
         return peripheryVote;
     }
 
-    public static List<PeripheryVote> loadPeripheryVotesFromCsv(File file) {
+    private static List<PeripheryVote> loadPeripheryVotesFromCsv(File file) {
         CSVReader reader = null;
         ArrayList<PeripheryVote> peripheryVoteList = new ArrayList<PeripheryVote>();
         try {
@@ -140,8 +163,8 @@ public class Main {
             HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate = getMapCandidate(listAllFieldInFile);
             for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++)
                 peripheryVoteList.add(getPeripheryVote(line, mapCandidate, listAllFieldInFile));
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.defaultPrettyPrintingWriter().writeValue(System.out, peripheryVoteList.get(0));
+            // ObjectMapper mapper = new ObjectMapper();
+            // mapper.defaultPrettyPrintingWriter().writeValue(System.out, peripheryVoteList.get(0));
         } catch (Exception ex) {
             throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
 
