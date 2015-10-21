@@ -15,6 +15,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 import au.com.bytecode.opencsv.CSVReader;
+
+import org.codehaus.jackson.map.ObjectMapper;
 import org.openpkw.utils.csv.json.*;
 
 public class Main {
@@ -47,17 +49,18 @@ public class Main {
             for (PeripheryVote peripheryVote : peripheryVoteList)
                 sendPeripheryVote(peripheryVote);
         } catch (Exception ex) {
-            log.error("main()", ex);
+            ex.printStackTrace();
+            ///log.error("main()", ex);
         }
     }
 
     private static void sendPeripheryVote(PeripheryVote peripheryVote) throws Exception {
 
         Client client = Client.create();
-
         WebResource webResource = client.resource(URL_ADDRESS);
-
-        ClientResponse response = webResource.type("application/json").post(ClientResponse.class, peripheryVote);
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(peripheryVote);
+        ClientResponse response = webResource.type("application/json").post(ClientResponse.class, json);
 
         if (response.getStatus() != 201) {
             throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
