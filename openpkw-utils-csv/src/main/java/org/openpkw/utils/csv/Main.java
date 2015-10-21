@@ -1,8 +1,10 @@
 package org.openpkw.utils.csv;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -41,35 +43,40 @@ public class Main {
     public final static int INDEX_INVALID_VOTES = 20;
     public final static int INDEX_VALID_CARD = 19;
     public final static int INDEX_VALID_VOTES = 21;
-    public final static String URL_ADDRESS = "http://localhost";
+    public final static String URL_ADDRESS_LOCALHOST = "http://localhost:8080/openpkw-dokument-generator/service/protocol";
+    public final static String URL_ADDRESS_DEV = "http://dobromir.openpkw.pl:9080/openpkw-dokument-generator/service/protocol";
 
     public static void main(String[] args) {
         try {
             List<PeripheryVote> peripheryVoteList = loadPeripheryVotesFromCsv(new File(EXAMPLE_CSV_FILE));
-            for (PeripheryVote peripheryVote : peripheryVoteList)
+            for (PeripheryVote peripheryVote : peripheryVoteList) {
                 sendPeripheryVote(peripheryVote);
+            }
         } catch (Exception ex) {
-            ex.printStackTrace();
-            ///log.error("main()", ex);
+            log.error("main()", ex);
         }
     }
 
     private static void sendPeripheryVote(PeripheryVote peripheryVote) throws Exception {
-
         Client client = Client.create();
-        WebResource webResource = client.resource(URL_ADDRESS);
+        WebResource webResource = client.resource(URL_ADDRESS_DEV);
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(peripheryVote);
+        DokumentGeneratorRequest request = new DokumentGeneratorRequest("2015_parliament_periphery", peripheryVote);
+        String json = mapper.writeValueAsString(request);
         ClientResponse response = webResource.type("application/json").post(ClientResponse.class, json);
 
-        if (response.getStatus() != 201) {
+        if (response.getStatus() != 200) {
+            String responseBody = response.getEntity(String.class);
+            System.out.println(responseBody);
             throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
         }
 
         System.out.println("Output from Server .... \n");
-        String output = response.getEntity(String.class);
-        System.out.println(output);
-
+        byte[] pdfFile = response.getEntity(byte[].class);
+        String fileName = "output-"+Calendar.getInstance().getTimeInMillis()+".pdf";
+        FileOutputStream out = new FileOutputStream(fileName);
+        out.write(pdfFile);
+        out.close();
     }
 
     private static HashMap<Committee, HashMap<Integer, Candidate>> getMapCandidate(List<String[]> listAllFieldInFile) {
@@ -119,7 +126,7 @@ public class Main {
         peripheryVoteResults.setCommitteesList(committeesList);
 
         peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile, line, INDEX_PERIPHERY_NUMBER));
-        peripheryVoteResults.setTeritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TERITORIAL_CODE));
+        peripheryVoteResults.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TERITORIAL_CODE));
         VotingCards votingCards = new VotingCards();
         votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_BALLOT_BOX));
         votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_ENVELOPES));
@@ -164,10 +171,11 @@ public class Main {
             reader = new CSVReader(new FileReader(file), ';', '\'');
             List<String[]> listAllFieldInFile = reader.readAll();
             HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate = getMapCandidate(listAllFieldInFile);
-            for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++)
+            for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++) {
                 peripheryVoteList.add(getPeripheryVote(line, mapCandidate, listAllFieldInFile));
-            // ObjectMapper mapper = new ObjectMapper();
-            // mapper.defaultPrettyPrintingWriter().writeValue(System.out, peripheryVoteList.get(0));
+            }
+//            ObjectMapper mapper = new ObjectMapper();
+//            mapper.defaultPrettyPrintingWriter().writeValue(System.out, peripheryVoteList.get(0));
         } catch (Exception ex) {
             throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
 
