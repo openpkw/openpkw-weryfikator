@@ -56,7 +56,8 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 | Dillinger.io  |  http://dillinger.io |
 |  GitHub  |  https://github.com/openpkw|
 |  Mailing List|http://openpkw.pl/mailman/listinfo/openpkw-java|
-
+| Serwer buildów | http://dobromir.openpkw.pl:8080/view/openpkw-weryfikator%20pipeline/ |
+| Środowisko TEST | http://dobromir.openpkw.pl:9080/openpkw/ |
 
 
 **Aktualnie poszukujemy!**  
@@ -161,7 +162,9 @@ do swojego środowiska.
 Plik openpkw-queue.cli odpowiada za założenie kolejki zgodnej z JMS do przesyłania komunikatów.
  
 
-**Środowisko developerskie**
+# Środowiska
 
-**Środowisko produkcyjne**
-
+- TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
+- UAT (ręczne testy integracyjne i regresyjne): brak
+- STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): brak
+- PROD (wykorzystywane podczas wyborów): brak

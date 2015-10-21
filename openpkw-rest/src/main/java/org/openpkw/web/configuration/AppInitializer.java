@@ -5,25 +5,21 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 /**
  * Created by Wojtek on 20.06.15.
  */
-
-public class AppInitializer  extends AbstractAnnotationConfigDispatcherServletInitializer {
-
+public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[] { "/" };
     }
-
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{AppConfig.class};
+        return new Class<?>[] { AppConfig.class };
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{MVCConfig.class};
+        return new Class<?>[] { MVCConfig.class };
     }
-
 
 }

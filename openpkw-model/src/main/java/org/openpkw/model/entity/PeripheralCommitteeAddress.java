@@ -9,7 +9,6 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "PeripheralCommitteeAddress")
-
 public class PeripheralCommitteeAddress implements Serializable {
 
     private static final long serialVersionUID = -5423011922592356949L;
