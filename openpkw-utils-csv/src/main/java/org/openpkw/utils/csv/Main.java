@@ -6,20 +6,27 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.openpkw.utils.csv.json.Candidate;
+import org.openpkw.utils.csv.json.Committee;
+import org.openpkw.utils.csv.json.CorrespondenceVoting;
+import org.openpkw.utils.csv.json.DokumentGeneratorRequest;
+import org.openpkw.utils.csv.json.ElectoralCampaign;
+import org.openpkw.utils.csv.json.PeripheryVote;
+import org.openpkw.utils.csv.json.PeripheryVoteResults;
+import org.openpkw.utils.csv.json.VotingCards;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-
-import au.com.bytecode.opencsv.CSVReader;
-
-import org.codehaus.jackson.map.ObjectMapper;
-import org.openpkw.utils.csv.json.*;
 
 public class Main {
 
@@ -90,7 +97,14 @@ public class Main {
             String committeeString = listAllFieldInFile.get(INDEX_LINE_COMMITTEE)[i];
             if (committeeString.indexOf(isCommitteeString) >= 0) {
                 committee = new Committee();
-                committee.setCommitteeName(committeeString.substring(committeeString.indexOf(isCommitteeString)).replace('"', ' ').replace('=', ' ').trim());
+                committee.setCommitteeNumber(0); // TODO: Enter committeeNumber here
+                
+                String[] tokens = committeeString.split("\ufffd");
+                int committeeNumber = Integer.parseInt(tokens[0].split(" ")[2]);
+                String committeeName = tokens[1].trim().replace((CharSequence) "\"","");
+
+                committee.setCommitteeNumber(committeeNumber);
+                committee.setCommitteeName(committeeName);
                 committee.setCommitteeVotesNumber(0);
                 hashMapCandidate.put(committee, new HashMap<Integer, Candidate>());
             }
@@ -102,7 +116,7 @@ public class Main {
                         candidate.setCandidateName(candidateString.replace('=', ' ').replace('\"', ' ').trim());
                         candidate.setCandidateVotesNumber(0);
                         hashMapCandidate.get(committee).put(i, candidate);
-                    }
+                    } 
                 }
             }
 
@@ -127,7 +141,38 @@ public class Main {
 
         peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile, line, INDEX_PERIPHERY_NUMBER));
         peripheryVoteResults.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TERITORIAL_CODE));
+        peripheryVoteResults.setPeripheralCommissionAddress("?"); // TODO: get from CVS
+        peripheryVoteResults.setCommune("?"); // TODO: get from CVS
+        peripheryVoteResults.setCounty("?"); // TODO: get from CVS
+        peripheryVoteResults.setProvince("?"); // TODO: get from CVS
+        peripheryVoteResults.setDistrictNumber("?"); // TODO: get from CVS
+        peripheryVoteResults.setDistrictCommissionAddress("?"); // TODO: get from CVS
+        
+        ElectoralCampaign electoralCampaign = new ElectoralCampaign();
+        electoralCampaign.setDate("?"); // TODO: get from CVS
+        electoralCampaign.setStartTime("?"); // TODO: get from CVS
+        electoralCampaign.setEndTime("?"); // TODO: get from CVS
+        
+        peripheryVoteResults.setElectoralCampaign(electoralCampaign);
+        
         VotingCards votingCards = new VotingCards();
+        votingCards.setTotalEntitledToVote(0); // TODO: get from CVS
+        votingCards.setTotalCards(0); // TODO: get from CVS
+        votingCards.setUnusedCards(0); // TODO: get from CVS
+        votingCards.setRegularVoters(0); // TODO: get from CVS
+        votingCards.setRepresentativeVoters(0); // TODO: get from CVS
+        votingCards.setCertificateVoters(0); // TODO: get from CVS
+        
+        CorrespondenceVoting correspondenceVoting = new CorrespondenceVoting();
+        correspondenceVoting.setIssuedPackages(0); // TODO: get from CVS
+        correspondenceVoting.setReceivedReplyEnvelopes(0); // TODO: get from CVS
+        correspondenceVoting.setMissingStatement(0); // TODO: get from CVS
+        correspondenceVoting.setMissingSignatureOnStatement(0); // TODO: get from CVS
+        correspondenceVoting.setMissingEnvelopeForVotingCard(0); // TODO: get from CVS
+        correspondenceVoting.setUnsealedEnvelope(0); // TODO: get from CVS
+        correspondenceVoting.setEnvelopesThrownToBallotBox(0); // TODO: get from CVS
+        peripheryVoteResults.setCorrespondenceVoting(correspondenceVoting);
+        
         votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_BALLOT_BOX));
         votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_ENVELOPES));
         votingCards.setInvalidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_INVALID_CARD));
@@ -155,8 +200,10 @@ public class Main {
                     candidateList.add(candidate);
                 }
             }
+            
+            committee.setTotalCandidatesVotesNumber(0); // TODO: get from CVS
+            
             committeesList.add(committee);
-
         }
 
         peripheryVote.setResults(peripheryVoteResults);
