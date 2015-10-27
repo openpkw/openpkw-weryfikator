@@ -1,19 +1,38 @@
-# Notatki ze spotkañ zespo³u Java
+# Notatki ze spotkaÅ„ zespoÅ‚u Java
 
-## Œroda, 7 paŸdziernia 2015 r.
+## Wtorek, 27 paÅºdziernia 2015 r.
 
-Obecni: Rafa³, £ukasz, Bartek, Remek, Sebastian, Kamil
+Obecni: RafaÅ‚ R., Åukasz F., Remek M., Sebastian C., Sebastian P., Kamil D., Kamil G.
 
-1. Przeprowadziliœmy code review projektu openpkw-weryfikator i usunêliœmy wszystko, co nie dotyczy aspektów funkcjonalnych dla najbli¿szych wyborów parlamentarnych. Czyli usunêliœmy rzeczy zwi¹zane z referendum, rzeczy zwi¹zane z bezpieczeñstwem, tworzeniem u¿ytkowników, walidacj¹ hase³ i e-maili itd. Usunêliœmy projekt openpkw-core, stworzyliœmy openpkw-utils itd.
+1. PrzeanalizowaliÅ›my co pozostaÅ‚o do zrobienia w rozwijanej przez Remka aplikacji, ktÃ³ra wysyÅ‚a do Generatora DokumentÃ³w historyczne dane, aby dostaÄ‡ protokoÅ‚y komisji obwodowej z kodami QR.
 
-2. Ustaliliœmy code conventions (standardowe Java conventions + u¿ycie czterech spacji zamiast tabulacji + szerokoœæ wierszy 480 znaków zamiast 76 znaków). Plik konfiguruj¹cy automatyczne formatowanie kodu w Eclipse i IntelliJ IDEA jest w gicie w openpkw-etc.
+2. ZaprojektowaliÅ›my strukturÄ™ bazy danych Weryfikatora (rozwijajÄ…c pomysÅ‚ przyniesiony przez Åukasza).
 
-3. Ustaliliœmy, ¿e bêdziemy u¿ywaæ bazy danych MySQL, poniewa¿ a) wszyscy j¹ znamy, b) zna j¹ wiele innych osób, a chcemy w OpenPKW likwidowaæ wszelkie bariery, które mog³yby utrudniæ innym osobom do³¹czenie do projektu.
+3. StworzyliÅ›my nowy projekt: openpkw-weryfikator-android, do ktÃ³rego Kamil G. wrzuci swojÄ… aplikacjÄ™ androidowÄ…, ktÃ³ra skanuje kody QR i wysyÅ‚a do backendu Weryfikatora.
 
-4. Przedyskutowaliœmy ponownie g³ówne komponenty OpenPKW: kalkulator, generator dokumentów, aplikacja mobilna, weryfikator, strona do prezentowania wyników. Sytuacja tutaj jest o tyle trudna do po³apania siê, ¿e czêœæ komponentów piszemy dla PKW, a czêœæ dla wolontariuszy, mamy dwa komponenty backendowe, w tym jeden stateless, a drugi stateful itd. Na pewno bêdzie trzeba to jeszcze wyjaœniaæ w przysz³oœci.
 
-5. U¿ywane jêzyki: ca³y kod piszemy wy³¹cznie po angielsku. Rozpoczynamy tworzenie s³ownika pojêæ, aby mieæ spójne nazewnictwo w ca³ym projekcie. Dziêki temu bêdzie wiadomo jak przet³umaczyæ ,,komisja obwodowa'' i ,,komisja okrêgowa'' na jêzyk angielski. Natomiast komentarze w githubie piszemy po polsku.
+Dalsze kroki:
 
-6. Wykonaliœmy krótki przegl¹d tasków w Trello. Po wykonaniu tego code review i zmianie priorytetów na funkcjonalnoœæ z pominiêciem aspektów typu bezpieczeñstwo czy tworzenie u¿ytkownikó czêœæ zadañ siê zdezaktualizowa³a, czêœæ zaktualizowaliœmy itd.
+1. Utworzenie bazy danych na podstawie projektu, stworzenie klas domenowych w backendzie Weryfikatora.
 
-7. Najbli¿sze zadanie: wygenerowanie protoko³u dla komisji obwodowej w postaci pliku PDF z kodem QR. Sebastian adaptuje generator dokumentów do wyborów parlamentarnych, Remek robi aplikacjê, która bêdzie strzelaæ do generatora po PDFy podaj¹c dane z CSV.
+2. Stworzenie narzÄ™dzia, ktÃ³re zaÅ‚aduje dane wszystkich komisji i kandydatÃ³w z plikÃ³w CSV do bazy danych Weryfikatora.
+
+3. Napisanie serwisu, ktÃ³ry odbierze dane z kodu QR i zapisze je do bazy danych Weryfikatora. PoczÄ…tkiem tego serwisu bÄ™dzie kod, ktÃ³ry wniÃ³sÅ‚ Kamil G.
+
+## Åšroda, 7 paÅºdziernia 2015 r.
+
+Obecni: RafaÅ‚, Åukasz, Bartek, Remek, Sebastian, Kamil
+
+1. PrzeprowadziliÅ›my code review projektu openpkw-weryfikator i usunÄ™liÅ›my wszystko, co nie dotyczy aspektÃ³w funkcjonalnych dla najbliÅ¼szych wyborÃ³w parlamentarnych. Czyli usunÄ™liÅ›my rzeczy zwiÄ…zane z referendum, rzeczy zwiÄ…zane z bezpieczeÅ„stwem, tworzeniem uÅ¼ytkownikÃ³w, walidacjÄ… haseÅ‚ i e-maili itd. UsunÄ™liÅ›my projekt openpkw-core, stworzyliÅ›my openpkw-utils itd.
+
+2. UstaliliÅ›my code conventions (standardowe Java conventions + uÅ¼ycie czterech spacji zamiast tabulacji + szerokoÅ›Ä‡ wierszy 480 znakÃ³w zamiast 76 znakÃ³w). Plik konfigurujÄ…cy automatyczne formatowanie kodu w Eclipse i IntelliJ IDEA jest w gicie w openpkw-etc.
+
+3. UstaliliÅ›my, Å¼e bÄ™dziemy uÅ¼ywaÄ‡ bazy danych MySQL, poniewaÅ¼ a) wszyscy jÄ… znamy, b) zna jÄ… wiele innych osÃ³b, a chcemy w OpenPKW likwidowaÄ‡ wszelkie bariery, ktÃ³re mogÅ‚yby utrudniÄ‡ innym osobom doÅ‚Ä…czenie do projektu.
+
+4. PrzedyskutowaliÅ›my ponownie gÅ‚Ã³wne komponenty OpenPKW: kalkulator, generator dokumentÃ³w, aplikacja mobilna, weryfikator, strona do prezentowania wynikÃ³w. Sytuacja tutaj jest o tyle trudna do poÅ‚apania siÄ™, Å¼e czÄ™Å›Ä‡ komponentÃ³w piszemy dla PKW, a czÄ™Å›Ä‡ dla wolontariuszy, mamy dwa komponenty backendowe, w tym jeden stateless, a drugi stateful itd. Na pewno bÄ™dzie trzeba to jeszcze wyjaÅ›niaÄ‡ w przyszÅ‚oÅ›ci.
+
+5. UÅ¼ywane jÄ™zyki: caÅ‚y kod piszemy wyÅ‚Ä…cznie po angielsku. Rozpoczynamy tworzenie sÅ‚ownika pojÄ™Ä‡, aby mieÄ‡ spÃ³jne nazewnictwo w caÅ‚ym projekcie. DziÄ™ki temu bÄ™dzie wiadomo jak przetÅ‚umaczyÄ‡ ,,komisja obwodowa'' i ,,komisja okrÄ™gowa'' na jÄ™zyk angielski. Natomiast komentarze w githubie piszemy po polsku.
+
+6. WykonaliÅ›my krÃ³tki przeglÄ…d taskÃ³w w Trello. Po wykonaniu tego code review i zmianie priorytetÃ³w na funkcjonalnoÅ›Ä‡ z pominiÄ™ciem aspektÃ³w typu bezpieczeÅ„stwo czy tworzenie uÅ¼ytkownikÃ³ czÄ™Å›Ä‡ zadaÅ„ siÄ™ zdezaktualizowaÅ‚a, czÄ™Å›Ä‡ zaktualizowaliÅ›my itd.
+
+7. NajbliÅ¼sze zadanie: wygenerowanie protokoÅ‚u dla komisji obwodowej w postaci pliku PDF z kodem QR. Sebastian adaptuje generator dokumentÃ³w do wyborÃ³w parlamentarnych, Remek robi aplikacjÄ™, ktÃ³ra bÄ™dzie strzelaÄ‡ do generatora po PDFy podajÄ…c dane z CSV.
