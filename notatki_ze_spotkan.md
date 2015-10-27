@@ -4,6 +4,21 @@
 
 Obecni: Rafał R., Łukasz F., Remek M., Sebastian C., Sebastian P., Kamil D., Kamil G.
 
+Postępy:
+
+1. Generator Dokumentów został przerobiony tak, aby oprócz starych i niepotrzebnych już protokołów na wybory prezydenckie 2015 generował protokoły na wybory parlamentarne 2015 (Sebastian C.).
+
+2. Prawie ukończone jest narzędzie, które wysyła do Generatora Dokumentów dane z zawierających historyczne wyniki wyborów plików CSV, dzięki czemu mamy wygenerowane protokoły w postaci plików PDF zawierające kod QR (Remek M.).
+
+3. Powstała aplikację na Androida, która odczytuje kod QR i wysyła go do web serwisu. Aplikacja nie jest jeszcze połączona z kodem OpenPKW (Kamil G.).
+
+4. Powstał wstępny projekt struktury bazy danych Weryfikatora (Łukasz F.).
+
+(coś jeszcze?)
+
+
+Przebieg spotkania:
+
 1. Przeanalizowaliśmy co pozostało do zrobienia w rozwijanej przez Remka aplikacji, która wysyła do Generatora Dokumentów historyczne dane, aby dostać protokoły komisji obwodowej z kodami QR.
 
 2. Zaprojektowaliśmy strukturę bazy danych Weryfikatora (rozwijając pomysł przyniesiony przez Łukasza).
