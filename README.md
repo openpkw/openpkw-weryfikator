@@ -3,7 +3,7 @@
 
 W obecnej chwili podstawowym celem zespołu developerów JAVA jest  zbudowanie niezależnej i obiektywnej formy weryfikacji wyników wyborów za pomocą tworzonego backend. System ten przeznaczony będzie dla ok 27800 ochotników będących mężami zaufania w obwodowych komisjach wyborczych. Użytkownicy Ci, mają za zadanie za pomocą aplikacji mobilnych przesłać dane z protokołow wyborczych wraz ze zdjeciami tychże protokołów, które udostępnione są publicznie w komisjach obwodowych na koniec dnia wyborczego do zbiorczego systemu agregacji danych (backend). System ten prócz zbierania danych ma zadanie wizualizować pozyskane informacje w postaci diagramów wyborczych z podziałem na województwa. 
  
- 
+![OpenPKW Weryfikator Components](https://raw.githubusercontent.com/openpkw/openpkw-devops/master/OpenPKW%20Weryfikator%20Components.png)
 
 # Członkowie w porzadku alfabetycznym 
 
