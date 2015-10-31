@@ -1,0 +1,1 @@
+Repozytoria danych JPA
