@@ -36,3 +36,11 @@ Plik openpkw-queue.cli odpowiada za założenie kolejki zgodnej z JMS do przesy�
 ### Biblioteki
 Przy dodawaniu odpowiednich dependency do pom-ów proszę korzystać z głównego pom-a, gdzie większość została zawarta. W projektach dziedziczących należy dodać do pom-ów tylko groupId i artifactId - wersja i scope zostaną odziedziczone z parenta.
 Gdy będzie potrzeba dodania nowej biblioteki do projektu prosiłbym o zgłaszanie do luk.franczuk@gmail.com.  Chciałbym abyśmy zachowali spójność używanych bibliotek
+
+
+# Środowiska
+
+- TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
+- UAT (ręczne testy integracyjne i regresyjne): brak
+- STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): brak
+- PROD (wykorzystywane podczas wyborów): brak
