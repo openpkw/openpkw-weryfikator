@@ -1,0 +1,1 @@
+Katalog z Plikiami konfiguracyjnymi 
