@@ -9,17 +9,18 @@ W obecnej chwili podstawowym celem zespołu developerów JAVA jest  zbudowanie n
 
 | Członek  | Rola  |
 | ------------- | ------------- |
-|Adam_K  |  Developer Java  BackEnd |
-|Bartek_M |  Developer Java  BackEnd |
+|Kamil Gr|   Developer Android|
 |Karol_D | Developer Java BackEnd |
-|Grzegorz|  Developer Java  BackEnd|
-|Jacek_F|   Developer Java  BackEnd|
 |Lukasz_F |  Developer Java  BackEnd  |
-|Mateusz_A |  Developer Java  BackEnd  |
-|Piotr_T |  Developer Java  BackEnd|
 |Rafal_R | Koordynacja/Organizacja  |
-|Tomek |  Developer Java  BackEnd|
-|Wojtek_R |  Developer Java  BackEnd |
+|Remek M |  Developer Java  BackEnd |
+|Sebastian C|  Developer Java  BackEnd  |
+|Sebastian P|   Developer Java  BackEnd|
+|Waldek M|  Developer Java  BackEnd |
+
+
+**RoadMap** 
+To Be Done
 
 
 **Jak do nas dołączyć?**  
@@ -34,8 +35,6 @@ Kontakt:
 Strona główna projektu: https://openpkw.pl/ 
 
 GitHub: https://github.com/openpkw/openpkw/tree/master/java
-
-
 
 
 # Oranizacja pracy i linki
@@ -63,7 +62,7 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 **Aktualnie poszukujemy!**  
 
 1. Doświadczonych (bądz tez nie - ale pełnych zapału) developerów JAVA
-2. Programiste API + JSon do pomocy nad BackEnd ( Security REST ) 
+2. Programistę HTML, JavaScript, Angular, Bootstrap  
 
 
 # Wizja Systemu
@@ -149,22 +148,4 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 ### Instalacja
 **Podstawowa instalacja komponentów serwera Wildfly**
 
-W katalogu openpkw-etc/src/main/etc/wildfly znajdują się polecenia CLI
-konfigurujące podstawowe usługi serwera wymagane przez aplikację.  
-W pierwszym kroku należy uruchomić serwer (instrukcja w dokumentacji producenta).
-Kolejny krok to wykonanie poleceń przy pomocy narzędzia jboss-cli.bat(sh).  
-Przykładowe wywołanie na lokalnym środowisku:  
-*jboss-cli.bat --connect --file=ścieżka_do_pliku_cli*
-
-Pliki \*_database.cli odpowiadają za instalację datasource. Prefiks oznacza wersję bazy danych.  
-UWAGA!!! Należy zwrócić uwagę na parametry połączenia zdefiniowane w plikach. Należy je dostosować
-do swojego środowiska.   
-Plik openpkw-queue.cli odpowiada za założenie kolejki zgodnej z JMS do przesyłania komunikatów.
- 
-
-# Środowiska
-
-- TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
-- UAT (ręczne testy integracyjne i regresyjne): brak
-- STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): brak
-- PROD (wykorzystywane podczas wyborów): brak
+https://github.com/openpkw/openpkw-weryfikator/blob/master/TECHNICAL_README.MD
