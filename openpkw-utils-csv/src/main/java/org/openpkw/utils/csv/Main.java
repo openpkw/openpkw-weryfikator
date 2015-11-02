@@ -254,10 +254,9 @@ public class Main {
             reader = new CSVReader(new FileReader(file), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate = getMapCandidate(listAllFieldInFile);
-            //for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++) {
-               int line=1;
+            for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++) {
                 peripheryVoteList.add(getPeripheryVote(line, mapCandidate, listAllFieldInFile));
-             //}
+             }
         } catch (Exception ex) {
             throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
 
