@@ -16,6 +16,7 @@ public class PeripheryVoteResults {
     private VotingCards votingCards;
     private CorrespondenceVoting correspondenceVoting;
     private List<Committee> committeesList;
+    private Comments comments;
 
     public String getTerritorialCode() {
         return territorialCode;
@@ -111,5 +112,13 @@ public class PeripheryVoteResults {
 
     public void setCommitteesList(List<Committee> committeesList) {
         this.committeesList = committeesList;
+    }
+
+    public Comments getComments() {
+        return comments;
+    }
+
+    public void setComments(Comments comments) {
+        this.comments = comments;
     }
 }

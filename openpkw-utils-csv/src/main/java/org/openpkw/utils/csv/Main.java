@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openpkw.utils.csv.json.Candidate;
+import org.openpkw.utils.csv.json.Comments;
 import org.openpkw.utils.csv.json.Committee;
 import org.openpkw.utils.csv.json.CorrespondenceVoting;
 import org.openpkw.utils.csv.json.DokumentGeneratorRequest;
@@ -242,6 +243,18 @@ public class Main {
             committeesList.add(committee);
         }
 
+        Comments comments = new Comments();
+        
+        comments.setComments15("Brak uwag.");
+        comments.setComments16("Brak uwag.");
+        comments.setComments17("Brak uwag.");
+        comments.setComments18("Brak zarządzeń.");
+        comments.setComments19("Brak zarzutów.");
+        comments.setComments20("Brak zarzutów.");
+        comments.setComments21("Brak uwag.");
+        
+        peripheryVoteResults.setComments(comments);
+        
         peripheryVote.setResults(peripheryVoteResults);
 
         return peripheryVote;
