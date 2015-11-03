@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,23 +34,47 @@ public class Main {
     private final static Logger log = LoggerFactory.getLogger(Main.class);
 
     // Examle file
-    public final static String EXAMPLE_CSV_FILE = "src/test/resources/p19x.csv";
+    public final static String EXAMPLE_CSV_FILE = "src/test/resources/p19x_new.csv";
 
     // Line numbers
-    public final static int INDEX_LINE_COMMITTEE = 3;
-    public final static int INDEX_LINE_CANDIDATE = 4;
-    public final static int INDEX_FIRST_LINE_PERIPHERY = 5;
+    public final static int INDEX_COLUMNS_LINE=0;
+    public final static int INDEX_FIRST_LINE_PERIPHERY = 1;
 
     // Column number
-    public final static int INDEX_TERITORIAL_CODE = 1;
-    public final static int INDEX_PERIPHERY_NUMBER = 5;
+    public final static int INDEX_TeritorialCode = 2;
+    public final static int INDEX_PeripheryNumber = 4;
+    public final static int INDEX_Commune=1;
+    public final static int INDEX_PeriphealCommissionAddress=3;
 
-    public final static int INDEX_CARDS_FROM_BALLOT_BOX = 16;
-    public final static int INDEX_CARDS_FROM_ENVELOPES = 17;
-    public final static int INDEX_INVALID_CARD = 18;
-    public final static int INDEX_INVALID_VOTES = 20;
-    public final static int INDEX_VALID_CARD = 19;
-    public final static int INDEX_VALID_VOTES = 21;
+    public final static int INDEX_TotalEntitledToVote =5 ;
+    public final static int INDEX_TotalCards =6;
+    public final static int INDEX_UnusedCards = 7;
+    
+    
+    public final static int INDEX_RegularVoters = 8;
+    public final static int INDEX_RepresentativeVoters= 9; 
+    public final static int INDEX_CertificateVoters= 10;
+    public final static int INDEX_CardsFromBallotBox = 18;
+    public final static int INDEX_CardsFromEnvelopes= 19;
+    public final static int INDEX_InvalidCards = 20;
+    public final static int INDEX_ValidCards=21;
+    public final static int INDEX_InvalidVotes = 22;
+    public final static int INDEX_ValidVotes = 26;
+
+
+    
+    
+    public final static int INDEX_IssuedPackages=11;
+    public final static int INDEX_ReceivedReplyEnvelopes = 12; 
+    public final static int INDEX_MissingStatement=13;
+    public final static int INDEX_MissingSignatureOnStatement = 14;
+    public final static int INDEX_MissingEnvelopeForVotingCard=15;
+    public final static int INDEX_UnsealedEnvelope=16;
+    public final static int INDEX_EnvelopesThrownToBallotBox=17;
+
+    
+    
+   
     public final static String URL_ADDRESS_LOCALHOST = "http://localhost:8080/openpkw-dokument-generator/service/protocol";
     public final static String URL_ADDRESS_DEV = "http://dobromir.openpkw.pl:9080/openpkw-dokument-generator/service/protocol";
 
@@ -88,39 +113,43 @@ public class Main {
 
     private static HashMap<Committee, HashMap<Integer, Candidate>> getMapCandidate(List<String[]> listAllFieldInFile) {
         HashMap<Committee, HashMap<Integer, Candidate>> hashMapCandidate = new HashMap<Committee, HashMap<Integer, Candidate>>();
-        String isCandidateText = "Razem";
-        String isCommitteeString = "\"=\"";
-
-        Committee committee = null;
-        for (int i = 0; i < listAllFieldInFile.get(INDEX_LINE_COMMITTEE).length; i++) {
-
-            String committeeString = listAllFieldInFile.get(INDEX_LINE_COMMITTEE)[i];
-            if (committeeString.indexOf(isCommitteeString) >= 0) {
-                committee = new Committee();
-                committee.setCommitteeNumber(0); // TODO: Enter committeeNumber here
+        String isCommiteeEnd = "Razem";
+        String isCommitteeStart="KW";
+        boolean startCommittee=false;
+        HashMap<Integer,Candidate> candidateHashMap=null;
+        int committeeNumber = 0;
+        for (int i=0;i<listAllFieldInFile.get(INDEX_COLUMNS_LINE).length;i++)
+        {
+            String value = listAllFieldInFile.get(INDEX_COLUMNS_LINE)[i];
+            if (startCommittee)
+            {
+                if (value.indexOf(isCommiteeEnd)==0)
+                {
+                    startCommittee=false;
+                } else
+                {
+                    Candidate candidate = new Candidate();
+                    candidate.setCandidateName(value);
+                    candidateHashMap.put(i, candidate);
+                }
                 
-                String[] tokens = committeeString.split("\ufffd");
-                int committeeNumber = Integer.parseInt(tokens[0].split(" ")[2]);
-                String committeeName = tokens[1].trim().replace((CharSequence) "\"","");
-
-                committee.setCommitteeNumber(committeeNumber);
-                committee.setCommitteeName(committeeName);
-                committee.setCommitteeVotesNumber(0);
-                hashMapCandidate.put(committee, new HashMap<Integer, Candidate>());
-            }
-            if (committee != null) {
-                if (i + 1 < listAllFieldInFile.get(INDEX_LINE_CANDIDATE).length) {
-                    String candidateString = listAllFieldInFile.get(INDEX_LINE_CANDIDATE)[i];
-                    if (!candidateString.equals(isCandidateText)) {
-                        Candidate candidate = new Candidate();
-                        candidate.setCandidateName(candidateString.replace('=', ' ').replace('\"', ' ').trim());
-                        candidate.setCandidateVotesNumber(0);
-                        hashMapCandidate.get(committee).put(i, candidate);
-                    } 
+            } else
+            {
+                if (value.indexOf(isCommitteeStart)==0)
+                {
+                    candidateHashMap = new HashMap<Integer,Candidate>();
+                    committeeNumber++;
+                    Committee committee = new Committee();
+                    committee.setCommitteeNumber(committeeNumber);
+                    committee.setCommitteeName(value);
+                    committee.setCommitteeVotesNumber(i);
+                    hashMapCandidate.put(committee, candidateHashMap);
+                    startCommittee = true;
                 }
             }
-
         }
+
+        
         return hashMapCandidate;
 
     }
@@ -139,69 +168,76 @@ public class Main {
         ArrayList<Committee> committeesList = new ArrayList<Committee>();
         peripheryVoteResults.setCommitteesList(committeesList);
 
-        peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile, line, INDEX_PERIPHERY_NUMBER));
-        peripheryVoteResults.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TERITORIAL_CODE));
-        peripheryVoteResults.setPeripheralCommissionAddress("?"); // TODO: get from CVS
-        peripheryVoteResults.setCommune("?"); // TODO: get from CVS
-        peripheryVoteResults.setCounty("?"); // TODO: get from CVS
-        peripheryVoteResults.setProvince("?"); // TODO: get from CVS
-        peripheryVoteResults.setDistrictNumber("?"); // TODO: get from CVS
-        peripheryVoteResults.setDistrictCommissionAddress("?"); // TODO: get from CVS
+        peripheryVoteResults.setPeripheryNumber(getLongFromCsv(listAllFieldInFile, line, INDEX_PeripheryNumber));
+        peripheryVoteResults.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, INDEX_TeritorialCode));
+        peripheryVoteResults.setPeripheralCommissionAddress(getStringFromCsv(listAllFieldInFile, line,INDEX_PeriphealCommissionAddress)); 
+        peripheryVoteResults.setCommune(getStringFromCsv(listAllFieldInFile, line,INDEX_Commune)); // TODO: get from CVS (gmina)
+        peripheryVoteResults.setCounty("?"); // TODO: get from CVS (powiat) - brak w CSV
+        peripheryVoteResults.setProvince("?"); // TODO: get from CVS (wojewodztwo) - brak w CSV
+        peripheryVoteResults.setDistrictNumber("?"); // TODO: get from CVS (nr okregu) - brak w CSV
+        peripheryVoteResults.setDistrictCommissionAddress("?"); // TODO: get from CVS (adres okregowej komisji) - brak w CSV
         
         ElectoralCampaign electoralCampaign = new ElectoralCampaign();
-        electoralCampaign.setDate("?"); // TODO: get from CVS
-        electoralCampaign.setStartTime("?"); // TODO: get from CVS
-        electoralCampaign.setEndTime("?"); // TODO: get from CVS
+        electoralCampaign.setDate("2015-09-23"); 
+        electoralCampaign.setStartTime("07:00"); 
+        electoralCampaign.setEndTime("21:00"); 
         
         peripheryVoteResults.setElectoralCampaign(electoralCampaign);
         
         VotingCards votingCards = new VotingCards();
-        votingCards.setTotalEntitledToVote(0); // TODO: get from CVS
-        votingCards.setTotalCards(0); // TODO: get from CVS
-        votingCards.setUnusedCards(0); // TODO: get from CVS
-        votingCards.setRegularVoters(0); // TODO: get from CVS
-        votingCards.setRepresentativeVoters(0); // TODO: get from CVS
-        votingCards.setCertificateVoters(0); // TODO: get from CVS
-        
-        CorrespondenceVoting correspondenceVoting = new CorrespondenceVoting();
-        correspondenceVoting.setIssuedPackages(0); // TODO: get from CVS
-        correspondenceVoting.setReceivedReplyEnvelopes(0); // TODO: get from CVS
-        correspondenceVoting.setMissingStatement(0); // TODO: get from CVS
-        correspondenceVoting.setMissingSignatureOnStatement(0); // TODO: get from CVS
-        correspondenceVoting.setMissingEnvelopeForVotingCard(0); // TODO: get from CVS
-        correspondenceVoting.setUnsealedEnvelope(0); // TODO: get from CVS
-        correspondenceVoting.setEnvelopesThrownToBallotBox(0); // TODO: get from CVS
-        peripheryVoteResults.setCorrespondenceVoting(correspondenceVoting);
-        
-        votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_BALLOT_BOX));
-        votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile, line, INDEX_CARDS_FROM_ENVELOPES));
-        votingCards.setInvalidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_INVALID_CARD));
-        votingCards.setInvalidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_INVALID_VOTES));
-        votingCards.setValidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_VALID_CARD));
-        votingCards.setValidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_VALID_VOTES));
+        votingCards.setTotalEntitledToVote(getLongFromCsv(listAllFieldInFile, line, INDEX_TotalEntitledToVote)); 
+        votingCards.setTotalCards(getLongFromCsv(listAllFieldInFile, line, INDEX_TotalCards)); 
+        votingCards.setUnusedCards(getLongFromCsv(listAllFieldInFile, line, INDEX_UnusedCards)); 
+        votingCards.setRegularVoters(getLongFromCsv(listAllFieldInFile, line, INDEX_RegularVoters)); 
+        votingCards.setRepresentativeVoters(getLongFromCsv(listAllFieldInFile, line, INDEX_RepresentativeVoters));  
+        votingCards.setCertificateVoters(getLongFromCsv(listAllFieldInFile, line, INDEX_CertificateVoters));
+        votingCards.setCardsFromBallotBox(getLongFromCsv(listAllFieldInFile, line, INDEX_CardsFromBallotBox));
+        votingCards.setCardsFromEnvelopes(getLongFromCsv(listAllFieldInFile, line, INDEX_CardsFromEnvelopes)); 
+        votingCards.setInvalidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_InvalidCards));
+        votingCards.setValidCards(getLongFromCsv(listAllFieldInFile, line, INDEX_ValidCards)); 
+        votingCards.setInvalidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_InvalidVotes));
+        votingCards.setValidVotes(getLongFromCsv(listAllFieldInFile, line, INDEX_ValidVotes));
         peripheryVoteResults.setVotingCards(votingCards);
 
-        for (Object key : mapCandidate.keySet().toArray()) {
-            Committee committeeFromMap = (Committee) key;
+        CorrespondenceVoting correspondenceVoting = new CorrespondenceVoting();
+        correspondenceVoting.setIssuedPackages(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_IssuedPackages)); 
+        correspondenceVoting.setReceivedReplyEnvelopes(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_ReceivedReplyEnvelopes)); 
+        correspondenceVoting.setMissingStatement(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_MissingStatement)); 
+        correspondenceVoting.setMissingSignatureOnStatement(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_MissingSignatureOnStatement)); 
+        correspondenceVoting.setMissingEnvelopeForVotingCard(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_MissingEnvelopeForVotingCard)); 
+        correspondenceVoting.setUnsealedEnvelope(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_UnsealedEnvelope)); 
+        correspondenceVoting.setEnvelopesThrownToBallotBox(getLongFromCsv(listAllFieldInFile, line, Main.INDEX_EnvelopesThrownToBallotBox));
+        peripheryVoteResults.setCorrespondenceVoting(correspondenceVoting);
+        
+        List<Committee> commiteeList = Arrays.asList(mapCandidate.keySet().toArray(new Committee[0]));
+        Collections.sort(commiteeList,new Comparator<Committee>(){
+            @Override
+            public int compare(Committee o1, Committee o2) {
+               return ((Long)o1.getCommitteeNumber()).compareTo((Long)o2.getCommitteeNumber());
+            }
+            
+        });
+        
+        
+        for (Committee committeeFromMap : commiteeList) {
             Committee committee = new Committee();
             committee.setCommitteeName(committeeFromMap.getCommitteeName());
+            committee.setCommitteeNumber(committeeFromMap.getCommitteeNumber());
+            committee.setCommitteeVotesNumber(getLongFromCsv(listAllFieldInFile, line,(int)committeeFromMap.getCommitteeVotesNumber()));
+         
             ArrayList<Candidate> candidateList = new ArrayList<Candidate>();
             committee.setCandidate(candidateList);
-            int minKey = Collections.min(mapCandidate.get(key).keySet());
-
-            for (Object keyTwo : mapCandidate.get(committeeFromMap).keySet().toArray()) {
-                Integer candidateIndex = (Integer) keyTwo;
-                if (candidateIndex == minKey) {
-                    committee.setCommitteeVotesNumber(Long.parseLong(listAllFieldInFile.get(line)[candidateIndex]));
-                } else {
+            List<Integer> keys = Arrays.asList(mapCandidate.get(committeeFromMap).keySet().toArray(new Integer[0]));
+            Collections.sort(keys);
+            
+            for (int candidateIndex : keys) {
                     Candidate candidate = new Candidate();
                     candidate.setCandidateName(mapCandidate.get(committeeFromMap).get(candidateIndex).getCandidateName());
                     candidate.setCandidateVotesNumber(Long.parseLong(listAllFieldInFile.get(line)[candidateIndex]));
                     candidateList.add(candidate);
-                }
+               
             }
             
-            committee.setTotalCandidatesVotesNumber(0); // TODO: get from CVS
             
             committeesList.add(committee);
         }
@@ -215,14 +251,12 @@ public class Main {
         CSVReader reader = null;
         ArrayList<PeripheryVote> peripheryVoteList = new ArrayList<PeripheryVote>();
         try {
-            reader = new CSVReader(new FileReader(file), ';', '\'');
+            reader = new CSVReader(new FileReader(file), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate = getMapCandidate(listAllFieldInFile);
             for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++) {
                 peripheryVoteList.add(getPeripheryVote(line, mapCandidate, listAllFieldInFile));
-            }
-//            ObjectMapper mapper = new ObjectMapper();
-//            mapper.defaultPrettyPrintingWriter().writeValue(System.out, peripheryVoteList.get(0));
+             }
         } catch (Exception ex) {
             throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
 
