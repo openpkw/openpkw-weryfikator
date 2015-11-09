@@ -97,7 +97,8 @@ public class Main {
         DokumentGeneratorRequest request = new DokumentGeneratorRequest("2015_parliament_periphery", peripheryVote);
         String json = mapper.writeValueAsString(request);
         ClientResponse response = webResource.type("application/json").post(ClientResponse.class, json);
-
+        
+        
         if (response.getStatus() != 200) {
             String responseBody = response.getEntity(String.class);
             System.out.println(responseBody);
@@ -118,6 +119,7 @@ public class Main {
         String isCommitteeStart="KW";
         boolean startCommittee=false;
         HashMap<Integer,Candidate> candidateHashMap=null;
+        Committee committee = null;
         int committeeNumber = 0;
         for (int i=0;i<listAllFieldInFile.get(INDEX_COLUMNS_LINE).length;i++)
         {
@@ -127,6 +129,8 @@ public class Main {
                 if (value.indexOf(isCommiteeEnd)==0)
                 {
                     startCommittee=false;
+                    if (committee!=null)
+                        committee.setTotalCandidatesVotesNumber(i);
                 } else
                 {
                     Candidate candidate = new Candidate();
@@ -140,7 +144,7 @@ public class Main {
                 {
                     candidateHashMap = new HashMap<Integer,Candidate>();
                     committeeNumber++;
-                    Committee committee = new Committee();
+                    committee = new Committee();
                     committee.setCommitteeNumber(committeeNumber);
                     committee.setCommitteeName(value);
                     committee.setCommitteeVotesNumber(i);
@@ -225,7 +229,8 @@ public class Main {
             committee.setCommitteeName(committeeFromMap.getCommitteeName());
             committee.setCommitteeNumber(committeeFromMap.getCommitteeNumber());
             committee.setCommitteeVotesNumber(getLongFromCsv(listAllFieldInFile, line,(int)committeeFromMap.getCommitteeVotesNumber()));
-         
+            committee.setTotalCandidatesVotesNumber((getLongFromCsv(listAllFieldInFile, line,(int)committeeFromMap.getTotalCandidatesVotesNumber())));
+            
             ArrayList<Candidate> candidateList = new ArrayList<Candidate>();
             committee.setCandidate(candidateList);
             List<Integer> keys = Arrays.asList(mapCandidate.get(committeeFromMap).keySet().toArray(new Integer[0]));
