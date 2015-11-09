@@ -96,11 +96,13 @@ public class Main {
     }
 
     private static void sendPeripheryVote(PeripheryVote peripheryVote) throws Exception {
+        String territorialCode = peripheryVote.getResults().getTerritorialCode();
+        String commune = peripheryVote.getResults().getCommune();
         long peripheryNumber = peripheryVote.getResults().getPeripheryNumber();
         long startTime = Calendar.getInstance().getTimeInMillis();
-        System.out.print("Processing periphery number " + peripheryNumber + "... ");
+        System.out.print("Processing periphery number " + peripheryNumber + " in " + commune + "... ");
 
-        String outputFileName = "output-" + df.format(peripheryNumber) + ".pdf";
+        String outputFileName = "output-" + territorialCode + "-" + df.format(peripheryNumber) + ".pdf";
         if (new File(outputFileName).exists()) {
             System.out.println("Skipping.");
             return;
