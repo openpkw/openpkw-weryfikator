@@ -19,6 +19,10 @@ public class PeripheralCommittee implements Serializable {
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
 
+    @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
+    @ManyToOne(optional = false)
+    private DistrictCommittee districtCommitteeId;
+    
     @Column(name = "name")
     private String name;
 
