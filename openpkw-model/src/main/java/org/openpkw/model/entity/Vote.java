@@ -23,11 +23,14 @@ public class Vote implements Serializable {
     @NotNull
     @Column(name = "VOTE_ID")
     private Integer voteId;
+    
     @Column(name = "CANDIDATES_VOTES_NUMBER")
     private Integer candidatesVotesNumber;
+    
     @JoinColumn(name = "PROTOCOL_PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
     @ManyToOne(optional = false)
     private Protocol protocolProtocolId;
+    
     @JoinColumn(name = "CANDIDATE_CANDIDATE_ID", referencedColumnName = "CANDIDATE_ID")
     @ManyToOne(optional = false)
     private Candidate candidateCandidateId;

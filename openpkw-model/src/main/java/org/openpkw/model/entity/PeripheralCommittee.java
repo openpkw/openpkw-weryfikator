@@ -29,7 +29,8 @@ public class PeripheralCommittee implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @Column(name = "allowed_to_vote")
+
+	@Column(name = "allowed_to_vote")
     private Long allowedToVote;
 
     @Column(name = "territorial_code")
@@ -101,4 +102,12 @@ public class PeripheralCommittee implements Serializable {
     public void setPeripheralCommitteeAddress(PeripheralCommitteeAddress peripheralCommitteeAddress) {
         this.peripheralCommitteeAddress = peripheralCommitteeAddress;
     }
+    
+    public DistrictCommittee getDistrictCommitteeId() {
+		return districtCommitteeId;
+	}
+
+	public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
+		this.districtCommitteeId = districtCommitteeId;
+	}
 }

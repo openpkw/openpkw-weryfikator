@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,11 +23,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "district_committee")
 public class DistrictCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer districtCommitteeId;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "NAME")
@@ -96,6 +96,9 @@ public class DistrictCommittee implements Serializable {
     public void setDistrictCommitteeAddressId(DistrictCommitteeAddress districtCommitteeAddressId) {
         this.districtCommitteeAddressId = districtCommitteeAddressId;
     }
+    
+    
+    
 
     @Override
     public int hashCode() {
