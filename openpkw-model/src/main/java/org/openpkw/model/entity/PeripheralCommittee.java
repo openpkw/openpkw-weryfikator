@@ -18,6 +18,11 @@ public class PeripheralCommittee implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
+    
+    @NotNull
+    @Column(name = "PERIPHERAL_COMMITTEE_NUMBER")
+    private int peripheralCommitteeNumber;
+    
 
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
@@ -110,4 +115,13 @@ public class PeripheralCommittee implements Serializable {
 	public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
 		this.districtCommitteeId = districtCommitteeId;
 	}
+
+	public int getPeripheralCommitteeNumber() {
+		return peripheralCommitteeNumber;
+	}
+
+	public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
+		this.peripheralCommitteeNumber = peripheralCommitteeNumber;
+	}
+	
 }

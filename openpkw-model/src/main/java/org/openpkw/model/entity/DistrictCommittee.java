@@ -30,6 +30,11 @@ public class DistrictCommittee implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer districtCommitteeId;
     
+    @NotNull
+    @Column(name = "DISTRICT_COMMITTEE_NUMBER")
+    private int districtCommitteeNumber;
+    
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "NAME")
@@ -97,10 +102,15 @@ public class DistrictCommittee implements Serializable {
         this.districtCommitteeAddressId = districtCommitteeAddressId;
     }
     
-    
-    
+    public int getDistrictCommitteeNumber() {
+		return districtCommitteeNumber;
+	}
 
-    @Override
+	public void setDistrictCommitteeNumber(int districtCommitteeNumber) {
+		this.districtCommitteeNumber = districtCommitteeNumber;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (districtCommitteeId != null ? districtCommitteeId.hashCode() : 0);
