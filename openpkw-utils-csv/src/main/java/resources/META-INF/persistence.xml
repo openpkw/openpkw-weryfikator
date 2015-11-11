@@ -16,13 +16,13 @@
     <class>org.openpkw.model.entity.UserSession</class>
     <class>org.openpkw.model.entity.Vote</class>
     
-    
     <properties>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
       <property name="javax.persistence.jdbc.url"  value="jdbc:mysql://localhost/openpkw" />
       <property name="javax.persistence.jdbc.user" value="root" />
       <property name="javax.persistence.jdbc.password" value="root" />
       <property name="eclipselink.ddl-generation" value="create-tables" />
+      <property name="eclipselink.ddl.default-table-suffix" value="engine=InnoDB"/>
       <property name="eclipselink.ddl-generation.output-mode" value="database" />
     </properties>
   </persistence-unit>
