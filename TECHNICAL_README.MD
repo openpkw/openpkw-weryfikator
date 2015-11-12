@@ -48,6 +48,33 @@
 - Po zakończeniu code review akceptujemy pull request w githubie, kod trafia do brancha master i jest automatycznie budowany, testowany, rozpraszany na środowisku TEST itd.
 - Jako ostatni krok można pchnąć zmianę na środowisko UAT. Robi się to ręcznie uruchamiając krok 04_Deploy_to_UAT na Jenkinsie.
 
+#### Jak wykonywać poszczególne kroki
+
+##### Kompilacja projektu i uruchamianie testów jednostkowych
+
+W katalogu głównym projektu:
+
+*mvn clean package*
+
+Nie robimy *mvn install* ponieważ komenda *install* automatycznie uruchomi komendę *integration-test*, która wykorzystywana jest do uruchamiania automatycznych testów akceptacyjnych aplikacji rozproszonych na serwerach w środowisku TEST. Jeśli nic nie jest rozproszone w środowisku TEST lub jest tam stara wersja, to komenda *integration-test* się nie powiedzie. Dlatego do budowania używamy tylko komendy *package*.
+
+##### Rozproszenie aplikacji na serwerze
+
+W katalogu openpkw-rest:
+
+*mvn wildfly:deploy -Dopenpkw-env:local|vagrant|test|deploy*
+
+Parametr *openpkw-env* określa na które środowisko robimy deployment. Podczas wykonywania tego kroku Maven poprosi o hasło do konsoli administracyjnej WildFly. Należy je wpisać z klawiatury, ewentualnie można je przekazać jako parametr Mavenowi. Ze względów bezpieczeństwa haseł tych nie ma w kodzie źródłowym ani nigdzie indziej na GitHubie. Jest przekazywane wszystkim programistom OpenPKW.
+
+##### Uruchomienie automatycznych testów akceptacyjnych
+
+W katalogu głównym projektu:
+
+*mvn verify*
+
+Komenda ta uruchomi testy względem aplikacji rozproszonej w środowisku TEST (i zawsze na tym, na razie URLe są zahardcodowane).
+
+
 #### Podstawowa instalacja komponentów serwera Wildfly
 
 W katalogu openpkw-etc/src/main/etc/wildfly znajdują się polecenia CLI konfigurujące podstawowe usługi serwera wymagane przez aplikację. W pierwszym kroku należy uruchomić serwer (instrukcja w dokumentacji producenta). Kolejny krok to wykonanie poleceń przy pomocy narzędzia jboss-cli.bat(sh).  
