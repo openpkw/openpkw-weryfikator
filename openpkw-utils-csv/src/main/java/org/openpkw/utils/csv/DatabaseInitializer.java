@@ -293,9 +293,9 @@ public class DatabaseInitializer {
 				candidate.setElectionCommitteeDistrictId(findDistrict.get());
 			} else
 			{
-				Optional<ElectionCommittee> find = electionCommitteeList.stream().findFirst().filter(
-						a->a.getName().equals(candidate.getElectionCommitteeDistrictId().getElectionCommitteeId().getName())
-						);
+				Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(
+						a->a.getName().trim().equals(candidate.getElectionCommitteeDistrictId().getElectionCommitteeId().getName().trim())
+						).findFirst();
 				if (find.isPresent())
 				{
 					electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrictId());

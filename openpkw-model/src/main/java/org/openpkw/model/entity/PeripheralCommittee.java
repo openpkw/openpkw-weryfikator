@@ -28,7 +28,7 @@ public class PeripheralCommittee implements Serializable {
     @ManyToOne(optional = false)
     private DistrictCommittee districtCommitteeId;
     
-    @Column(name = "name")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "type")
@@ -123,5 +123,15 @@ public class PeripheralCommittee implements Serializable {
 	public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
 		this.peripheralCommitteeNumber = peripheralCommitteeNumber;
 	}
+
+	@Override
+	public String toString() {
+		return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
+				+ peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
+				+ ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
+				+ ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
+				+ "]";
+	}
+	
 	
 }

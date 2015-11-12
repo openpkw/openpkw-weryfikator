@@ -37,7 +37,7 @@ public class DistrictCommittee implements Serializable {
     
     @Basic(optional = false)
     @NotNull
-    @Column(name = "NAME")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
@@ -130,9 +130,13 @@ public class DistrictCommittee implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "org.openpkw.model.entity.DistrictCommittee[ districtCommitteeId=" + districtCommitteeId + " ]";
-    }
+	@Override
+	public String toString() {
+		return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
+				+ districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
+				+ electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
+				+ peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
+	}
+      
     
 }

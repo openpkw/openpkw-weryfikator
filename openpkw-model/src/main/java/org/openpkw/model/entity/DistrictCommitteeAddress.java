@@ -25,7 +25,7 @@ public class DistrictCommitteeAddress implements Serializable {
 	@Column(name = "DISTRICT_COMMITTEE_ADDRESS_ID")
 	private Integer districtCommitteeAddressId;
 
-	@Column(name = "NAME")
+	@Column(name = "NAME",columnDefinition = "TEXT")
 	private String name;
 
 	@NotNull
@@ -168,8 +168,12 @@ public class DistrictCommitteeAddress implements Serializable {
 
 	@Override
 	public String toString() {
-		return "org.openpkw.model.entity.DistrictCommitteeAddress[ districtCommitteeAddressId="
-				+ districtCommitteeAddressId + " ]";
+		return "DistrictCommitteeAddress [districtCommitteeAddressId=" + districtCommitteeAddressId + ", name=" + name
+				+ ", street=" + street + ", buildingNumber=" + buildingNumber + ", roomNumber=" + roomNumber + ", city="
+				+ city + ", postalCode=" + postalCode + ", post=" + post + ", districtCommitteeCollection="
+				+ districtCommitteeCollection + "]";
 	}
+
+	
 
 }
