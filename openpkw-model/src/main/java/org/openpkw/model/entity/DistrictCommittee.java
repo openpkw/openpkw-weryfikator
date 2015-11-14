@@ -1,19 +1,9 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "district_committee")
@@ -21,7 +11,6 @@ public class DistrictCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
@@ -43,7 +32,7 @@ public class DistrictCommittee implements Serializable {
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private DistrictCommitteeAddress districtCommitteeAddressId;
 
     public DistrictCommittee() {

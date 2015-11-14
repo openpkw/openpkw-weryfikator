@@ -1,15 +1,8 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "vote")
@@ -17,8 +10,8 @@ public class Vote implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(generator="vote_seq_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="vote_seq_gen",sequenceName="vote_seq", allocationSize=1, initialValue = 10)
     @Column(name = "VOTE_ID")
     private Integer voteId;
     
