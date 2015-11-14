@@ -1,16 +1,9 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -21,7 +14,8 @@ import javax.validation.constraints.NotNull;
 public class DistrictCommitteeAddress implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator="district_commitee_address_seq_gen", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="district_commitee_address_seq_gen",sequenceName="district_commitee_address_seq", allocationSize=1, initialValue = 10)
 	@Column(name = "DISTRICT_COMMITTEE_ADDRESS_ID")
 	private Integer districtCommitteeAddressId;
 
@@ -55,6 +49,15 @@ public class DistrictCommitteeAddress implements Serializable {
 	private Collection<DistrictCommittee> districtCommitteeCollection;
 
 	public DistrictCommitteeAddress() {
+	}
+
+	public DistrictCommitteeAddress(String street, String buildingNumber, String roomNumber, String city, String postalCode, String post) {
+		this.postalCode = postalCode;
+		this.city = city;
+		this.roomNumber = roomNumber;
+		this.buildingNumber = buildingNumber;
+		this.street = street;
+		this.post = post;
 	}
 
 	public DistrictCommitteeAddress(Integer districtCommitteeAddressId) {
