@@ -36,7 +36,7 @@ public class When_sending_POST_request_to_qrResult {
     public void Should_return_BAD_REQUEST_status_for_empty_request() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/api/qr");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/api/qr");
         Response response = target.request().post(Entity.json(QR_EMPTY_JSON));
 
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST_STATUS);
@@ -47,7 +47,7 @@ public class When_sending_POST_request_to_qrResult {
     public void Should_return_OK_status() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/api/qr");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/api/qr");
         Response response = target.request().post(Entity.json(QR_JSON));
 
         assertThat(response.getStatus()).isEqualTo(OK_STATUS);
@@ -57,7 +57,7 @@ public class When_sending_POST_request_to_qrResult {
     public void Should_return_NOT_FOUND_status() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/api/qr");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/api/qr");
         Response response = target.request().post(Entity.json(QR_WRONG_DATA_JSON));
 
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND_STATUS);
