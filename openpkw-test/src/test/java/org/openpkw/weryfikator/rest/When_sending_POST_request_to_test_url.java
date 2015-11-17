@@ -17,7 +17,7 @@ public class When_sending_POST_request_to_test_url {
         String testContent = "{\"test\":\"OpenPKW rules\"}";
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/test/echo");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/test/echo");
         String response = target.request().post(Entity.json(testContent), String.class);
 
         assertThat(response, equalTo(testContent));
