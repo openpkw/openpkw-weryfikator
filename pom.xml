@@ -15,6 +15,7 @@
         <module>openpkw-utils</module>
         <module>openpkw-utils-csv</module>
     </modules>
+
     <packaging>pom</packaging>
     <name>openpkw</name>
 
