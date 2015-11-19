@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.openpkw</groupId>
     <artifactId>openpkw</artifactId>
@@ -12,8 +13,8 @@
         <module>openpkw-etc</module>
         <module>openpkw-test</module>
         <module>openpkw-utils</module>
-    <module>openpkw-utils-csv</module>
-  </modules>
+        <module>openpkw-utils-csv</module>
+    </modules>
     <packaging>pom</packaging>
     <name>openpkw</name>
 
@@ -41,22 +42,52 @@
                 <wildfly.management.host>localhost</wildfly.management.host>
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
-                <wildfly.management.password/>
+                <wildfly.management.password></wildfly.management.password>
             </properties>
         </profile>
         <profile>
-            <id>DEV</id>
+            <id>VAGRANT</id>
             <activation>
                 <property>
                     <name>openpkw-env</name>
-                    <value>dev</value>
+                    <value>vagrant</value>
+                </property>
+            </activation>
+            <properties>
+                <wildfly.management.host>localhost</wildfly.management.host>
+                <wildfly.management.port>4501</wildfly.management.port>
+                <wildfly.management.user>jenkins</wildfly.management.user>
+                <wildfly.management.password></wildfly.management.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>TEST</id>
+            <activation>
+                <property>
+                    <name>openpkw-env</name>
+                    <value>test</value>
                 </property>
             </activation>
             <properties>
                 <wildfly.management.host>dobromir.openpkw.pl</wildfly.management.host>
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
-                <wildfly.management.password/>
+                <wildfly.management.password></wildfly.management.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>UAT</id>
+            <activation>
+                <property>
+                    <name>openpkw-env</name>
+                    <value>uat</value>
+                </property>
+            </activation>
+            <properties>
+                <wildfly.management.host>pat.openpkw.pl</wildfly.management.host>
+                <wildfly.management.port>9999</wildfly.management.port>
+                <wildfly.management.user>jenkins</wildfly.management.user>
+                <wildfly.management.password></wildfly.management.password>
             </properties>
         </profile>
     </profiles>
@@ -253,6 +284,24 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.19</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <pluginRepositories>
