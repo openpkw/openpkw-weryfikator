@@ -96,8 +96,10 @@ public class DatabaseInitializer {
     }
 
     private void commitTransacationAndClose() {
+        log.info("Committing the database transaction");
         em.getTransaction().commit();
         em.close();
+        log.info("Data upload completed");
     }
 
     public static void main(String[] argv) {
@@ -128,6 +130,7 @@ public class DatabaseInitializer {
     }
 
     private void writeToDatabaseDistrictCommitteeAndAddress() {
+        log.info("Writing list of district committees to the database");
         for (DistrictCommittee districtCommittee : this.districtCommitteeList) {
             em.persist(districtCommittee.getDistrictCommitteeAddressId());
             em.persist(districtCommittee);
@@ -135,6 +138,7 @@ public class DatabaseInitializer {
     }
 
     private void writeToDatabaseDistrictPeripheralCommitteeAndAdress() {
+        log.info("Writing list of district peripheral committees to the database");
         for (PeripheralCommittee peripheralCommittee : this.peripheralCommitteeList) {
             em.persist(peripheralCommittee.getPeripheralCommitteeAddress());
             em.persist(peripheralCommittee);
@@ -142,18 +146,21 @@ public class DatabaseInitializer {
     }
 
     private void writeToDatabaseElectionCommittee() {
+        log.info("Writing list of election committees to the database");
         for (ElectionCommittee electionCommittee : this.electionCommitteeList) {
             em.persist(electionCommittee);
         }
     }
 
     private void writeToDatabaseElectionDistrictCommittee() {
+        log.info("Writing list of election comimittee districts to the database");
         for (ElectionCommitteeDistrict electionCommitteeDistrict : this.electionCommitteeDistrictList) {
             em.persist(electionCommitteeDistrict);
         }
     }
 
     private void writeToDatabaseCandidate() {
+        log.info("Writing list of candidates to the database");
         for (Candidate candidate : this.candidateList) {
             em.persist(candidate);
         }
@@ -195,6 +202,7 @@ public class DatabaseInitializer {
     }
 
     private void readPeripheralCommiteeFromCsv(File file) {
+        log.info("Loading data from " + file);
         peripheralCommitteeList = new ArrayList<PeripheralCommittee>();
         CSVReader reader = null;
         try {
@@ -238,6 +246,7 @@ public class DatabaseInitializer {
     }
 
     private void extractCandidateList() {
+        log.info("Extracting list of candidates");
         electionCommitteeList = new ArrayList<ElectionCommittee>();
         electionCommitteeDistrictList = new ArrayList<ElectionCommitteeDistrict>();
         for (Candidate candidate : candidateList) {
@@ -259,6 +268,7 @@ public class DatabaseInitializer {
     }
 
     private void readCandidateListFromCsv(File file) {
+        log.info("Loading data from " + file);
         candidateList = new ArrayList<Candidate>();
         CSVReader reader = null;
         try {
@@ -281,6 +291,7 @@ public class DatabaseInitializer {
     }
 
     private void readDistrictCommitteeListFromCsv(File file) {
+        log.info("Loading data from " + file);
         CSVReader reader = null;
         districtCommitteeList = new ArrayList<DistrictCommittee>();
         try {
