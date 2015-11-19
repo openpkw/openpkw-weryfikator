@@ -2,6 +2,7 @@ package org.openpkw.utils.csv;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import org.openpkw.model.entity.Candidate;
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.DistrictCommitteeAddress;
@@ -26,9 +28,9 @@ public class DatabaseInitializer {
     private EntityManager em = null;
     private final String PERSISTENCE_UNIT_NAME = "openpkw";
     private final static Logger log = LoggerFactory.getLogger(DatabaseInitializer.class);
-    private final static String FILE_NAME_DISTRICTS = "src/test/resources/districts.csv";
-    private final static String FILE_NAME_PERIPHERALS = "src/test/resources/peripherals.csv";
-    private final static String FILE_NAME_CANDIDATES = "src/test/resources/candidates.csv";
+    private final static String FILE_NAME_DISTRICTS = "/districts.csv";
+    private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
+    private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
 
     private List<DistrictCommittee> districtCommitteeList;
     private List<PeripheralCommittee> peripheralCommitteeList;
@@ -113,9 +115,9 @@ public class DatabaseInitializer {
     }
 
     public void readCsvFiles() {
-        readDistrictCommitteeListFromCsv(new File(FILE_NAME_DISTRICTS));
-        readPeripheralCommiteeFromCsv(new File(FILE_NAME_PERIPHERALS));
-        readCandidateListFromCsv(new File(FILE_NAME_CANDIDATES));
+        readDistrictCommitteeListFromCsv(FILE_NAME_DISTRICTS);
+        readPeripheralCommiteeFromCsv(FILE_NAME_PERIPHERALS);
+        readCandidateListFromCsv(FILE_NAME_CANDIDATES);
         extractCandidateList();
     }
 
@@ -201,18 +203,18 @@ public class DatabaseInitializer {
         return districtCommittee;
     }
 
-    private void readPeripheralCommiteeFromCsv(File file) {
-        log.info("Loading data from " + file);
+    private void readPeripheralCommiteeFromCsv(String fileName) {
+        log.info("Loading data from " + fileName);
         peripheralCommitteeList = new ArrayList<PeripheralCommittee>();
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new FileReader(file), ',', '\"');
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName)), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 peripheralCommitteeList.add(getPeripheralCommitte(i, listAllFieldInFile, districtCommitteeList));
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
+            throw new RuntimeException("Failed to parse file " + fileName + ": " + ex.getMessage(), ex);
 
         } finally {
             try {
@@ -267,18 +269,18 @@ public class DatabaseInitializer {
         }
     }
 
-    private void readCandidateListFromCsv(File file) {
-        log.info("Loading data from " + file);
+    private void readCandidateListFromCsv(String fileName) {
+        log.info("Loading data from " + fileName);
         candidateList = new ArrayList<Candidate>();
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new FileReader(file), ',', '\"');
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName)), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 candidateList.add(getCandidate(i, listAllFieldInFile, districtCommitteeList));
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
+            throw new RuntimeException("Failed to parse file " + fileName + ": " + ex.getMessage(), ex);
         } finally {
             try {
                 if (reader != null) {
@@ -290,18 +292,18 @@ public class DatabaseInitializer {
         }
     }
 
-    private void readDistrictCommitteeListFromCsv(File file) {
-        log.info("Loading data from " + file);
+    private void readDistrictCommitteeListFromCsv(String fileName) {
+        log.info("Loading data from " + fileName);
         CSVReader reader = null;
         districtCommitteeList = new ArrayList<DistrictCommittee>();
         try {
-            reader = new CSVReader(new FileReader(file), ',', '\"');
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName)), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 districtCommitteeList.add(getDistrictCommittee(i, listAllFieldInFile));
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
+            throw new RuntimeException("Failed to parse file " + fileName + ": " + ex.getMessage(), ex);
         } finally {
             try {
                 if (reader != null) {
