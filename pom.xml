@@ -55,7 +55,7 @@
             </activation>
             <properties>
                 <wildfly.management.host>localhost</wildfly.management.host>
-                <wildfly.management.port>4502</wildfly.management.port>
+                <wildfly.management.port>4501</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
             </properties>
