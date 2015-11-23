@@ -1,4 +1,4 @@
-package org.openpkw.web.controllers;
+package org.openpkw.qr.dto;
 
 import java.io.Serializable;
 

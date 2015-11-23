@@ -2,6 +2,7 @@ package org.openpkw.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.openpkw.model.entity.*;
+import org.openpkw.qr.dto.QrDTO;
 import org.openpkw.repositories.CandidateRepository;
 import org.openpkw.repositories.DistrictCommitteeRepository;
 import org.openpkw.repositories.ElectionCommitteeRepository;
