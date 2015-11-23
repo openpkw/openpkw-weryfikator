@@ -1,4 +1,4 @@
-package org.openpkw.web.controllers;
+package org.openpkw.qr.dto;
 
 /**
  * Candidate DTO using for parse candidates from qr string

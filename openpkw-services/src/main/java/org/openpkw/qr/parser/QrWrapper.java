@@ -1,9 +1,11 @@
-package org.openpkw.web.controllers;
+package org.openpkw.qr.parser;
+
+import org.openpkw.qr.dto.CandidateVoteDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.openpkw.web.controllers.QrIndex.*;
+import static org.openpkw.qr.parser.QrIndex.*;
 
 /**
  * Wrapper for QR string. Split qr to String array
@@ -64,7 +66,7 @@ public class QrWrapper {
 
     public List<CandidateVoteDTO> getCandidates() {
         List<CandidateVoteDTO> candidates = new ArrayList<>();
-        for (int i = CANDIDATES_START.getIndex(); i < tokens.length; i++) {
+        for (int i = QrIndex.CANDIDATES_START.getIndex(); i < tokens.length; i++) {
             String[] candidateData = tokens[i].split(";");
             Integer listNumber = Integer.parseInt(candidateData[0].substring(0, 2));
             Integer positionOnList = Integer.parseInt(candidateData[0].substring(2, 4));

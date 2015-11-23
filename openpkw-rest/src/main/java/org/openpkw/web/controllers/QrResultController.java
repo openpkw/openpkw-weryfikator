@@ -1,6 +1,9 @@
 package org.openpkw.web.controllers;
 
 import org.openpkw.model.entity.*;
+import org.openpkw.qr.dto.CandidateVoteDTO;
+import org.openpkw.qr.dto.QrDTO;
+import org.openpkw.qr.parser.QrWrapper;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.*;
 import org.slf4j.Logger;
