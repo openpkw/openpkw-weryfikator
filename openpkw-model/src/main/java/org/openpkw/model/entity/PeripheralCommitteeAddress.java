@@ -15,7 +15,7 @@ public class PeripheralCommitteeAddress implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "peripheral_committee_address_id")
     private Long peripheralCommitteeAddressID;
 

@@ -1,9 +1,9 @@
 package org.openpkw.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Karol Dzięgiel on 8/26/2015.
@@ -11,14 +11,13 @@ import java.util.Date;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
-
     private static final long serialVersionUID = 6814143181739850328L;
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    //@NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
-    private Long UserID;
+    private Long userID;
 
     @Column(name = "first_name")
     private String firstName;
@@ -39,18 +38,31 @@ public class User implements Serializable {
     private String token;
 
     @Column(name = "token_created_date")
+				@Temporal(javax.persistence.TemporalType.DATE)
     private Date tokenCreatedDate;
 
     @Column(name = "user_type_id")
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
+				
+				@OneToMany
+				private List<UserDevice> userDevices;
 
+				public User() {
+					super();
+				}
+
+				public User(String email, String password) {
+					this.email = email;
+					this.password = password;
+				}
+				
     public Long getUserID() {
-        return UserID;
+        return userID;
     }
 
-    public void setUserID(Long UserID) {
-        this.UserID = UserID;
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -116,5 +128,11 @@ public class User implements Serializable {
     public void setUserType(UserType userType) {
         this.userType = userType;
     }
+
+	@Override
+	public String toString() {
+		return "User: ID:"+userID+", email:"+email+", firstName:"+firstName+", lastName:"+lastName+", password:"+password+", token:"+token;
+	}
+				
 }
 
