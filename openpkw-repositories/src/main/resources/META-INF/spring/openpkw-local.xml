@@ -6,13 +6,19 @@
 
     <beans profile="local">
 
-        <context:property-placeholder location="classpath:/jdbc.properties"/>
-        <tx:annotation-driven transaction-manager="transactionManager"/>
-
+        <!-- <context:property-placeholder location="classpath:/jdbc.properties"/> -->
+        <!-- <tx:annotation-driven transaction-manager="transactionManager"/> -->
+<!--
         <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-
+            <property name="entityManagerFactory" ref="entityManagerFactory"/>
+            <property name="dataSource" ref="dataSource"/>
         </bean>
-
+-->
+        <!--
+        <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+            <property name="dataSource" ref="dataSource"/>
+        </bean>
+        -->
     </beans>
 
 </beans>
