@@ -24,5 +24,11 @@
                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
 
-
+     <!-- <context:property-placeholder location="classpath:/jdbc.properties"/> -->
+        <tx:annotation-driven transaction-manager="transactionManager"/>
+<!-- Define transaction manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" /> 
 </beans>
