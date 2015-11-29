@@ -2,7 +2,7 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,31 +14,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "candidate")
 public class Candidate implements Serializable {
+    
     private static final long serialVersionUID = 1L;
+
     @Id
     @NotNull
     @Column(name = "CANDIDATE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer candidateId;
+
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "SURNAME")
     private String surname;
+
     @Column(name = "POSITION_ON_LIST")
     private Integer positionOnList;
+
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidateCandidateId")
     private Collection<Vote> voteCollection;
+    
     @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
     @ManyToOne(optional = false)
     private ElectionCommitteeDistrict electionCommitteeDistrictId;
@@ -130,5 +133,5 @@ public class Candidate implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.Candidate[ candidateId=" + candidateId + " ]";
     }
-    
+
 }

@@ -1,9 +1,16 @@
 package org.openpkw.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Created by Karol Dzięgiel on 8/26/2015.
@@ -15,9 +22,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 6814143181739850328L;
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "USER_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID", unique = true, nullable = false)
     private Long UserID;
 
     @Column(name = "first_name")
@@ -117,4 +123,3 @@ public class User implements Serializable {
         this.userType = userType;
     }
 }
-

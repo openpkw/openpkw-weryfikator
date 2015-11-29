@@ -2,7 +2,7 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,24 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "election_committee")
 public class ElectionCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @NotNull
     @Column(name = "ELECTION_COMMITTEE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer electionCommitteeId;
+
     @NotNull
     @Column(name = "NAME")
     private String name;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeId", fetch = FetchType.LAZY)
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
 
@@ -94,5 +92,4 @@ public class ElectionCommittee implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.ElectionCommittee[ electionCommitteeId=" + electionCommitteeId + " ]";
     }
-    
 }

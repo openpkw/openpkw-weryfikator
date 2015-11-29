@@ -2,6 +2,7 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,32 +15,33 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "user_session")
 public class UserSession implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_SESSION_ID")
     private Integer userSessionId;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "TOKEN")
     private String token;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
+    
     @Column(name = "VALID_UNTIL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date validUntil;
+    
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false)
     private User userId;
@@ -121,5 +123,4 @@ public class UserSession implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.UserSession[ userSessionId=" + userSessionId + " ]";
     }
-    
 }

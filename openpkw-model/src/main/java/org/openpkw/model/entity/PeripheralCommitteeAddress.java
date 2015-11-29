@@ -1,12 +1,15 @@
 package org.openpkw.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-/**
- * Created by Karol Dzięgiel on 8/27/2015.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 @Entity
 @Table(name = "PeripheralCommitteeAddress")
 public class PeripheralCommitteeAddress implements Serializable {
@@ -15,7 +18,7 @@ public class PeripheralCommitteeAddress implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_address_id")
     private Long peripheralCommitteeAddressID;
 

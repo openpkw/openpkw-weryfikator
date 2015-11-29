@@ -1,6 +1,7 @@
 package org.openpkw.model.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,24 +11,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "vote")
 public class Vote implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "VOTE_ID")
     private Integer voteId;
+
     @Column(name = "CANDIDATES_VOTES_NUMBER")
     private Integer candidatesVotesNumber;
+
     @JoinColumn(name = "PROTOCOL_PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
     @ManyToOne(optional = false)
     private Protocol protocolProtocolId;
+
     @JoinColumn(name = "CANDIDATE_CANDIDATE_ID", referencedColumnName = "CANDIDATE_ID")
     @ManyToOne(optional = false)
     private Candidate candidateCandidateId;
@@ -95,5 +96,4 @@ public class Vote implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.Vote[ voteId=" + voteId + " ]";
     }
-    
 }

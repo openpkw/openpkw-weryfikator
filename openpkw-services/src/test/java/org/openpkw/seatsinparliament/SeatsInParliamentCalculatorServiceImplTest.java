@@ -3,6 +3,7 @@ package org.openpkw.seatsinparliament;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openpkw.services.seatsinparliament.SeatsInParliamentCalculatorServiceImpl;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

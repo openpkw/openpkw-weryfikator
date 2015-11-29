@@ -1,37 +1,35 @@
-package org.openpkw.web.controllers;
+﻿package org.openpkw.web.controllers;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.PeripheralCommitteeRepository;
-import org.openpkw.repositories.PeripherialCommitteeAddressRepository;
+import org.openpkw.services.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * @author Tomasz Łabuz on 2015-07-17.
- */
 @OpenPKWAPIController
 @RequestMapping("/test")
-public class EchoController {
+public class TestController {
 
     @Autowired
     private PeripheralCommitteeRepository pcRepository;
 
-    @RequestMapping(value = "/echo", method = RequestMethod.POST)
-    public Map<String, String> echo(@RequestBody Map<String, String> object) {
+    @Autowired
+    TestService testService;
 
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public Map<String, String> echo(@RequestBody Map<String, String> object) {
+        testService.addUser();
         return object;
     }
 
-    @RequestMapping(value = "/selftest", method = RequestMethod.GET)
+    @RequestMapping(value = "/selfTest", method = RequestMethod.GET)
     public Map<String, String> selfTest() {
         String databaseStatus = getDatabaseStatus();
 

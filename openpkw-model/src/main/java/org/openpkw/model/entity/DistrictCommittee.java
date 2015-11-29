@@ -2,6 +2,7 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,33 +15,30 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "district_committee")
 public class DistrictCommittee implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "NAME")
     private String name;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
-    
+
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
     @ManyToOne(optional = false)
     private DistrictCommitteeAddress districtCommitteeAddressId;
@@ -121,5 +119,4 @@ public class DistrictCommittee implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.DistrictCommittee[ districtCommitteeId=" + districtCommitteeId + " ]";
     }
-    
 }
