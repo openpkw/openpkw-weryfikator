@@ -4,6 +4,7 @@ import org.openpkw.model.entity.*;
 import org.openpkw.qr.dto.CandidateVoteDTO;
 import org.openpkw.qr.dto.QrDTO;
 import org.openpkw.qr.dto.QrResultDTO;
+import org.openpkw.qr.parser.QrParserService;
 import org.openpkw.qr.parser.QrWrapper;
 import org.openpkw.repositories.*;
 import org.slf4j.Logger;
@@ -14,11 +15,14 @@ import javax.inject.Inject;
 import java.util.*;
 
 /**
- * Created by Sebastian on 24.11.2015.
+ * Service using for save data from QR
+ * @author Sebastian Pogorzelski
  */
 @Service
 public class QrServiceImpl implements QrService {
 
+    @Inject
+    private QrParserService parserService;
 
     @Inject
     private ProtocolRepository protocolRepository;
@@ -42,9 +46,13 @@ public class QrServiceImpl implements QrService {
 
     @Override
     public QrResultDTO saveResult(QrDTO qrDTO) {
-        //TODO add necessary validations
 
-        QrWrapper qrWrapper = new QrWrapper(qrDTO.getQr());
+        //TODO add necessary validations
+        if (qrDTO.getQr() == null) {
+            throw new NullPointerException();
+        }
+
+        QrWrapper qrWrapper = parserService.parse(qrDTO.getQr());
 
         Protocol protocol = createAndSaveProtocol(qrWrapper);
 

@@ -4,7 +4,7 @@ import org.openpkw.qr.dto.QrDTO;
 import org.openpkw.qr.dto.QrResultDTO;
 
 /**
- * Service for parsing and saving qr from mobile
+ * Service for parsing and saving QR data from mobile
  * @author Sebastian Pogorzelski
  */
 public interface QrService {

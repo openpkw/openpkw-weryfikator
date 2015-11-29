@@ -2,76 +2,55 @@ package org.openpkw.qr.parser;
 
 import org.openpkw.qr.dto.CandidateVoteDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.openpkw.qr.parser.QrIndex.*;
-
 /**
- * Wrapper for QR string. Split qr to String array
+ * Interface contains all methods to retrieve data from qr
  * @author Sebastian Pogorzelski
  */
-public class QrWrapper {
-    private final String[] tokens;
+public interface QrWrapper {
 
-    public QrWrapper(String code) {
-        this.tokens = code.split(",");
-    }
+    String getTerritorialCode();
 
+    String getPeripheryNumber();
 
-    public String getTerritorialCode() {
-        return tokens[TERRITORIAL_CODE.getIndex()];
-    }
+    String getVotingCardsTotalEntitledToVote();
 
-    public String getPeripheryNumber() { return tokens[PERIPHERY_NUMBER.getIndex()]; }
+    String getVotingCardsTotalCards();
 
-    public String getVotingCardsTotalEntitledToVote() { return tokens[VOTINGCARDS_TOTALENTITLEDTOVOTE.getIndex()]; }
+    String getVotingCardsUnusedCards();
 
-    public String getVotingCardsTotalCards() { return tokens[VOTINGCARDS_TOTALCARDS.getIndex()]; }
+    String getVotingCardsRegularVoters();
 
-    public String getVotingCardsUnusedCards() { return tokens[VOTINGCARDS_UNUSEDCARDS.getIndex()]; }
+    String getVotingCardsRepresentativeVoters();
 
-    public String getVotingCardsRegularVoters() { return tokens[VOTINGCARDS_REGULARVOTERS.getIndex()]; }
+    String getVotingCardsCertificateVoters();
 
-    public String getVotingCardsRepresentativeVoters() { return tokens[VOTINGCARDS_REPRESENTATIVEVOTERS.getIndex()]; }
+    String getVotingCardsFromBallotBox();
 
-    public String getVotingCardsCertificateVoters() { return tokens[VOTINGCARDS_CERTIFICATEVOTERS.getIndex()]; }
+    String getVotingCardsFromEnvelopes();
 
-    public String getVotingCardsFromBallotBox() { return tokens[VOTINGCARDS_CARDSFROMBALLOTBOX.getIndex()]; }
+    String getVotingCardsInvalidCards();
 
-    public String getVotingCardsFromEnvelopes() { return tokens[VOTINGCARDS_CARDSFROMENVELOPES.getIndex()]; }
+    String getVotingCardsValidCards();
 
-    public String getVotingCardsInvalidCards() { return tokens[VOTINGCARDS_INVALIDCARDS.getIndex()]; }
+    String getVotingCardsInvalidVotes();
 
-    public String getVotingCardsValidCards() { return tokens[VOTINGCARDS_VALIDCARDS.getIndex()]; }
+    String getVotingCardsValidVotes();
 
-    public String getVotingCardsInvalidVotes() { return tokens[VOTINGCARDS_INVALIDVOTES.getIndex()]; }
+    String getCorrespondenceVotingIssuedPackages();
 
-    public String getVotingCardsValidVotes() { return tokens[VOTINGCARDS_VALIDVOTES.getIndex()]; }
+    String getCorrespondenceVotingReceivedReplyEnvelopes();
 
-    public String getCorrespondenceVotingIssuedPackages() { return tokens[CORRESPONDENCEVOTING_ISSUEDPACKAGES.getIndex()]; }
+    String getCorrespondenceVotingMissingStatement();
 
-    public String getCorrespondenceVotingReceivedReplyEnvelopes() { return tokens[CORRESPONDENCEVOTING_RECEIVEDREPLYENVELOPES.getIndex()]; }
+    String getCorrespondenceVotingMissingSignatureOnStatement();
 
-    public String getCorrespondenceVotingMissingStatement() { return tokens[CORRESPONDENCEVOTING_MISSINGSTATEMENT.getIndex()]; }
+    String getCorrespondenceVotingMissingEnvelopeForVotingCard();
 
-    public String getCorrespondenceVotingMissingSignatureOnStatement() { return tokens[CORRESPONDENCEVOTING_MISSINGSIGNATUREONSTATEMENT.getIndex()]; }
+    String getCorrespondenceVotingUnsealedEnvelope();
 
-    public String getCorrespondenceVotingMissingEnvelopeForVotingCard() { return tokens[CORRESPONDENCEVOTING_MISSINGENVELOPEFORVOTINGCARD.getIndex()]; }
+    String getCorrespondenceVotingEnvelopesThrownToBallotBox();
 
-    public String getCorrespondenceVotingUnsealedEnvelope() { return tokens[CORRESPONDENCEVOTING_UNSEALEDENVELOPE.getIndex()]; }
-
-    public String getCorrespondenceVotingEnvelopesThrownToBallotBox() { return tokens[CORRESPONDENCEVOTING_ENVELOPESTHROWNTOBALLOTBOX.getIndex()]; }
-
-
-    public List<CandidateVoteDTO> getCandidates() {
-        List<CandidateVoteDTO> candidates = new ArrayList<>();
-        for (int i = QrIndex.CANDIDATES_START.getIndex(); i < tokens.length; i++) {
-            String[] candidateData = tokens[i].split(";");
-            Integer listNumber = Integer.parseInt(candidateData[0].substring(0, 2));
-            Integer positionOnList = Integer.parseInt(candidateData[0].substring(2, 4));
-            candidates.add(new CandidateVoteDTO(listNumber, positionOnList, Integer.valueOf(candidateData[1])));
-        }
-        return candidates;
-    }
+    List<CandidateVoteDTO> getCandidates();
 }

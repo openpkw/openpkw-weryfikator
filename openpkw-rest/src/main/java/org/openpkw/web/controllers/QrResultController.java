@@ -2,7 +2,6 @@ package org.openpkw.web.controllers;
 
 import org.openpkw.qr.dto.QrDTO;
 import org.openpkw.qr.dto.QrResultDTO;
-import org.openpkw.qr.parser.QrWrapper;
 import org.openpkw.qr.service.QrService;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.slf4j.Logger;
@@ -31,22 +30,26 @@ public class QrResultController {
     private final static Logger LOGGER = LoggerFactory.getLogger(QrResultController.class);
 
     @RequestMapping(value = "/qr", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<QrResultDTO> saveResult(@RequestBody QrDTO result) {
+    public ResponseEntity<QrResultDTO> saveResult(@RequestBody QrDTO qrDTO) {
 
-        //TODO add necessary validations
-        if (result.getQr() == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<QrResultDTO> result;
 
         try {
 
-            QrResultDTO qrResultDTO = qrService.saveResult(result);
+            result = new ResponseEntity<>(qrService.saveResult(qrDTO), HttpStatus.OK);
 
         } catch (IllegalArgumentException ex) {
             LOGGER.warn("Can't save result", ex);
-            return new ResponseEntity<>(new QrResultDTO("Can't save result"), HttpStatus.NOT_FOUND);
+            result = handleException("Can't save result", HttpStatus.NOT_FOUND);
+        } catch (NullPointerException ex) {
+            LOGGER.warn("Can't save result", ex);
+            result = handleException("Can't save result", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return result;
+    }
+
+    private ResponseEntity<QrResultDTO> handleException(String errorMessage, HttpStatus httpStatus) {
+        return new ResponseEntity<>(new QrResultDTO(errorMessage), httpStatus);
     }
 
 }

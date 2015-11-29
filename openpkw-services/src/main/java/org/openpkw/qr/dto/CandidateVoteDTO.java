@@ -12,6 +12,8 @@ public class CandidateVoteDTO {
 
     private Integer listNumber;
 
+    private String name;
+
     public CandidateVoteDTO(Integer listNumber, Integer positionOnList, Integer votesNumber) {
         this.positionOnList = positionOnList;
         this.votesNumber = votesNumber;
@@ -28,5 +30,13 @@ public class CandidateVoteDTO {
 
     public Integer getListNumber() {
         return listNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
