@@ -18,18 +18,24 @@ public class PeripheralCommittee implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
+    
+    @NotNull
+    @Column(name = "PERIPHERAL_COMMITTEE_NUMBER")
+    private int peripheralCommitteeNumber;
+    
 
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
     private DistrictCommittee districtCommitteeId;
     
-    @Column(name = "name")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "type")
     private String type;
 
-    @Column(name = "allowed_to_vote")
+
+	@Column(name = "allowed_to_vote")
     private Long allowedToVote;
 
     @Column(name = "territorial_code")
@@ -101,4 +107,31 @@ public class PeripheralCommittee implements Serializable {
     public void setPeripheralCommitteeAddress(PeripheralCommitteeAddress peripheralCommitteeAddress) {
         this.peripheralCommitteeAddress = peripheralCommitteeAddress;
     }
+    
+    public DistrictCommittee getDistrictCommitteeId() {
+		return districtCommitteeId;
+	}
+
+	public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
+		this.districtCommitteeId = districtCommitteeId;
+	}
+
+	public int getPeripheralCommitteeNumber() {
+		return peripheralCommitteeNumber;
+	}
+
+	public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
+		this.peripheralCommitteeNumber = peripheralCommitteeNumber;
+	}
+
+	@Override
+	public String toString() {
+		return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
+				+ peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
+				+ ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
+				+ ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
+				+ "]";
+	}
+	
+	
 }

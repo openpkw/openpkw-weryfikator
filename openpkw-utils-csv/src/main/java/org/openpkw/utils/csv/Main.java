@@ -2,7 +2,7 @@ package org.openpkw.utils.csv;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +39,7 @@ public class Main {
     private final static DecimalFormat dfPerformance = new DecimalFormat("0.00");
 
     // Examle file
-    public final static String EXAMPLE_CSV_FILE = "src/test/resources/p19x_new.csv";
+    public final static String EXAMPLE_CSV_FILE = "/p19x_new.csv";
 
     // Line numbers
     public final static int INDEX_COLUMNS_LINE = 0;
@@ -78,7 +78,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            List<PeripheryVote> peripheryVoteList = loadPeripheryVotesFromCsv(new File(EXAMPLE_CSV_FILE));
+            List<PeripheryVote> peripheryVoteList = loadPeripheryVotesFromCsv(EXAMPLE_CSV_FILE);
             System.out.println("Found data for " + peripheryVoteList.size() + " peripheries");
             long startTime = Calendar.getInstance().getTimeInMillis();
 
@@ -273,18 +273,18 @@ public class Main {
         return peripheryVote;
     }
 
-    private static List<PeripheryVote> loadPeripheryVotesFromCsv(File file) {
+    private static List<PeripheryVote> loadPeripheryVotesFromCsv(String fileName) {
         CSVReader reader = null;
         ArrayList<PeripheryVote> peripheryVoteList = new ArrayList<PeripheryVote>();
         try {
-            reader = new CSVReader(new FileReader(file), ',', '\"');
+            reader = new CSVReader(new InputStreamReader(Main.class.getResourceAsStream(fileName)), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             HashMap<Committee, HashMap<Integer, Candidate>> mapCandidate = getMapCandidate(listAllFieldInFile);
             for (int line = INDEX_FIRST_LINE_PERIPHERY; line < listAllFieldInFile.size(); line++) {
                 peripheryVoteList.add(getPeripheryVote(line, mapCandidate, listAllFieldInFile));
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Failed to parse file " + file.getName() + ": " + ex.getMessage(), ex);
+            throw new RuntimeException("Failed to parse file " + fileName + ": " + ex.getMessage(), ex);
 
         } finally {
             try {

@@ -38,6 +38,7 @@ public class User implements Serializable {
     @Column(name = "token")
     private String token;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "token_created_date")
     private Date tokenCreatedDate;
 
