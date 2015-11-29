@@ -9,7 +9,7 @@ import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
 
-public class When_senging_GET_request_to_root_url {
+public class When_sending_GET_request_to_root_url {
 
     @Test
     public void should_return_Hello_World_HTML_page() {

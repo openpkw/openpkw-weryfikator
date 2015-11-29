@@ -24,11 +24,16 @@ public class TestController {
     TestService testService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
-    public Map<String, String> echo(@RequestBody Map<String, String> object) {
+    public String addUser(@RequestBody Map<String, String> object) {
         testService.addUser();
-        return object;
+        return "OK";
     }
 
+    @RequestMapping(value = "/echo", method = RequestMethod.POST)
+    public Map<String, String> echo(@RequestBody Map<String, String> object) {
+        return object;
+    }
+    
     @RequestMapping(value = "/selfTest", method = RequestMethod.GET)
     public Map<String, String> selfTest() {
         String databaseStatus = getDatabaseStatus();
