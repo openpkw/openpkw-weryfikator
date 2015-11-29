@@ -1,4 +1,4 @@
-﻿package org.openpkw.web.controllers;
+package org.openpkw.web.controllers;
 
 import java.util.HashMap;
 import java.util.List;
