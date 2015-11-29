@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,6 +29,7 @@ public class Protocol {
     @Column(name = "cards_given")
     private Long cardsGiven;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "received_date")
     private Date receivedDate;
 

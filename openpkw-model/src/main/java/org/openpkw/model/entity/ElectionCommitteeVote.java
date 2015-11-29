@@ -1,7 +1,6 @@
 package org.openpkw.model.entity;
 
 import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +14,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "election_committee_vote")
 public class ElectionCommitteeVote implements Serializable {
-    private static final long serialVersionUID = 1L;
 
+    private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)

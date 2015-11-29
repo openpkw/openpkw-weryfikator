@@ -1,14 +1,8 @@
 package org.openpkw.model.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "PeripheralCommitteeAddress")
@@ -22,7 +16,7 @@ public class PeripheralCommitteeAddress implements Serializable {
     @Column(name = "peripheral_committee_address_id")
     private Long peripheralCommitteeAddressID;
 
-    @Column(name = "name")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "street")
@@ -109,5 +103,12 @@ public class PeripheralCommitteeAddress implements Serializable {
 
     public void setPost(String post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "PeripheralCommitteeAddress [peripheralCommitteeAddressID=" + peripheralCommitteeAddressID + ", name="
+                + name + ", street=" + street + ", buildingNumber=" + buildingNumber + ", roomNumber=" + roomNumber
+                + ", city=" + city + ", postalCode=" + postalCode + ", post=" + post + "]";
     }
 }

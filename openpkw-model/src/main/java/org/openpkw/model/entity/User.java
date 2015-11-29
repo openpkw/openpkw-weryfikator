@@ -11,10 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * Created by Karol Dzięgiel on 8/26/2015.
- */
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
@@ -44,6 +43,7 @@ public class User implements Serializable {
     @Column(name = "token")
     private String token;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "token_created_date")
     private Date tokenCreatedDate;
 

@@ -2,7 +2,6 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +17,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "candidate")
 public class Candidate implements Serializable {
-    
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -41,7 +39,7 @@ public class Candidate implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidateCandidateId")
     private Collection<Vote> voteCollection;
-    
+
     @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
     @ManyToOne(optional = false)
     private ElectionCommitteeDistrict electionCommitteeDistrictId;
@@ -118,7 +116,8 @@ public class Candidate implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the id fields are
+        // not set
         if (!(object instanceof Candidate)) {
             return false;
         }

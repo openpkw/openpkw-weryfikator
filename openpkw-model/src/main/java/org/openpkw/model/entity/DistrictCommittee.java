@@ -2,7 +2,6 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "district_committee")
 public class DistrictCommittee implements Serializable {
-
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -27,18 +25,23 @@ public class DistrictCommittee implements Serializable {
     @Column(name = "DISTRICT_COMMITTEE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
-
+    
+    @NotNull
+    @Column(name = "DISTRICT_COMMITTEE_NUMBER")
+    private int districtCommitteeNumber;
+    
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "NAME")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
-
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
-
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
-
+    
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
     @ManyToOne(optional = false)
     private DistrictCommitteeAddress districtCommitteeAddressId;
@@ -94,6 +97,14 @@ public class DistrictCommittee implements Serializable {
     public void setDistrictCommitteeAddressId(DistrictCommitteeAddress districtCommitteeAddressId) {
         this.districtCommitteeAddressId = districtCommitteeAddressId;
     }
+    
+    public int getDistrictCommitteeNumber() {
+        return districtCommitteeNumber;
+    }
+
+    public void setDistrictCommitteeNumber(int districtCommitteeNumber) {
+        this.districtCommitteeNumber = districtCommitteeNumber;
+    }
 
     @Override
     public int hashCode() {
@@ -117,6 +128,9 @@ public class DistrictCommittee implements Serializable {
 
     @Override
     public String toString() {
-        return "org.openpkw.model.entity.DistrictCommittee[ districtCommitteeId=" + districtCommitteeId + " ]";
+        return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
+                + districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
+                + electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
+                + peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
     }
 }
