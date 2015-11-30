@@ -1,18 +1,9 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -25,7 +16,8 @@ public class Candidate implements Serializable {
 	@Id
 	@NotNull
 	@Column(name = "CANDIDATE_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(generator="candidate_seq_gen", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="candidate_seq_gen",sequenceName="candidate_seq", allocationSize=1, initialValue = 10)
 	private Integer candidateId;
 	
 	@Column(name = "NAME")

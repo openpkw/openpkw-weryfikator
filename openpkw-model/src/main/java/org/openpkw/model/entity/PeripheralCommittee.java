@@ -14,8 +14,8 @@ public class PeripheralCommittee implements Serializable {
     private static final long serialVersionUID = 1409616309807301974L;
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator="peripheral_commitee_seq_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="peripheral_commitee_seq_gen",sequenceName="peripheral_commitee_seq", allocationSize=1, initialValue = 10)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
     
