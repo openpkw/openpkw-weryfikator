@@ -4,9 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-/**
- * Created by Karol Dzięgiel on 8/27/2015.
- */
 @Entity
 @Table(name = "PeripheralCommitteeAddress")
 public class PeripheralCommitteeAddress implements Serializable {
@@ -15,11 +12,11 @@ public class PeripheralCommitteeAddress implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_address_id")
     private Long peripheralCommitteeAddressID;
 
-    @Column(name = "name")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "street")
@@ -106,5 +103,12 @@ public class PeripheralCommitteeAddress implements Serializable {
 
     public void setPost(String post) {
         this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "PeripheralCommitteeAddress [peripheralCommitteeAddressID=" + peripheralCommitteeAddressID + ", name="
+                + name + ", street=" + street + ", buildingNumber=" + buildingNumber + ", roomNumber=" + roomNumber
+                + ", city=" + city + ", postalCode=" + postalCode + ", post=" + post + "]";
     }
 }

@@ -1,13 +1,22 @@
 package org.openpkw.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Karol Dzięgiel on 8/26/2015.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
@@ -16,7 +25,7 @@ public class User implements Serializable {
     @Id
     //@NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "USER_ID", unique = true, nullable = false)
     private Long userID;
 
     @Column(name = "first_name")
@@ -37,25 +46,25 @@ public class User implements Serializable {
     @Column(name = "token")
     private String token;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "token_created_date")
-				@Temporal(javax.persistence.TemporalType.DATE)
     private Date tokenCreatedDate;
 
     @Column(name = "user_type_id")
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 				
-				@OneToMany
-				private List<UserDevice> userDevices;
+    @OneToMany
+    private List<UserDevice> userDevices;
 
-				public User() {
-					super();
-				}
+    public User() {
+        super();
+    }
 
-				public User(String email, String password) {
-					this.email = email;
-					this.password = password;
-				}
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 				
     public Long getUserID() {
         return userID;
@@ -135,4 +144,3 @@ public class User implements Serializable {
 	}
 				
 }
-

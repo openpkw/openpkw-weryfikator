@@ -10,14 +10,14 @@ import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
 
-public class When_sending_POST_request_to_test_url {
+public class When_sending_POST_request_to_echo_url {
 
     @Test
     public void Should_return_the_same_content_that_wast_sent() {
         String testContent = "{\"test\":\"OpenPKW rules\"}";
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/test/echo");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/test/echo");
         String response = target.request().post(Entity.json(testContent), String.class);
 
         assertThat(response, equalTo(testContent));

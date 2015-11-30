@@ -4,9 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-/**
- * Created by Karol Dzięgiel on 8/27/2015.
- */
 @Entity
 @Table(name = "peripheral_commitee")
 public class PeripheralCommittee implements Serializable {
@@ -15,11 +12,20 @@ public class PeripheralCommittee implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
+    
+    @NotNull
+    @Column(name = "PERIPHERAL_COMMITTEE_NUMBER")
+    private int peripheralCommitteeNumber;
+    
 
-    @Column(name = "name")
+    @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
+    @ManyToOne(optional = false)
+    private DistrictCommittee districtCommitteeId;
+    
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
     @Column(name = "type")
@@ -96,5 +102,30 @@ public class PeripheralCommittee implements Serializable {
 
     public void setPeripheralCommitteeAddress(PeripheralCommitteeAddress peripheralCommitteeAddress) {
         this.peripheralCommitteeAddress = peripheralCommitteeAddress;
+    }
+    
+    public DistrictCommittee getDistrictCommitteeId() {
+        return districtCommitteeId;
+    }
+
+    public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
+        this.districtCommitteeId = districtCommitteeId;
+    }
+
+    public int getPeripheralCommitteeNumber() {
+        return peripheralCommitteeNumber;
+    }
+
+    public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
+        this.peripheralCommitteeNumber = peripheralCommitteeNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
+                + peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
+                + ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
+                + ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
+                + "]";
     }
 }

@@ -9,13 +9,13 @@ import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
 
-public class When_senging_GET_request_to_root_url {
+public class When_sending_GET_request_to_root_url {
 
     @Test
     public void should_return_Hello_World_HTML_page() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://localhost:8080/openpkw/");
+        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/");
         String response = target.request().get(String.class);
 
         assertThat(response, containsString("Hello World"));
