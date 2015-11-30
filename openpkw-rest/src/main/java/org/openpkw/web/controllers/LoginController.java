@@ -15,6 +15,9 @@ import org.openpkw.web.Autorize;
 import org.openpkw.web.Token;
 import org.openpkw.web.UserRegister;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,26 +35,18 @@ public class LoginController {
     @Autowired
     UserDeviceRepository deviceRepository;
 
-    // @RequestParam(value="txtEmail", required=false)
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
-    /*
-     * public String register( @RequestParam(value="clientPublicKey" ) String clientPublicKey, @RequestParam(value="devid") String devid,
-     * 
-     * @RequestParam(value="email") String email, @RequestParam(value="password") String password){ Autorize autorize = new Autorize(clientPublicKey, devid, email, password);
-     */
-    public String register(@RequestBody UserRegister userRegister) {
-        User user = userRepository.findByEmailAddress("fdsaf");
-        System.out.println("L:" + userRegister + ", user:" + user);
-        if (userRegister == null || userRegister.isEmpty()) {
-            return "ERROR";
+    public ResponseEntity<String> register(@RequestBody UserRegister userRegister) {
+        User user = userRepository.findByEmailAddress(userRegister.getEmail());
+        if (user != null) {
+            return new ResponseEntity<String>("User with given email address already exists", HttpStatus.BAD_REQUEST);
         }
 
-        // User user = userRepository.findByEmailAddress(autorize.getEmail());
-        user = userRepository.findByEmailAddress(userRegister.getEmail());
-        if (user != null) {
-            return "ERROR";
+        if (StringUtils.isEmpty(userRegister.getEmail())) {
+            return new ResponseEntity<String>("E-mail is mandatory", HttpStatus.BAD_REQUEST);
         }
+
         user = new User();
         user.setEmail(userRegister.getEmail());
         user.setPassword(userRegister.getPassword());
@@ -64,10 +59,9 @@ public class LoginController {
             userRepository.saveAndFlush(user);
             System.out.println("" + user);
         } catch (Exception ex) {
-            ex.printStackTrace();
-            return "ERROR.";
+            throw new RuntimeException("Failed to register new user: " + ex.getMessage(), ex);
         }
-        return "OK";
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)

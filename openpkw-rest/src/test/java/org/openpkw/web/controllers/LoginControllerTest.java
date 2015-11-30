@@ -2,7 +2,9 @@ package org.openpkw.web.controllers;
 
 import org.junit.After;
 import org.junit.AfterClass;
+
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.openpkw.web.Autorize;
 import org.openpkw.web.Token;
 import org.openpkw.web.UserRegister;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -64,7 +67,7 @@ public class LoginControllerTest {
 		System.out.println("register");
 		UserRegister userRegister = null;
 		String expResult = "";
-		String result = loginController.register(userRegister);
+		ResponseEntity<String> result = loginController.register(userRegister);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
