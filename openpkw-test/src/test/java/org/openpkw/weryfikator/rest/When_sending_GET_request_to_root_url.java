@@ -15,7 +15,7 @@ public class When_sending_GET_request_to_root_url {
     public void should_return_Hello_World_HTML_page() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://dobromir.openpkw.pl:9080/openpkw/");
+        WebTarget target = client.target(Configuration.TEST);
         String response = target.request().get(String.class);
 
         assertThat(response, containsString("Hello World"));
