@@ -13,10 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "election_committee")
 public class ElectionCommittee implements Serializable {
@@ -25,7 +21,7 @@ public class ElectionCommittee implements Serializable {
 	@Id
 	@NotNull
 	@Column(name = "ELECTION_COMMITTEE_ID")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer electionCommitteeId;
 
 	@NotNull
@@ -98,5 +94,4 @@ public class ElectionCommittee implements Serializable {
 	public String toString() {
 		return "org.openpkw.model.entity.ElectionCommittee[ electionCommitteeId=" + electionCommitteeId + " ]";
 	}
-
 }

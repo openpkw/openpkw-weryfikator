@@ -15,29 +15,31 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "election_committee_district")
 public class ElectionCommitteeDistrict implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ELECTION_COMMITTEE_DISTRICT_ID")
     private Integer electionCommitteeDistrictId;
+    
     @Column(name = "LIST_NUMBER")
     private Integer listNumber;
+    
     @JoinColumn(name = "ELECTION_COMMITTEE_ID", referencedColumnName = "ELECTION_COMMITTEE_ID")
     @ManyToOne(optional = false)
     private ElectionCommittee electionCommitteeId;
+    
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
     private DistrictCommittee districtCommitteeId;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
     private Collection<ElectionCommitteeVote> electionCommitteeVoteCollection;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
     private Collection<Candidate> candidateCollection;
 
@@ -122,5 +124,4 @@ public class ElectionCommitteeDistrict implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.ElectionCommitteeDistrict[ electionCommitteeDistrictId=" + electionCommitteeDistrictId + " ]";
     }
-    
 }

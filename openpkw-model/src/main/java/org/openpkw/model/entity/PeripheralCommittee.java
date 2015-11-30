@@ -4,9 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-/**
- * Created by Karol Dzięgiel on 8/27/2015.
- */
 @Entity
 @Table(name = "peripheral_commitee")
 public class PeripheralCommittee implements Serializable {
@@ -15,7 +12,7 @@ public class PeripheralCommittee implements Serializable {
 
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
     
@@ -35,7 +32,7 @@ public class PeripheralCommittee implements Serializable {
     private String type;
 
 
-	@Column(name = "allowed_to_vote")
+    @Column(name = "allowed_to_vote")
     private Long allowedToVote;
 
     @Column(name = "territorial_code")
@@ -109,29 +106,27 @@ public class PeripheralCommittee implements Serializable {
     }
     
     public DistrictCommittee getDistrictCommitteeId() {
-		return districtCommitteeId;
-	}
+        return districtCommitteeId;
+    }
 
-	public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
-		this.districtCommitteeId = districtCommitteeId;
-	}
+    public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
+        this.districtCommitteeId = districtCommitteeId;
+    }
 
-	public int getPeripheralCommitteeNumber() {
-		return peripheralCommitteeNumber;
-	}
+    public int getPeripheralCommitteeNumber() {
+        return peripheralCommitteeNumber;
+    }
 
-	public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
-		this.peripheralCommitteeNumber = peripheralCommitteeNumber;
-	}
+    public void setPeripheralCommitteeNumber(int peripheralCommitteeNumber) {
+        this.peripheralCommitteeNumber = peripheralCommitteeNumber;
+    }
 
-	@Override
-	public String toString() {
-		return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
-				+ peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
-				+ ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
-				+ ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
-				+ "]";
-	}
-	
-	
+    @Override
+    public String toString() {
+        return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
+                + peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
+                + ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
+                + ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
+                + "]";
+    }
 }

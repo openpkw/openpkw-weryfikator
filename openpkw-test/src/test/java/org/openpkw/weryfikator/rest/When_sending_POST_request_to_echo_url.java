@@ -10,7 +10,7 @@ import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
 
-public class When_sending_POST_request_to_test_url {
+public class When_sending_POST_request_to_echo_url {
 
     @Test
     public void Should_return_the_same_content_that_wast_sent() {

@@ -1,4 +1,4 @@
-package org.openpkw.seatsinparliament;
+package org.openpkw.services.seatsinparliament;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;

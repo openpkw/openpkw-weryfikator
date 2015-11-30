@@ -15,10 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "district_committee")
 public class DistrictCommittee implements Serializable {
@@ -27,7 +23,7 @@ public class DistrictCommittee implements Serializable {
     @Id
     @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
     
     @NotNull
@@ -103,14 +99,14 @@ public class DistrictCommittee implements Serializable {
     }
     
     public int getDistrictCommitteeNumber() {
-		return districtCommitteeNumber;
-	}
+        return districtCommitteeNumber;
+    }
 
-	public void setDistrictCommitteeNumber(int districtCommitteeNumber) {
-		this.districtCommitteeNumber = districtCommitteeNumber;
-	}
+    public void setDistrictCommitteeNumber(int districtCommitteeNumber) {
+        this.districtCommitteeNumber = districtCommitteeNumber;
+    }
 
-	@Override
+    @Override
     public int hashCode() {
         int hash = 0;
         hash += (districtCommitteeId != null ? districtCommitteeId.hashCode() : 0);
@@ -130,13 +126,11 @@ public class DistrictCommittee implements Serializable {
         return true;
     }
 
-	@Override
-	public String toString() {
-		return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
-				+ districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
-				+ electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
-				+ peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
-	}
-      
-    
+    @Override
+    public String toString() {
+        return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
+                + districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
+                + electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
+                + peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
+    }
 }
