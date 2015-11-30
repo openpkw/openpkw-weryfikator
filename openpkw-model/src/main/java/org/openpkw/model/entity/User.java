@@ -1,7 +1,5 @@
 package org.openpkw.model.entity;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,7 +22,6 @@ public class User implements Serializable {
     private static final long serialVersionUID = 6814143181739850328L;
 
     @Id
-    //@NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID", unique = true, nullable = false)
     private Long userID;
@@ -53,7 +51,7 @@ public class User implements Serializable {
     @Column(name = "user_type_id")
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
-				
+
     @OneToMany
     private List<UserDevice> userDevices;
 
@@ -65,7 +63,7 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
     }
-				
+
     public Long getUserID() {
         return userID;
     }
@@ -138,9 +136,8 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
-	@Override
-	public String toString() {
-		return "User: ID:"+userID+", email:"+email+", firstName:"+firstName+", lastName:"+lastName+", password:"+password+", token:"+token;
-	}
-				
+    @Override
+    public String toString() {
+        return "User: ID:" + userID + ", email:" + email + ", firstName:" + firstName + ", lastName:" + lastName + ", password:" + password + ", token:" + token;
+    }
 }
