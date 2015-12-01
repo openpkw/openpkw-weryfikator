@@ -2,6 +2,8 @@ package org.openpkw.web.controllers;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -14,6 +16,9 @@ import org.openpkw.repositories.UserRepository;
 import org.openpkw.web.Autorize;
 import org.openpkw.web.Token;
 import org.openpkw.web.UserRegister;
+import org.openpkw.web.validation.RestClientErrorMessage;
+import org.openpkw.web.validation.RegisterUserValidator;
+import org.openpkw.web.validation.RestClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,21 +35,30 @@ public class LoginController {
     private final SecureRandom secureRandom = new SecureRandom();
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserDeviceRepository deviceRepository;
+    private UserDeviceRepository deviceRepository;
+
+    @Autowired
+    private RegisterUserValidator registerUserValidator;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<String> register(@RequestBody UserRegister userRegister) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody UserRegister userRegister) {
+        try {
+            registerUserValidator.validate(userRegister);
+        } catch (RestClientException ex) {
+            return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST);
+        }
+
         User user = userRepository.findByEmailAddress(userRegister.getEmail());
         if (user != null) {
-            return new ResponseEntity<String>("User with given email address already exists", HttpStatus.BAD_REQUEST);
+            return buildResponse(RestClientErrorMessage.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
         }
 
         if (StringUtils.isEmpty(userRegister.getEmail())) {
-            return new ResponseEntity<String>("E-mail is mandatory", HttpStatus.BAD_REQUEST);
+
         }
 
         user = new User();
@@ -61,7 +75,7 @@ public class LoginController {
         } catch (Exception ex) {
             throw new RuntimeException("Failed to register new user: " + ex.getMessage(), ex);
         }
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -96,5 +110,12 @@ public class LoginController {
         token.setToken(bToken);
         device.setToken(token.getToken());
         return token;
+    }
+
+    private ResponseEntity<Map<String, String>> buildResponse(RestClientErrorMessage validationError, HttpStatus httpStatus) {
+        Map<String, String> responseBody = new HashMap<String, String>();
+        responseBody.put("errorCode", Integer.toString(validationError.getErrorCode()));
+        responseBody.put("errorMessage", validationError.getErrorMessage());
+        return new ResponseEntity<Map<String, String>>(responseBody, httpStatus);
     }
 }
