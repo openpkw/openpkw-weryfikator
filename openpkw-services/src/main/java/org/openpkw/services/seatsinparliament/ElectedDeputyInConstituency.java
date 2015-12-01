@@ -1,4 +1,4 @@
-package org.openpkw.seatsinparliament;
+package org.openpkw.services.seatsinparliament;
 
 public class ElectedDeputyInConstituency {
 

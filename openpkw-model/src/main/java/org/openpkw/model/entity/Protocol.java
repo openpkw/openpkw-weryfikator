@@ -9,11 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by Karol Dzięgiel on 8/27/2015.
- */
 @Entity
 @Table(name = "protocol")
 public class Protocol {
@@ -30,6 +29,7 @@ public class Protocol {
     @Column(name = "cards_given")
     private Long cardsGiven;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "received_date")
     private Date receivedDate;
 
@@ -76,5 +76,4 @@ public class Protocol {
     public void setPeripheralCommittee(PeripheralCommittee peripheralCommittee) {
         this.peripheralCommittee = peripheralCommittee;
     }
-
 }

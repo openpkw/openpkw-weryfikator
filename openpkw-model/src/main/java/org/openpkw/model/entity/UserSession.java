@@ -14,32 +14,33 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "user_session")
 public class UserSession implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "USER_SESSION_ID")
     private Integer userSessionId;
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "TOKEN")
     private String token;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "CREATION_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
+
     @Column(name = "VALID_UNTIL")
     @Temporal(TemporalType.TIMESTAMP)
     private Date validUntil;
+
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false)
     private User userId;
@@ -106,12 +107,14 @@ public class UserSession implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the id fields are
+        // not set
         if (!(object instanceof UserSession)) {
             return false;
         }
         UserSession other = (UserSession) object;
-        if ((this.userSessionId == null && other.userSessionId != null) || (this.userSessionId != null && !this.userSessionId.equals(other.userSessionId))) {
+        if ((this.userSessionId == null && other.userSessionId != null)
+                || (this.userSessionId != null && !this.userSessionId.equals(other.userSessionId))) {
             return false;
         }
         return true;
@@ -121,5 +124,4 @@ public class UserSession implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.UserSession[ userSessionId=" + userSessionId + " ]";
     }
-    
 }

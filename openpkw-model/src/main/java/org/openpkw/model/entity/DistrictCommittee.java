@@ -14,25 +14,26 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "district_committee")
 public class DistrictCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
+    
+    @NotNull
+    @Column(name = "DISTRICT_COMMITTEE_NUMBER")
+    private int districtCommitteeNumber;
+    
+    
     @Basic(optional = false)
     @NotNull
-    @Column(name = "NAME")
+    @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
@@ -96,6 +97,14 @@ public class DistrictCommittee implements Serializable {
     public void setDistrictCommitteeAddressId(DistrictCommitteeAddress districtCommitteeAddressId) {
         this.districtCommitteeAddressId = districtCommitteeAddressId;
     }
+    
+    public int getDistrictCommitteeNumber() {
+        return districtCommitteeNumber;
+    }
+
+    public void setDistrictCommitteeNumber(int districtCommitteeNumber) {
+        this.districtCommitteeNumber = districtCommitteeNumber;
+    }
 
     @Override
     public int hashCode() {
@@ -119,7 +128,9 @@ public class DistrictCommittee implements Serializable {
 
     @Override
     public String toString() {
-        return "org.openpkw.model.entity.DistrictCommittee[ districtCommitteeId=" + districtCommitteeId + " ]";
+        return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
+                + districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
+                + electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
+                + peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
     }
-    
 }

@@ -1,7 +1,6 @@
 package org.openpkw.model.entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,24 +11,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author waldek
- */
 @Entity
 @Table(name = "election_committee_vote")
 public class ElectionCommitteeVote implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    
     @Id
     @NotNull
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ELECTION_COMMITTEE_VOTE_ID")
     private Integer electionCommitteeVoteId;
+    
     @Column(name = "ELECTION_COMMITTEE_VOTE_NUMBER")
     private Integer electionCommitteeVoteNumber;
+    
     @JoinColumn(name = "PROTOCOL_PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
     @ManyToOne(optional = false)
     private Protocol protocolProtocolId;
+    
     @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
     @ManyToOne(optional = false)
     private ElectionCommitteeDistrict electionCommitteeDistrictId;
@@ -97,5 +97,4 @@ public class ElectionCommitteeVote implements Serializable {
     public String toString() {
         return "org.openpkw.model.entity.ElectionCommitteeVote[ electionCommitteeVoteId=" + electionCommitteeVoteId + " ]";
     }
-    
 }
