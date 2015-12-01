@@ -16,8 +16,8 @@ import org.openpkw.repositories.UserRepository;
 import org.openpkw.web.Autorize;
 import org.openpkw.web.Token;
 import org.openpkw.web.UserRegister;
+import org.openpkw.web.validation.LoginControllerRequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
-import org.openpkw.web.validation.RegisterUserValidator;
 import org.openpkw.web.validation.RestClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,20 +41,20 @@ public class LoginController {
     private UserDeviceRepository deviceRepository;
 
     @Autowired
-    private RegisterUserValidator registerUserValidator;
+    private LoginControllerRequestValidator registerUserValidator;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
     public ResponseEntity<Map<String, String>> register(@RequestBody UserRegister userRegister) {
         try {
-            registerUserValidator.validate(userRegister);
+            registerUserValidator.validateUserRegistration(userRegister);
         } catch (RestClientException ex) {
-            return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST);
+            return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
         }
 
         User user = userRepository.findByEmailAddress(userRegister.getEmail());
         if (user != null) {
-            return buildResponse(RestClientErrorMessage.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
+            return buildResponse(RestClientErrorMessage.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST, null);
         }
 
         if (StringUtils.isEmpty(userRegister.getEmail())) {
@@ -75,11 +75,16 @@ public class LoginController {
         } catch (Exception ex) {
             throw new RuntimeException("Failed to register new user: " + ex.getMessage(), ex);
         }
-        return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK);
+        return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, null);
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Token login(Autorize autorize) {
+    public ResponseEntity<Map<String, String>> login(Autorize autorize) {
+        try {
+            registerUserValidator.validateUserAuthorization(autorize);
+        } catch (RestClientException ex) {
+            return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
+        }
         System.out.println(autorize);
         Token token = new Token();
         User user = userRepository.findByEmailAddress(autorize.getEmail());
@@ -100,7 +105,7 @@ public class LoginController {
         token = updateUserToken(device);
         deviceRepository.saveAndFlush(device);
 
-        return token;
+        return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, token.getToken());
     }
 
     private Token updateUserToken(UserDevice device) {
@@ -112,10 +117,11 @@ public class LoginController {
         return token;
     }
 
-    private ResponseEntity<Map<String, String>> buildResponse(RestClientErrorMessage validationError, HttpStatus httpStatus) {
+    private ResponseEntity<Map<String, String>> buildResponse(RestClientErrorMessage validationError, HttpStatus httpStatus, String data) {
         Map<String, String> responseBody = new HashMap<String, String>();
         responseBody.put("errorCode", Integer.toString(validationError.getErrorCode()));
         responseBody.put("errorMessage", validationError.getErrorMessage());
+        responseBody.put("data", data);
         return new ResponseEntity<Map<String, String>>(responseBody, httpStatus);
     }
 }

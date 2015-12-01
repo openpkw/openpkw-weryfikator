@@ -84,7 +84,7 @@ public class LoginControllerTest {
 		Autorize autorize = null;
 		LoginController instance = new LoginController();
 		Token expResult = null;
-		Token result = instance.login(autorize);
+		ResponseEntity<Map<String, String>> result = instance.login(autorize);
 		assertEquals(expResult, result);
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
