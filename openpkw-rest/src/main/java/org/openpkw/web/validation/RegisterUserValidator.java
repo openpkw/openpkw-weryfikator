@@ -20,6 +20,10 @@ public class RegisterUserValidator {
             throw new RestClientException(RestClientErrorMessage.USER_LAST_NAME_IS_MANDATORY);
         }
 
+        if (StringUtils.isEmpty(request.getPassword())) {
+            throw new RestClientException(RestClientErrorMessage.USER_PASSWORD_IS_MANDATORY);
+        }
+
         if (request.getUserType() == null) {
             throw new RestClientException(RestClientErrorMessage.USER_TYPE_IS_MANDATORY);
         }

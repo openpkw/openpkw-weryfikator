@@ -15,6 +15,8 @@ public enum RestClientErrorMessage {
     
     USER_TYPE_IS_MANDATORY (103, "User type is mandatory"),
     
+    USER_PASSWORD_IS_MANDATORY (104, "User password is mandatory"),
+    
     USER_ALREADY_EXISTS (200, "User with given e-mail address already exists");
     
     int errorCode;
