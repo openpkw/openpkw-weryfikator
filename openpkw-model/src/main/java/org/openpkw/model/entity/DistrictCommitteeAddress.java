@@ -48,13 +48,9 @@ public class DistrictCommitteeAddress implements Serializable {
     public DistrictCommitteeAddress() {
     }
 
-    public DistrictCommitteeAddress(Integer districtCommitteeAddressId) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
-    }
-
-    public DistrictCommitteeAddress(Integer districtCommitteeAddressId, String street, String buildingNumber,
+    public DistrictCommitteeAddress(String name, String street, String buildingNumber,
             String city, String postalCode, String post) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
+        this.name = name;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.city = city;

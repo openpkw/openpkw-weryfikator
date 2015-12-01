@@ -10,8 +10,7 @@ public class Vote implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(generator="vote_seq_gen", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name="vote_seq_gen",sequenceName="vote_seq", allocationSize=1, initialValue = 10)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "VOTE_ID")
     private Integer voteId;
     

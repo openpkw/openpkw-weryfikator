@@ -11,7 +11,6 @@ public class ElectionCommitteeVote implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ELECTION_COMMITTEE_VOTE_ID")
     private Integer electionCommitteeVoteId;

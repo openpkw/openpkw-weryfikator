@@ -1,4 +1,4 @@
-package org.openpkw.qr.service;
+package org.openpkw.qr.services;
 
 import org.openpkw.model.entity.*;
 import org.openpkw.qr.dto.CandidateVoteDTO;

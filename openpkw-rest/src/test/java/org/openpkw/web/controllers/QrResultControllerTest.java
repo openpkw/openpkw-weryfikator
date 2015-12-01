@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Test for QRResultController
  * @author Sebastian Pogorzelski
  */
-@ContextConfiguration(classes = {TestJpaConfig.class, TestAppConfig.class, MVCConfig.class})
+@ContextConfiguration(classes = {TestJpaConfig.class, MVCConfig.class, TestAppConfig.class})
 @WebAppConfiguration
 public class QrResultControllerTest extends AbstractTestNGSpringContextTests {
 
@@ -66,7 +66,7 @@ public class QrResultControllerTest extends AbstractTestNGSpringContextTests {
     }
 
     private void prepareData() {
-        DistrictCommitteeAddress districtCommitteeAddress = new DistrictCommitteeAddress(1, "12", "1", "Warsaw", "00-021", "Warsaw");
+        DistrictCommitteeAddress districtCommitteeAddress = new DistrictCommitteeAddress("Name", "12", "1", "Warsaw", "00-021", "Warsaw");
         DistrictCommittee districtCommittee = new DistrictCommittee();
         districtCommittee.setDistrictCommitteeAddressId(districtCommitteeAddress);
         districtCommittee.setDistrictCommitteeNumber(1);
@@ -111,7 +111,7 @@ public class QrResultControllerTest extends AbstractTestNGSpringContextTests {
         return peripheralCommittee;
     }
 
-    @Test
+    @Test(enabled = true)
     public void shouldSaveResultToDatabase() throws Exception {
 
         QrDTO dto = new QrDTO(QR_CODE, "");
@@ -132,7 +132,6 @@ public class QrResultControllerTest extends AbstractTestNGSpringContextTests {
         }
         assertThat(candidates).isNotNull();
         assertThat(candidates).isNotEmpty();
-
     }
 
 

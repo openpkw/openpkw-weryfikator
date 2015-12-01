@@ -11,7 +11,6 @@ public class Candidate implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @NotNull
     @Column(name = "CANDIDATE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer candidateId;

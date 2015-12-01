@@ -22,12 +22,12 @@ import java.util.Properties;
  */
 @Configuration
 @EnableJpaRepositories(
-        basePackages = {"org.openpkw.repositories"},
-        entityManagerFactoryRef = "emf")
+        basePackages = {"org.openpkw.repositories"}
+        )
 public class TestJpaConfig {
 
 
-    @Bean(name = "emf")
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -53,7 +53,7 @@ public class TestJpaConfig {
     }
 
 
-    @Bean
+    @Bean(name = "dataSource")
     public DataSource dataSource() {
 
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();

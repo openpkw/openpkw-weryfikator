@@ -8,8 +8,7 @@ import java.util.Date;
 public class Protocol {
 
     @Id
-    @GeneratedValue(generator = "protocol_seq_gen", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "protocol_seq_gen", sequenceName = "protocol_seq", allocationSize = 1, initialValue = 10)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "protocol_id")
     private Long protocolID;
 
