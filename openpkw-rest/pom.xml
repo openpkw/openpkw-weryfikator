@@ -69,7 +69,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <scope>test</scope>
+
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
