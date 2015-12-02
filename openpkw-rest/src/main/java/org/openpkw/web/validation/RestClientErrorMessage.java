@@ -17,7 +17,10 @@ public enum RestClientErrorMessage {
     
     USER_PASSWORD_IS_MANDATORY (104, "User password is mandatory"),
     
-    USER_ALREADY_EXISTS (200, "User with given e-mail address already exists");
+    USER_ALREADY_EXISTS (200, "User with given e-mail address already exists"),
+    
+    USER_NOT_FOUND (300, "User with given e-mail address does not exist");    
+    
     
     int errorCode;
     String errorMessage;

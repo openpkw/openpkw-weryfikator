@@ -24,10 +24,6 @@ public class LoginControllerRequestValidator {
         if (StringUtils.isEmpty(request.getPassword())) {
             throw new RestClientException(RestClientErrorMessage.USER_PASSWORD_IS_MANDATORY);
         }
-
-        if (request.getUserType() == null) {
-            throw new RestClientException(RestClientErrorMessage.USER_TYPE_IS_MANDATORY);
-        }
     }
 
     public void validateUserAuthorization(AuthorizeUserRequest request) throws RestClientException {

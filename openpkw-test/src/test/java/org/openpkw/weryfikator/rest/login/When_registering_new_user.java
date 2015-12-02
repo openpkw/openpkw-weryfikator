@@ -57,7 +57,7 @@ public class When_registering_new_user {
     public void should_return_error_200_if_user_with_given_email_address_already_exists() {
         String testEmail = Long.toString(Calendar.getInstance().getTimeInMillis()) + "@test.com";
 
-        String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"userType\":\"ADMINISTRATOR\"}";
+        String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"password\":\"asfd\"}";
 
         // First time /authorize/register is called it should be OK
         callAuthorizeRegister(testContent);

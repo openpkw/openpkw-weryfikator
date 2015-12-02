@@ -1,6 +1,5 @@
 package org.openpkw.web.validation;
 
-import org.openpkw.model.entity.UserType;
 import org.openpkw.web.dto.RegisterUserRequest;
 
 public class UserRegisterBuilder {
@@ -24,11 +23,6 @@ public class UserRegisterBuilder {
 
     public UserRegisterBuilder withPassword(String password) {
         result.setPassword(password);
-        return this;
-    }
-
-    public UserRegisterBuilder withType(UserType userType) {
-        result.setUserType(userType);
         return this;
     }
 

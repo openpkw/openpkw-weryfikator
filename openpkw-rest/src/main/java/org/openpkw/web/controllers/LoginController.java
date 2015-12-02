@@ -1,7 +1,6 @@
 package org.openpkw.web.controllers;
 
 import java.security.SecureRandom;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,7 +61,7 @@ public class LoginController {
         user.setFirstName(userRegister.getFirst_name());
         user.setLastName(userRegister.getLast_name());
         user.setIsActive(true);
-        user.setUserType(userRegister.getUserType());
+        user.setUserType(UserType.VOLUNTEER);
 
         try {
             userRepository.saveAndFlush(user);
@@ -81,29 +80,25 @@ public class LoginController {
             return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
         }
 
-        Token token = new Token();
         User user = userRepository.findByEmailAddress(autorize.getEmail());
         if (user == null) {
-            user = new User(autorize.getEmail(), autorize.getPassword());
-            user.setUserType(UserType.VOLUNTEER);
-            user.setIsActive(Boolean.TRUE);
-            user.setTokenCreatedDate(new Date());
-            userRepository.saveAndFlush(user);
+            return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
         }
 
-        UserDevice device = deviceRepository.findByUserIdAndDevId(user.getUserID(), autorize.getDevid());
+        String deviceID = "DEFAULT";
+        UserDevice device = deviceRepository.findByUserIdAndDevId(user.getUserID(), deviceID);
         if (device == null) {
             device = new UserDevice();
-            device.setDevId(autorize.getDevid());
+            device.setDevId(deviceID);
             device.setUser(user);
         }
-        token = updateUserToken(device);
+        Token token = createUserToken(device);
         deviceRepository.saveAndFlush(device);
 
         return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, token.getToken());
     }
 
-    private Token updateUserToken(UserDevice device) {
+    private Token createUserToken(UserDevice device) {
         byte[] bToken = new byte[24];
         Token token = new Token();
         secureRandom.nextBytes(bToken);
