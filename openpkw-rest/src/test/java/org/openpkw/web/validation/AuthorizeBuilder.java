@@ -1,10 +1,10 @@
 package org.openpkw.web.validation;
 
-import org.openpkw.web.Autorize;
+import org.openpkw.web.dto.AuthorizeUserRequest;
 
 public class AuthorizeBuilder {
 
-    private Autorize result = new Autorize();
+    private AuthorizeUserRequest result = new AuthorizeUserRequest();
 
     public AuthorizeBuilder withEmail(String email) {
         result.setEmail(email);
@@ -16,7 +16,7 @@ public class AuthorizeBuilder {
         return this;
     }
 
-    public Autorize build() {
+    public AuthorizeUserRequest build() {
         return result;
     }
 }

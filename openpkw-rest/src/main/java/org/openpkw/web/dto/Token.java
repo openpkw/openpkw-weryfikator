@@ -1,4 +1,4 @@
-package org.openpkw.web;
+package org.openpkw.web.dto;
 
 import java.util.Base64;
 

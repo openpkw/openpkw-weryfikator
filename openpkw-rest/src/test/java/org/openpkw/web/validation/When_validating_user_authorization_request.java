@@ -5,7 +5,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openpkw.web.Autorize;
+import org.openpkw.web.dto.AuthorizeUserRequest;
 
 public class When_validating_user_authorization_request {
 
@@ -13,13 +13,13 @@ public class When_validating_user_authorization_request {
 
     @Test
     public void should_return_error_if_user_email_is_not_provided() {
-        Autorize request = new AuthorizeBuilder().withPassword("password").build();
+        AuthorizeUserRequest request = new AuthorizeBuilder().withPassword("password").build();
         expectException(() -> cut.validateUserAuthorization(request), RestClientErrorMessage.USER_EMAIL_IS_MANDATORY.getErrorCode());
     }
 
     @Test
     public void should_return_error_if_user_password_is_not_provided() {
-        Autorize request = new AuthorizeBuilder().withEmail("email").build();
+        AuthorizeUserRequest request = new AuthorizeBuilder().withEmail("email").build();
         expectException(() -> cut.validateUserAuthorization(request), RestClientErrorMessage.USER_PASSWORD_IS_MANDATORY.getErrorCode());
     }
 

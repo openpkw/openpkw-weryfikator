@@ -13,16 +13,15 @@ import org.openpkw.model.entity.UserType;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.UserDeviceRepository;
 import org.openpkw.repositories.UserRepository;
-import org.openpkw.web.Autorize;
-import org.openpkw.web.Token;
-import org.openpkw.web.UserRegister;
+import org.openpkw.web.dto.AuthorizeUserRequest;
+import org.openpkw.web.dto.RegisterUserRequest;
+import org.openpkw.web.dto.Token;
 import org.openpkw.web.validation.LoginControllerRequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
 import org.openpkw.web.validation.RestClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,7 +44,7 @@ public class LoginController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<Map<String, String>> register(@RequestBody UserRegister userRegister) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterUserRequest userRegister) {
         try {
             registerUserValidator.validateUserRegistration(userRegister);
         } catch (RestClientException ex) {
@@ -55,10 +54,6 @@ public class LoginController {
         User user = userRepository.findByEmailAddress(userRegister.getEmail());
         if (user != null) {
             return buildResponse(RestClientErrorMessage.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST, null);
-        }
-
-        if (StringUtils.isEmpty(userRegister.getEmail())) {
-
         }
 
         user = new User();
@@ -79,13 +74,13 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> login(Autorize autorize) {
+    public ResponseEntity<Map<String, String>> login(AuthorizeUserRequest autorize) {
         try {
             registerUserValidator.validateUserAuthorization(autorize);
         } catch (RestClientException ex) {
             return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
         }
-        System.out.println(autorize);
+
         Token token = new Token();
         User user = userRepository.findByEmailAddress(autorize.getEmail());
         if (user == null) {

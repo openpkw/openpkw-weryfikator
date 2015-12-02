@@ -1,11 +1,11 @@
 package org.openpkw.web.validation;
 
 import org.openpkw.model.entity.UserType;
-import org.openpkw.web.UserRegister;
+import org.openpkw.web.dto.RegisterUserRequest;
 
 public class UserRegisterBuilder {
 
-    private UserRegister result = new UserRegister();
+    private RegisterUserRequest result = new RegisterUserRequest();
 
     public UserRegisterBuilder withFirstName(String firstName) {
         result.setFirst_name(firstName);
@@ -32,7 +32,7 @@ public class UserRegisterBuilder {
         return this;
     }
 
-    public UserRegister build() {
+    public RegisterUserRequest build() {
         return result;
     }
 }

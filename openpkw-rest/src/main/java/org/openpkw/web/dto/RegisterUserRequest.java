@@ -1,11 +1,11 @@
-package org.openpkw.web;
+package org.openpkw.web.dto;
 
 import java.io.Serializable;
 
 import org.openpkw.model.entity.UserType;
 import org.springframework.util.StringUtils;
 
-public class UserRegister implements Serializable {
+public class RegisterUserRequest implements Serializable {
     
     private static final long serialVersionUID = 1L;
 

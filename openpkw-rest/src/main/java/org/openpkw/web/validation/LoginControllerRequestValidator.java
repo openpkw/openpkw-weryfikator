@@ -1,14 +1,14 @@
 package org.openpkw.web.validation;
 
 import org.openpkw.utils.StringUtils;
-import org.openpkw.web.Autorize;
-import org.openpkw.web.UserRegister;
+import org.openpkw.web.dto.AuthorizeUserRequest;
+import org.openpkw.web.dto.RegisterUserRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginControllerRequestValidator {
 
-    public void validateUserRegistration(UserRegister request) throws RestClientException {
+    public void validateUserRegistration(RegisterUserRequest request) throws RestClientException {
         if (StringUtils.isEmpty(request.getEmail())) {
             throw new RestClientException(RestClientErrorMessage.USER_EMAIL_IS_MANDATORY);
         }
@@ -30,7 +30,7 @@ public class LoginControllerRequestValidator {
         }
     }
 
-    public void validateUserAuthorization(Autorize request) throws RestClientException {
+    public void validateUserAuthorization(AuthorizeUserRequest request) throws RestClientException {
         if (StringUtils.isEmpty(request.getEmail())) {
             throw new RestClientException(RestClientErrorMessage.USER_EMAIL_IS_MANDATORY);
         }

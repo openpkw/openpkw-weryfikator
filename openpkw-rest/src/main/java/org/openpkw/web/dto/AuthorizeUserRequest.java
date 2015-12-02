@@ -1,8 +1,8 @@
-package org.openpkw.web;
+package org.openpkw.web.dto;
 
 import java.io.Serializable;
 
-public class Autorize implements Serializable {
+public class AuthorizeUserRequest implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
@@ -11,11 +11,11 @@ public class Autorize implements Serializable {
     private String email;
     private String password;
 
-    public Autorize() {
+    public AuthorizeUserRequest() {
         super();
     }
 
-    public Autorize(String clientPublicKey, String devid, String email, String password) {
+    public AuthorizeUserRequest(String clientPublicKey, String devid, String email, String password) {
         this.clientPublicKey = clientPublicKey;
         this.devid = devid;
         this.email = email;
