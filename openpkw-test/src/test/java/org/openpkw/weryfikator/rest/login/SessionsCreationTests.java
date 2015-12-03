@@ -78,6 +78,17 @@ public class SessionsCreationTests {
         Assert.assertThat("Test user has not been deleted after test teardown:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
     }    
     
+    @Test
+    public void Should_return_error_if_user_does_not_exist() {
+        String testEmail = Long.toString(Calendar.getInstance().getTimeInMillis()) + "@test.com";
+
+        // Trygint to log in
+        String userCredentials = "{\"email\":\"" + testEmail + "\",\"password\":\"random-password\"}";
+        callCreateSession(userCredentials);
+        Assert.assertThat("Failed to log in using valid credentials:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
+        Assert.assertThat("Error code for USER_NOT_FOUND should be returned", responseBody.get("errorCode"), is(equalTo("300")));
+    }   
+    
     private void callCreateSession(String userCredentials) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.LOCALHOST + "/sessions/");
