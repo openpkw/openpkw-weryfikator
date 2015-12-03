@@ -12,6 +12,6 @@ public class Configuration {
      * np. mvn verivy -Dopenpkw-env=DEV
      */
     public static String getHost() {
-        return LOCALHOST;
+        return TEST;
     }
 }
