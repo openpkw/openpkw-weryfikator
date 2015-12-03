@@ -19,6 +19,7 @@ import org.openpkw.web.validation.RestClientException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,7 +40,7 @@ public class SessionsController {
     private LoginControllerRequestValidator registerUserValidator;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ResponseEntity<Map<String, String>> login(AuthorizeUserRequest autorize) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody AuthorizeUserRequest autorize) {
         try {
             registerUserValidator.validateUserAuthorization(autorize);
         } catch (RestClientException ex) {
@@ -51,7 +52,9 @@ public class SessionsController {
             return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
         }
 
-        String deviceID = "DEFAULT";
+        // W piewszej fazie implementacji zakładamy, że każdy użytkownik używa tylko jednego urządzenia
+        // Identyfikatorem urządzenia jest email użytkownika
+        String deviceID = autorize.getEmail();
         UserDevice device = deviceRepository.findByUserIdAndDevId(user.getUserID(), deviceID);
         if (device == null) {
             device = new UserDevice();

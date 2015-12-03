@@ -52,7 +52,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 
-    @OneToMany
+    @OneToMany (mappedBy = "user")
     private List<UserDevice> userDevices;
 
     public User() {
@@ -134,6 +134,10 @@ public class User implements Serializable {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public List<UserDevice> getUserDevices() {
+        return userDevices;
     }
 
     @Override

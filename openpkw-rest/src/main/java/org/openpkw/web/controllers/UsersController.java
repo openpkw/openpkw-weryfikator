@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.openpkw.model.entity.User;
+import org.openpkw.model.entity.UserDevice;
 import org.openpkw.model.entity.UserType;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.UserDeviceRepository;
@@ -88,6 +89,9 @@ public class UsersController {
         User user = userRepository.findByEmailAddress(email);
 
         if (user != null) {
+            for (UserDevice device : user.getUserDevices()) {
+                deviceRepository.delete(device);
+            }
             userRepository.delete(user);
             return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, null);
         } else {
