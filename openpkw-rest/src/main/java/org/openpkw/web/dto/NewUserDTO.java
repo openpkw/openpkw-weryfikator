@@ -2,7 +2,7 @@ package org.openpkw.web.dto;
 
 import java.io.Serializable;
 
-public class RegisterUserRequest implements Serializable {
+public class NewUserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -11,8 +11,8 @@ import org.openpkw.model.entity.UserType;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.UserDeviceRepository;
 import org.openpkw.repositories.UserRepository;
-import org.openpkw.web.dto.RegisterUserRequest;
-import org.openpkw.web.validation.LoginControllerRequestValidator;
+import org.openpkw.web.dto.NewUserDTO;
+import org.openpkw.web.validation.RequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
 import org.openpkw.web.validation.RestClientException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +35,11 @@ public class UsersController {
     private UserDeviceRepository deviceRepository;
 
     @Autowired
-    private LoginControllerRequestValidator registerUserValidator;
+    private RequestValidator registerUserValidator;
 
     @RequestMapping(value = "/", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterUserRequest userRegister) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody NewUserDTO userRegister) {
         try {
             registerUserValidator.validateUserRegistration(userRegister);
         } catch (RestClientException ex) {

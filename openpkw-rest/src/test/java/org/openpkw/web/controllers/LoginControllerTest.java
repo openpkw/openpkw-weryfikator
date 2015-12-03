@@ -12,8 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openpkw.web.controllers.UsersController;
-import org.openpkw.web.dto.AuthorizeUserRequest;
-import org.openpkw.web.dto.RegisterUserRequest;
+import org.openpkw.web.dto.UserCredentialsDTO;
+import org.openpkw.web.dto.NewUserDTO;
 import org.openpkw.web.dto.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -68,7 +68,7 @@ public class LoginControllerTest {
 	@Test
 	public void testRegister() {
 		System.out.println("register");
-		RegisterUserRequest userRegister = null;
+		NewUserDTO userRegister = null;
 		String expResult = "";
 		ResponseEntity<Map<String, String>> result = loginController.register(userRegister);
 		assertEquals(expResult, result);

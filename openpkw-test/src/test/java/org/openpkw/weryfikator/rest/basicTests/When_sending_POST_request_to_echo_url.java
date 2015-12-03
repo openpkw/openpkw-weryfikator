@@ -1,4 +1,4 @@
-package org.openpkw.weryfikator.rest;
+package org.openpkw.weryfikator.rest.basicTests;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
@@ -9,6 +9,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 
 import org.junit.Test;
+import org.openpkw.weryfikator.rest.Configuration;
 
 public class When_sending_POST_request_to_echo_url {
 
@@ -17,7 +18,7 @@ public class When_sending_POST_request_to_echo_url {
         String testContent = "{\"test\":\"OpenPKW rules\"}";
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(Configuration.TEST + "/test/echo");
+        WebTarget target = client.target(Configuration.getHost() + "/test/echo");
         String response = target.request().post(Entity.json(testContent), String.class);
 
         assertThat(response, equalTo(testContent));
