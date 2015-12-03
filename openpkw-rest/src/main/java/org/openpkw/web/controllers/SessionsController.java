@@ -52,6 +52,10 @@ public class SessionsController {
             return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
         }
 
+        if (!user.getPassword().equals(autorize.getPassword())) {
+            return buildResponse(RestClientErrorMessage.INVALID_PASSWORD, HttpStatus.BAD_REQUEST, null);
+        }
+
         // W piewszej fazie implementacji zakładamy, że każdy użytkownik używa tylko jednego urządzenia
         // Identyfikatorem urządzenia jest email użytkownika
         String deviceID = autorize.getEmail();

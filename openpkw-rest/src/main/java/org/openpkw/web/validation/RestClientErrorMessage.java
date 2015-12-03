@@ -19,7 +19,9 @@ public enum RestClientErrorMessage {
     
     USER_ALREADY_EXISTS (200, "User with given e-mail address already exists"),
     
-    USER_NOT_FOUND (300, "User with given e-mail address does not exist");    
+    USER_NOT_FOUND (300, "User with given e-mail address does not exist"),
+    
+    INVALID_PASSWORD (301, "Invalid password");    
     
     
     int errorCode;

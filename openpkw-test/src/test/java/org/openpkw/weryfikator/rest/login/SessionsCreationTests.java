@@ -25,7 +25,7 @@ public class SessionsCreationTests {
     private Map<String, String> responseBody;
 
     @Test
-    public void Should_return_session_token_if_users_exists_and_password_is_valid() {
+    public void Should_return_session_token_if_user_exists_and_password_is_valid() {
         String testEmail = Long.toString(Calendar.getInstance().getTimeInMillis()) + "@test.com";
         String password = UUID.randomUUID().toString();
         String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"password\":\"" + password + "\"}";
@@ -51,6 +51,33 @@ public class SessionsCreationTests {
         Assert.assertThat("Test user has not been deleted after test teardown:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
     }
 
+    @Test
+    public void Should_return_error_if_user_exists_but_password_is_not_valid() {
+        String testEmail = Long.toString(Calendar.getInstance().getTimeInMillis()) + "@test.com";
+        String password = UUID.randomUUID().toString();
+        String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"password\":\"" + password+"\"}";
+
+        // Creating user
+        callCreateUser(testContent);
+        Assert.assertThat(responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
+        Assert.assertThat(responseBody.get("errorCode"), is(equalTo("0")));
+        Assert.assertThat(responseBody.get("errorMessage"), is(equalTo("OK")));
+
+        // Trygint to log in
+        String userCredentials = "{\"email\":\"" + testEmail + "\",\"password\":\"invalid-password\"}";
+        callCreateSession(userCredentials);
+        Assert.assertThat("Failed to log in using valid credentials:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
+        Assert.assertThat("Error code for INVALID_PASSWORD should be returned", responseBody.get("errorCode"), is(equalTo("301")));
+
+        // Deleting user after test
+        callDeleteUser(testEmail);
+        Assert.assertThat("Failed to delete test user during test teardown: " + responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
+
+        // Checking that user has been deleted
+        callGetUser(testEmail);
+        Assert.assertThat("Test user has not been deleted after test teardown:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
+    }    
+    
     private void callCreateSession(String userCredentials) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.LOCALHOST + "/sessions/");
