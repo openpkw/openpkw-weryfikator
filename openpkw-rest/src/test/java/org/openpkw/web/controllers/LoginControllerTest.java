@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openpkw.web.controllers.LoginController;
+import org.openpkw.web.controllers.UsersController;
 import org.openpkw.web.dto.AuthorizeUserRequest;
 import org.openpkw.web.dto.RegisterUserRequest;
 import org.openpkw.web.dto.Token;
@@ -31,7 +31,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 public class LoginControllerTest {
 	
 	@Autowired
-	private LoginController loginController;
+	private UsersController loginController;
 
 	public LoginControllerTest() {
 	}
@@ -75,20 +75,4 @@ public class LoginControllerTest {
 		// TODO review the generated test code and remove the default call to fail.
 		fail("The test case is a prototype.");
 	}
-
-	/**
-	 * Test of login method, of class LoginController.
-	 */
-	@Test
-	public void testLogin() {
-		System.out.println("login");
-		AuthorizeUserRequest autorize = null;
-		LoginController instance = new LoginController();
-		Token expResult = null;
-		ResponseEntity<Map<String, String>> result = instance.login(autorize);
-		assertEquals(expResult, result);
-		// TODO review the generated test code and remove the default call to fail.
-		fail("The test case is a prototype.");
-	}
-	
 }

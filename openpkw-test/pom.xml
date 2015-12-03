@@ -59,6 +59,7 @@
                 <configuration>
                     <includes>
                         <include>**/When*.java</include>
+                        <include>**/*Tests.java</include>
                     </includes>
                 </configuration>
             </plugin>
