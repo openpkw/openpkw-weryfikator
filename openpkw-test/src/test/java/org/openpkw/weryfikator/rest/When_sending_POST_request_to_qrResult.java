@@ -48,7 +48,7 @@ public class When_sending_POST_request_to_qrResult {
     }
 
     @Test
-    //@Ignore // Doesn't work without initial data in database
+    @Ignore // Doesn't work without initial data in database
     public void Should_return_OK_status() {
 
         Client client = ClientBuilder.newClient();

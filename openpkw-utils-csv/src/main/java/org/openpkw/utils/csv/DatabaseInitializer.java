@@ -95,7 +95,7 @@ public class DatabaseInitializer {
         em.getTransaction().begin();
     }
 
-    private void commitTransacationAndClose() {
+    private void commitTransactionAndClose() {
         log.info("Committing the database transaction");
         em.getTransaction().commit();
         em.close();
@@ -126,7 +126,7 @@ public class DatabaseInitializer {
         writeToDatabaseElectionCommittee();
         writeToDatabaseElectionDistrictCommittee();
         writeToDatabaseCandidate();
-        commitTransacationAndClose();
+        commitTransactionAndClose();
     }
 
     private void writeToDatabaseDistrictCommitteeAndAddress() {
