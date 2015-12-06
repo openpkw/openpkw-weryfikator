@@ -54,67 +54,80 @@ public class QrServiceImpl implements QrService {
 
         QrWrapper qrWrapper = parserService.parse(qrDTO.getQr());
 
-        Protocol protocol = createAndSaveProtocol(qrWrapper);
+        PeripheralCommittee peripheralCommittee = findPeripheralCommittee(qrWrapper.getPeripheryNumber(), qrWrapper.getTerritorialCode(), qrWrapper.getDistrictNumber());
+        Protocol protocol = createAndSaveProtocol(qrWrapper, peripheralCommittee);
 
-        countAndSaveVotes(qrWrapper, protocol);
+
+        countAndSaveVotes(qrWrapper, peripheralCommittee, protocol);
 
 
         return new QrResultDTO();
     }
 
-    private void countAndSaveVotes(QrWrapper qrWrapper, Protocol protocol) {
+    private void countAndSaveVotes(QrWrapper qrWrapper, PeripheralCommittee peripheralCommittee, Protocol protocol) {
         List<CandidateVoteDTO> candidateVoteDTOs = qrWrapper.getCandidates();
-        Map<Integer, Integer> electionCommitteeVotesCounter = new HashMap<>();
+        Map<Integer, ElectionCommitteeVote> electionCommitteeVotes = new HashMap<>();
 
         for (CandidateVoteDTO candidateVoteDTO : candidateVoteDTOs) {
-            Vote vote = new Vote();
-            vote.setProtocolProtocolId(protocol);
-            vote.setCandidateCandidateId(findCandidate(candidateVoteDTO.getListNumber(), candidateVoteDTO.getPositionOnList()));
-            vote.setCandidatesVotesNumber(candidateVoteDTO.getVotesNumber());
-            voteRepository.save(vote);
+            ElectionCommitteeDistrict electionCommitteeDistrict = findCommiteeDistrict(peripheralCommittee.getDistrictCommittee(), candidateVoteDTO.getListNumber());
 
-            addVotesToCounter(electionCommitteeVotesCounter, candidateVoteDTO);
+            createAndSaveVote(protocol, candidateVoteDTO, electionCommitteeDistrict);
+
+            addElectionCommitteeVote(electionCommitteeVotes, electionCommitteeDistrict, protocol, candidateVoteDTO);
         }
 
-        for (Map.Entry<Integer, Integer> entry : electionCommitteeVotesCounter.entrySet()) {
-            ElectionCommitteeVote electionCommitteeVote = new ElectionCommitteeVote();
-            electionCommitteeVote.setProtocolProtocolId(protocol);
-            electionCommitteeVote.setElectionCommitteeDistrictId(findCommiteeDistrict(entry.getKey()));
-            electionCommitteeVote.setElectionCommitteeVoteNumber(entry.getValue());
-
+        for (ElectionCommitteeVote electionCommitteeVote : electionCommitteeVotes.values()) {
             electionCommitteeVoteRepository.save(electionCommitteeVote);
         }
     }
 
-    private ElectionCommitteeDistrict findCommiteeDistrict(Integer listNumber) {
-        Optional<ElectionCommitteeDistrict> electionCommitteeDistrict = electionCommitteeDistrictRepository.findByListNumber(listNumber);
+    private void createAndSaveVote(Protocol protocol, CandidateVoteDTO candidateVoteDTO, ElectionCommitteeDistrict electionCommitteeDistrict) {
+        Vote vote = new Vote();
+        vote.setProtocol(protocol);
+        vote.setCandidate(findCandidate(candidateVoteDTO.getPositionOnList(), electionCommitteeDistrict));
+        vote.setCandidatesVotesNumber(candidateVoteDTO.getVotesNumber());
+        voteRepository.save(vote);
+    }
+
+    private void addElectionCommitteeVote(Map<Integer, ElectionCommitteeVote> electionCommitteeVotes, ElectionCommitteeDistrict electionCommitteeDistrict, Protocol protocol, CandidateVoteDTO candidateVoteDTO) {
+        if (!electionCommitteeVotes.containsKey(electionCommitteeDistrict.getElectionCommitteeDistrictId())) {
+
+            ElectionCommitteeVote electionCommitteeVote = new ElectionCommitteeVote();
+            electionCommitteeVote.setProtocol(protocol);
+            electionCommitteeVote.setElectionCommitteeDistrict(electionCommitteeDistrict);
+            electionCommitteeVote.setVoteNumber(candidateVoteDTO.getVotesNumber());
+            electionCommitteeVotes.put(electionCommitteeDistrict.getElectionCommitteeDistrictId(), electionCommitteeVote);
+        } else {
+            ElectionCommitteeVote electionCommitteeVote = electionCommitteeVotes.get(electionCommitteeDistrict.getElectionCommitteeDistrictId());
+            Integer currentVotes = electionCommitteeVote.getVoteNumber();
+            electionCommitteeVote.setVoteNumber(currentVotes + candidateVoteDTO.getVotesNumber());
+        }
+
+    }
+
+    private ElectionCommitteeDistrict findCommiteeDistrict(DistrictCommittee districtCommittee, Integer listNumber) {
+        Optional<ElectionCommitteeDistrict> electionCommitteeDistrict = electionCommitteeDistrictRepository.findByDistrictCommitteeAndListNumber(districtCommittee, listNumber);
         if (electionCommitteeDistrict.isPresent()) {
             return electionCommitteeDistrict.get();
         }
         throw new IllegalArgumentException("Candidate not found");
     }
 
-    private void addVotesToCounter(Map<Integer, Integer> electionCommitteeVotesCounter, CandidateVoteDTO candidateVoteDTO) {
-        Integer votesNumber = candidateVoteDTO.getVotesNumber();
-        if (electionCommitteeVotesCounter.containsKey(candidateVoteDTO.getListNumber())) {
-            votesNumber = electionCommitteeVotesCounter.get(candidateVoteDTO.getListNumber()) + candidateVoteDTO.getVotesNumber();
-        }
-        electionCommitteeVotesCounter.put(candidateVoteDTO.getListNumber(), votesNumber);
-    }
 
-    private Candidate findCandidate(Integer listNumber, Integer positionOnList) {
-        Optional<Candidate> candidate = candidateRepository.findByPositionOnListAndElectionCommitteeDistrictId_ListNumber(positionOnList, listNumber);
+
+    private Candidate findCandidate(Integer positionOnList, ElectionCommitteeDistrict committeeDistrict) {
+        Optional<Candidate> candidate = candidateRepository.findByPositionOnListAndElectionCommitteeDistrict(positionOnList, committeeDistrict);
         if (candidate.isPresent()) {
             return candidate.get();
         }
         throw new IllegalArgumentException("Candidate not found");
     }
 
-    private Protocol createAndSaveProtocol(QrWrapper qrWrapper) {
+    private Protocol createAndSaveProtocol(QrWrapper qrWrapper, PeripheralCommittee peripheralCommittee) {
 
         Protocol protocol = new Protocol();
         protocol.setReceivedDate(new Date());
-        protocol.setPeripheralCommittee(findPeripheralCommittee(qrWrapper.getPeripheryNumber(), qrWrapper.getTerritorialCode()));
+        protocol.setPeripheralCommittee(peripheralCommittee);
 
         protocol.setTotalEntitledToVote(qrWrapper.getVotingCardsTotalEntitledToVote());
         protocol.setTotalCards( qrWrapper.getVotingCardsTotalCards());
@@ -140,8 +153,9 @@ public class QrServiceImpl implements QrService {
         return protocol;
     }
 
-    private PeripheralCommittee findPeripheralCommittee(String peripheryNumber, String territorialCode) {
-        Optional<PeripheralCommittee> committee = peripheralCommitteeRepository.findByPeripheralCommitteeNumberAndTerritorialCode(Integer.parseInt(peripheryNumber), territorialCode);
+    private PeripheralCommittee findPeripheralCommittee(String peripheryNumber, String territorialCode, String districtNumber) {
+        Optional<PeripheralCommittee> committee = peripheralCommitteeRepository.findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(Integer.parseInt(peripheryNumber),
+                                                                                                                                    territorialCode, Integer.parseInt(districtNumber));
         if (committee.isPresent()) {
             return committee.get();
         }

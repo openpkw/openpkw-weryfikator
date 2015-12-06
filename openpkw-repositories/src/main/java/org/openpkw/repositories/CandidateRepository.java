@@ -1,6 +1,7 @@
 package org.openpkw.repositories;
 
 import org.openpkw.model.entity.Candidate;
+import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -11,5 +12,6 @@ import java.util.Optional;
  */
 public interface CandidateRepository extends JpaRepository<Candidate, Long> {
 
-    Optional<Candidate> findByPositionOnListAndElectionCommitteeDistrictId_ListNumber(Integer listNumber, Integer positionOnList);
+    Optional<Candidate> findByPositionOnListAndElectionCommitteeDistrict(Integer positionOnList, ElectionCommitteeDistrict committeeDistrict);
+
 }

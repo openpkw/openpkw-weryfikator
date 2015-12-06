@@ -28,6 +28,11 @@ public class DefaultQrWrapper implements QrWrapper {
     public String getPeripheryNumber() { return tokens[PERIPHERY_NUMBER.getIndex()]; }
 
     @Override
+    public String getDistrictNumber() {
+        return tokens[DISTRICT_NUMBER.getIndex()];
+    }
+
+    @Override
     public String getVotingCardsTotalEntitledToVote() { return tokens[VOTINGCARDS_TOTALENTITLEDTOVOTE.getIndex()]; }
 
     @Override

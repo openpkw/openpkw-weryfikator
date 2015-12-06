@@ -19,30 +19,25 @@ public class DistrictCommitteeAddress implements Serializable {
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
-    @NotNull
     @Column(name = "STREET")
     private String street;
 
-    @NotNull
     @Column(name = "BUILDING_NUMBER")
     private String buildingNumber;
 
     @Column(name = "ROOM_NUMBER")
     private String roomNumber;
 
-    @NotNull
     @Column(name = "CITY")
     private String city;
 
-    @NotNull
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
-    @NotNull
     @Column(name = "POST")
     private String post;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddressId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddress")
     private Collection<DistrictCommittee> districtCommitteeCollection;
 
     public DistrictCommitteeAddress() {

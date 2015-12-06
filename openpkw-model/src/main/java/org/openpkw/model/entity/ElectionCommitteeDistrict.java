@@ -29,13 +29,13 @@ public class ElectionCommitteeDistrict implements Serializable {
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
-    private DistrictCommittee districtCommitteeId;
+    private DistrictCommittee districtCommittee;
 
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<ElectionCommitteeVote> electionCommitteeVoteCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<Candidate> candidateCollection = new ArrayList<>();
 
     public ElectionCommitteeDistrict() {
@@ -69,12 +69,12 @@ public class ElectionCommitteeDistrict implements Serializable {
         this.electionCommitteeId = electionCommitteeId;
     }
 
-    public DistrictCommittee getDistrictCommitteeId() {
-        return districtCommitteeId;
+    public DistrictCommittee getDistrictCommittee() {
+        return districtCommittee;
     }
 
-    public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
-        this.districtCommitteeId = districtCommitteeId;
+    public void setDistrictCommittee(DistrictCommittee districtCommittee) {
+        this.districtCommittee = districtCommittee;
     }
 
     @XmlTransient

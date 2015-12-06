@@ -11,5 +11,6 @@ public interface PeripheralCommitteeRepository extends JpaRepository<PeripheralC
 
     Optional<PeripheralCommittee> findByPeripheralCommitteeNumberAndTerritorialCode(int peripheralNumber, String territorialCode);
 
+    Optional<PeripheralCommittee> findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(int peripheralNumber, String territorialCode, int committeeNumber);
 
 }

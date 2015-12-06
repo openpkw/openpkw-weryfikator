@@ -1,5 +1,6 @@
 package org.openpkw.repositories;
 
+import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,5 +12,5 @@ import java.util.Optional;
  */
 public interface ElectionCommitteeDistrictRepository extends JpaRepository<ElectionCommitteeDistrict, Integer> {
 
-    Optional<ElectionCommitteeDistrict> findByListNumber(Integer listNumber);
+    Optional<ElectionCommitteeDistrict> findByDistrictCommitteeAndListNumber(DistrictCommittee districtCommittee, Integer listNumber);
 }

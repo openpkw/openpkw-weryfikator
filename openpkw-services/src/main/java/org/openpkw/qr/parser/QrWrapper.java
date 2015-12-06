@@ -14,6 +14,8 @@ public interface QrWrapper {
 
     String getPeripheryNumber();
 
+    String getDistrictNumber();
+
     String getVotingCardsTotalEntitledToVote();
 
     String getVotingCardsTotalCards();

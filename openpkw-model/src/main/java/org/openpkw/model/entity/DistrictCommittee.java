@@ -25,15 +25,15 @@ public class DistrictCommittee implements Serializable {
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private DistrictCommitteeAddress districtCommitteeAddressId;
+    private DistrictCommitteeAddress districtCommitteeAddress;
 
     public DistrictCommittee() {
     }
@@ -79,12 +79,12 @@ public class DistrictCommittee implements Serializable {
         this.peripheralCommitteeCollection = peripheralCommitteeCollection;
     }
 
-    public DistrictCommitteeAddress getDistrictCommitteeAddressId() {
-        return districtCommitteeAddressId;
+    public DistrictCommitteeAddress getDistrictCommitteeAddress() {
+        return districtCommitteeAddress;
     }
 
-    public void setDistrictCommitteeAddressId(DistrictCommitteeAddress districtCommitteeAddressId) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
+    public void setDistrictCommitteeAddress(DistrictCommitteeAddress districtCommitteeAddress) {
+        this.districtCommitteeAddress = districtCommitteeAddress;
     }
     
     public int getDistrictCommitteeNumber() {
@@ -120,6 +120,6 @@ public class DistrictCommittee implements Serializable {
         return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
                 + districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
                 + electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
-                + peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
+                + peripheralCommitteeCollection + ", districtCommitteeAddress=" + districtCommitteeAddress + "]";
     }
 }

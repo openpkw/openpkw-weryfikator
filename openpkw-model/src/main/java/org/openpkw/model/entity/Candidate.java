@@ -1,19 +1,18 @@
 package org.openpkw.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "candidate")
+@Table(name = "CANDIDATE")
 public class Candidate implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "CANDIDATE_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer candidateId;
+    private Integer id;
 
     @Column(name = "NAME")
     private String name;
@@ -27,26 +26,26 @@ public class Candidate implements Serializable {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidateCandidateId")
-    private Collection<Vote> voteCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
+    private Collection<Vote> votes;
 
     @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
     @ManyToOne(optional = false)
-    private ElectionCommitteeDistrict electionCommitteeDistrictId;
+    private ElectionCommitteeDistrict electionCommitteeDistrict;
 
     public Candidate() {
     }
 
-    public Candidate(Integer candidateId) {
-        this.candidateId = candidateId;
+    public Candidate(Integer id) {
+        this.id = id;
     }
 
-    public Integer getCandidateId() {
-        return candidateId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCandidateId(Integer candidateId) {
-        this.candidateId = candidateId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -81,26 +80,26 @@ public class Candidate implements Serializable {
         this.isActive = isActive;
     }
 
-    public Collection<Vote> getVoteCollection() {
-        return voteCollection;
+    public Collection<Vote> getVotes() {
+        return votes;
     }
 
-    public void setVoteCollection(Collection<Vote> voteCollection) {
-        this.voteCollection = voteCollection;
+    public void setVotes(Collection<Vote> votes) {
+        this.votes = votes;
     }
 
-    public ElectionCommitteeDistrict getElectionCommitteeDistrictId() {
-        return electionCommitteeDistrictId;
+    public ElectionCommitteeDistrict getElectionCommitteeDistrict() {
+        return electionCommitteeDistrict;
     }
 
-    public void setElectionCommitteeDistrictId(ElectionCommitteeDistrict electionCommitteeDistrictId) {
-        this.electionCommitteeDistrictId = electionCommitteeDistrictId;
+    public void setElectionCommitteeDistrict(ElectionCommitteeDistrict electionCommitteeDistrict) {
+        this.electionCommitteeDistrict = electionCommitteeDistrict;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (candidateId != null ? candidateId.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -112,7 +111,7 @@ public class Candidate implements Serializable {
             return false;
         }
         Candidate other = (Candidate) object;
-        if ((this.candidateId == null && other.candidateId != null) || (this.candidateId != null && !this.candidateId.equals(other.candidateId))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -120,7 +119,7 @@ public class Candidate implements Serializable {
 
     @Override
     public String toString() {
-        return "org.openpkw.model.entity.Candidate[ candidateId=" + candidateId + " ]";
+        return "org.openpkw.model.entity.Candidate[ id=" + id + " ]";
     }
 
 }
