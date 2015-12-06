@@ -11,7 +11,6 @@ public class PeripheralCommittee implements Serializable {
     private static final long serialVersionUID = 1409616309807301974L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_id")
     private Long peripheralCommitteeID;
@@ -23,7 +22,7 @@ public class PeripheralCommittee implements Serializable {
 
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
-    private DistrictCommittee districtCommitteeId;
+    private DistrictCommittee districtCommittee;
     
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
@@ -105,12 +104,12 @@ public class PeripheralCommittee implements Serializable {
         this.peripheralCommitteeAddress = peripheralCommitteeAddress;
     }
     
-    public DistrictCommittee getDistrictCommitteeId() {
-        return districtCommitteeId;
+    public DistrictCommittee getDistrictCommittee() {
+        return districtCommittee;
     }
 
-    public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
-        this.districtCommitteeId = districtCommitteeId;
+    public void setDistrictCommittee(DistrictCommittee districtCommittee) {
+        this.districtCommittee = districtCommittee;
     }
 
     public int getPeripheralCommitteeNumber() {
@@ -124,7 +123,7 @@ public class PeripheralCommittee implements Serializable {
     @Override
     public String toString() {
         return "PeripheralCommittee [peripheralCommitteeID=" + peripheralCommitteeID + ", peripheralCommitteeNumber="
-                + peripheralCommitteeNumber + ", districtCommitteeId=" + districtCommitteeId + ", name=" + name
+                + peripheralCommitteeNumber + ", districtCommittee=" + districtCommittee + ", name=" + name
                 + ", type=" + type + ", allowedToVote=" + allowedToVote + ", territorialCode=" + territorialCode
                 + ", peripheralCode=" + peripheralCode + ", peripheralCommitteeAddress=" + peripheralCommitteeAddress
                 + "]";

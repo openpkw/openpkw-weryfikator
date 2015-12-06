@@ -1,25 +1,17 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "vote")
+@Table(name = "VOTE")
 public class Vote implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "VOTE_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Integer voteId;
     
 
@@ -27,14 +19,14 @@ public class Vote implements Serializable {
     private Integer candidatesVotesNumber;
     
 
-    @JoinColumn(name = "PROTOCOL_PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
+    @JoinColumn(name = "PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
     @ManyToOne(optional = false)
-    private Protocol protocolProtocolId;
+    private Protocol protocol;
     
 
-    @JoinColumn(name = "CANDIDATE_CANDIDATE_ID", referencedColumnName = "CANDIDATE_ID")
+    @JoinColumn(name = "CANDIDATE_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Candidate candidateCandidateId;
+    private Candidate candidate;
 
     public Vote() {
     }
@@ -59,20 +51,20 @@ public class Vote implements Serializable {
         this.candidatesVotesNumber = candidatesVotesNumber;
     }
 
-    public Protocol getProtocolProtocolId() {
-        return protocolProtocolId;
+    public Protocol getProtocol() {
+        return protocol;
     }
 
-    public void setProtocolProtocolId(Protocol protocolProtocolId) {
-        this.protocolProtocolId = protocolProtocolId;
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
     }
 
-    public Candidate getCandidateCandidateId() {
-        return candidateCandidateId;
+    public Candidate getCandidate() {
+        return candidate;
     }
 
-    public void setCandidateCandidateId(Candidate candidateCandidateId) {
-        this.candidateCandidateId = candidateCandidateId;
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 
     @Override
