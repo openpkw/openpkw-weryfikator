@@ -189,7 +189,7 @@ public class Main {
         peripheryVoteResults.setCommune(getStringFromCsv(listAllFieldInFile, line, INDEX_Commune)); // TODO: get from CVS (gmina)
         peripheryVoteResults.setCounty("?"); // TODO: get from CVS (powiat) - brak w CSV
         peripheryVoteResults.setProvince("?"); // TODO: get from CVS (wojewodztwo) - brak w CSV
-        peripheryVoteResults.setDistrictNumber("?"); // TODO: get from CVS (nr okregu) - brak w CSV
+        peripheryVoteResults.setDistrictNumber("19"); // TODO: get from CVS (nr okregu) - brak w CSV
         peripheryVoteResults.setDistrictCommissionAddress("?"); // TODO: get from CVS (adres okregowej komisji) - brak w CSV
 
         ElectoralCampaign electoralCampaign = new ElectoralCampaign();
