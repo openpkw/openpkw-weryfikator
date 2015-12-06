@@ -1,19 +1,11 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "district_committee_address")
+@Table(name = "DISTRICT_COMMITTEE_ADDRESS")
 public class DistrictCommitteeAddress implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -26,42 +18,32 @@ public class DistrictCommitteeAddress implements Serializable {
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
 
-    @NotNull
     @Column(name = "STREET")
     private String street;
 
-    @NotNull
     @Column(name = "BUILDING_NUMBER")
     private String buildingNumber;
 
     @Column(name = "ROOM_NUMBER")
     private String roomNumber;
 
-    @NotNull
     @Column(name = "CITY")
     private String city;
 
-    @NotNull
     @Column(name = "POSTAL_CODE")
     private String postalCode;
 
-    @NotNull
     @Column(name = "POST")
     private String post;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddressId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddress")
     private Collection<DistrictCommittee> districtCommitteeCollection;
 
     public DistrictCommitteeAddress() {
     }
 
-    public DistrictCommitteeAddress(Integer districtCommitteeAddressId) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
-    }
-
-    public DistrictCommitteeAddress(Integer districtCommitteeAddressId, String street, String buildingNumber,
-            String city, String postalCode, String post) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
+    public DistrictCommitteeAddress(String name, String street, String buildingNumber, String city, String postalCode, String post) {
+        this.name = name;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.city = city;

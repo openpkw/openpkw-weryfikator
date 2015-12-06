@@ -1,47 +1,42 @@
 package org.openpkw.model.entity;
 
-import java.io.Serializable;
-import java.util.Collection;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
-@Table(name = "election_committee_district")
+@Table(name = "ELECTION_COMMITTEE_DISTRICT")
 public class ElectionCommitteeDistrict implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ELECTION_COMMITTEE_DISTRICT_ID")
     private Integer electionCommitteeDistrictId;
+
     
     @Column(name = "LIST_NUMBER")
     private Integer listNumber;
+
     
     @JoinColumn(name = "ELECTION_COMMITTEE_ID", referencedColumnName = "ELECTION_COMMITTEE_ID")
     @ManyToOne(optional = false)
     private ElectionCommittee electionCommitteeId;
+
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
-    private DistrictCommittee districtCommitteeId;
+    private DistrictCommittee districtCommittee;
+
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<ElectionCommitteeVote> electionCommitteeVoteCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrictId")
-    private Collection<Candidate> candidateCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
+    private Collection<Candidate> candidateCollection = new ArrayList<>();
 
     public ElectionCommitteeDistrict() {
     }
@@ -74,12 +69,12 @@ public class ElectionCommitteeDistrict implements Serializable {
         this.electionCommitteeId = electionCommitteeId;
     }
 
-    public DistrictCommittee getDistrictCommitteeId() {
-        return districtCommitteeId;
+    public DistrictCommittee getDistrictCommittee() {
+        return districtCommittee;
     }
 
-    public void setDistrictCommitteeId(DistrictCommittee districtCommitteeId) {
-        this.districtCommitteeId = districtCommitteeId;
+    public void setDistrictCommittee(DistrictCommittee districtCommittee) {
+        this.districtCommittee = districtCommittee;
     }
 
     @XmlTransient
