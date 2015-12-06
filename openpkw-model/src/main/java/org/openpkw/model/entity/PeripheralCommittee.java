@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "peripheral_commitee")
+@Table(name = "PERIPHERAL_COMMITTEE")
 public class PeripheralCommittee implements Serializable {
 
     private static final long serialVersionUID = 1409616309807301974L;
@@ -29,7 +29,6 @@ public class PeripheralCommittee implements Serializable {
 
     @Column(name = "type")
     private String type;
-
 
     @Column(name = "allowed_to_vote")
     private Long allowedToVote;

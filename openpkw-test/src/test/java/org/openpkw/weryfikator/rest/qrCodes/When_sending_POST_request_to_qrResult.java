@@ -1,7 +1,7 @@
-package org.openpkw.weryfikator.rest;
+package org.openpkw.weryfikator.rest.qrCodes;
 
-import org.junit.Ignore;
 import org.junit.Test;
+import org.openpkw.weryfikator.rest.Configuration;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -10,7 +10,6 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 /**
  * Test for QR REST service
@@ -33,26 +32,24 @@ public class When_sending_POST_request_to_qrResult {
     public static final int NOT_FOUND_STATUS = 404;
     public static final int OK_STATUS = 200;
     public static final int BAD_REQUEST_STATUS = 400;
-    public static final String QR_TEST_URL = "/openpkw/api/qr";
-    public static final String TEST_SERVER_URL = "http://dobromir.openpkw.pl:9080";
-    //public static final String TEST_SERVER_URL = "http://localhost:8080";
+    public static final String QR_TEST_URL = "/api/qr";
 
     @Test
     public void Should_return_BAD_REQUEST_status_for_empty_request() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(TEST_SERVER_URL + QR_TEST_URL);
+        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_EMPTY_JSON));
 
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST_STATUS);
     }
 
     @Test
-    @Ignore // Doesn't work without initial data in database
+    // Requires initial data to be present in the database
     public void Should_return_OK_status() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(TEST_SERVER_URL + QR_TEST_URL);
+        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_JSON));
 
         assertThat(response.getStatus()).isEqualTo(OK_STATUS);
@@ -62,10 +59,9 @@ public class When_sending_POST_request_to_qrResult {
     public void Should_return_NOT_FOUND_status() {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target(TEST_SERVER_URL + QR_TEST_URL);
+        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_WRONG_DATA_JSON));
 
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND_STATUS);
     }
-
 }

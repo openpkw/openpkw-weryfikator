@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "district_committee")
+@Table(name = "DISTRICT_COMMITTEE")
 public class DistrictCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
     
@@ -18,7 +18,6 @@ public class DistrictCommittee implements Serializable {
     @NotNull
     @Column(name = "DISTRICT_COMMITTEE_NUMBER")
     private int districtCommitteeNumber;
-    
     
     @Basic(optional = false)
     @NotNull

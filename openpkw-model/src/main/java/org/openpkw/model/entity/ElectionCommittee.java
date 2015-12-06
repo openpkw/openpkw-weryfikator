@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "election_committee")
+@Table(name = "ELECTION_COMMITTEE")
 public class ElectionCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
 

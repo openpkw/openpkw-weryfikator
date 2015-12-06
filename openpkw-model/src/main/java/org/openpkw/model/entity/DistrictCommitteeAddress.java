@@ -1,12 +1,11 @@
 package org.openpkw.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "district_committee_address")
+@Table(name = "DISTRICT_COMMITTEE_ADDRESS")
 public class DistrictCommitteeAddress implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -43,8 +42,7 @@ public class DistrictCommitteeAddress implements Serializable {
     public DistrictCommitteeAddress() {
     }
 
-    public DistrictCommitteeAddress(String name, String street, String buildingNumber,
-            String city, String postalCode, String post) {
+    public DistrictCommitteeAddress(String name, String street, String buildingNumber, String city, String postalCode, String post) {
         this.name = name;
         this.street = street;
         this.buildingNumber = buildingNumber;
