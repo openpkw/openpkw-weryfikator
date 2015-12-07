@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openpkw.utils.csv.json.Candidate;
 import org.openpkw.utils.csv.json.Comments;
@@ -22,8 +23,6 @@ import org.openpkw.utils.csv.json.ElectoralCampaign;
 import org.openpkw.utils.csv.json.PeripheryVote;
 import org.openpkw.utils.csv.json.PeripheryVoteResults;
 import org.openpkw.utils.csv.json.VotingCards;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -33,7 +32,7 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Main {
 
-    private final static Logger log = LoggerFactory.getLogger(Main.class);
+    private final static Logger log = Logger.getLogger(Main.class);
 
     private final static DecimalFormat df = new DecimalFormat("0000");
     private final static DecimalFormat dfPerformance = new DecimalFormat("0.00");

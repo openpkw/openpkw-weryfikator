@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.apache.log4j.Logger;
 import org.openpkw.model.entity.Candidate;
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.DistrictCommitteeAddress;
@@ -16,8 +17,6 @@ import org.openpkw.model.entity.ElectionCommittee;
 import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.model.entity.PeripheralCommitteeAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -25,7 +24,7 @@ public class DatabaseInitializer {
     private EntityManagerFactory factory = null;
     private EntityManager em = null;
     private final String PERSISTENCE_UNIT_NAME = "openpkw";
-    private final static Logger log = LoggerFactory.getLogger(DatabaseInitializer.class);
+    private final static Logger log = Logger.getLogger(DatabaseInitializer.class);
     private final static String FILE_NAME_DISTRICTS = "/districts.csv";
     private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
     private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
