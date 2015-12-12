@@ -27,7 +27,7 @@ To Be Done
 Aby do nas dołączyć skontaktuj się z nami poprzez E-Mail i Skype. 
 
 Kontakt:
-  - Rafał Reguła: <rafal.regula@openpkw.pl>
+  - Rafał Reguła: <rafal.regula@open-pkw.pl>
   - Skype: rafal.regula
   
 ## Informacje o projekcie OpenPKW Java
