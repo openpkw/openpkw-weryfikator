@@ -2,6 +2,7 @@ package org.openpkw.web.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -46,12 +47,12 @@ public class UsersController {
             return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
         }
 
-        User user = userRepository.findByEmailAddress(userRegister.getEmail());
-        if (user != null) {
+        Optional<User> userOptional = userRepository.findByEmailAddress(userRegister.getEmail());
+        if (userOptional.isPresent()) {
             return buildResponse(RestClientErrorMessage.USER_ALREADY_EXISTS, HttpStatus.BAD_REQUEST, null);
         }
 
-        user = new User();
+        User user = new User();
         user.setEmail(userRegister.getEmail());
         user.setPassword(userRegister.getPassword());
         user.setFirstName(userRegister.getFirst_name());
@@ -74,10 +75,10 @@ public class UsersController {
     @RequestMapping(value = "/{email:.+}", method = RequestMethod.GET, headers = "Accept=application/json")
     @Transactional
     public ResponseEntity<Map<String, String>> get(@PathVariable String email) {
-        User user = userRepository.findByEmailAddress(email);
+        Optional<User> user = userRepository.findByEmailAddress(email);
 
-        if (user != null) {
-            return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, userToJson(user));
+        if (user.isPresent()) {
+            return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, userToJson(user.get()));
         } else {
             return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
         }
@@ -86,13 +87,13 @@ public class UsersController {
     @RequestMapping(value = "/{email:.+}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     @Transactional
     public ResponseEntity<Map<String, String>> delete(@PathVariable("email") String email) {
-        User user = userRepository.findByEmailAddress(email);
+        Optional<User> user = userRepository.findByEmailAddress(email);
 
         if (user != null) {
-            for (UserDevice device : user.getUserDevices()) {
+            for (UserDevice device : user.get().getUserDevices()) {
                 deviceRepository.delete(device);
             }
-            userRepository.delete(user);
+            userRepository.delete(user.get());
             return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, null);
         } else {
             return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);

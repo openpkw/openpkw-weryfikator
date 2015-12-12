@@ -3,6 +3,7 @@ package org.openpkw.web.controllers;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -47,23 +48,23 @@ public class SessionsController {
             return buildResponse(ex.getErrorCode(), HttpStatus.BAD_REQUEST, null);
         }
 
-        User user = userRepository.findByEmailAddress(userCredentials.getEmail());
-        if (user == null) {
+        Optional<User> user = userRepository.findByEmailAddress(userCredentials.getEmail());
+        if (!user.isPresent()) {
             return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
         }
 
-        if (!user.getPassword().equals(userCredentials.getPassword())) {
+        if (!user.get().getPassword().equals(userCredentials.getPassword())) {
             return buildResponse(RestClientErrorMessage.INVALID_PASSWORD, HttpStatus.BAD_REQUEST, null);
         }
 
         // W piewszej fazie implementacji zakładamy, że każdy użytkownik używa tylko jednego urządzenia
         // Identyfikatorem urządzenia jest email użytkownika
         String deviceID = userCredentials.getEmail();
-        UserDevice device = deviceRepository.findByUserIdAndDevId(user.getUserID(), deviceID);
+        UserDevice device = deviceRepository.findByUserIdAndDevId(user.get().getUserID(), deviceID);
         if (device == null) {
             device = new UserDevice();
             device.setDevId(deviceID);
-            device.setUser(user);
+            device.setUser(user.get());
         }
         Token token = createUserToken(device);
         deviceRepository.saveAndFlush(device);
