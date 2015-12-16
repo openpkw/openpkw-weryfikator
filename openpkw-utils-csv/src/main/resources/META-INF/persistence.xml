@@ -13,6 +13,7 @@
     <class>org.openpkw.model.entity.PeripheralCommitteeAddress</class>
     <class>org.openpkw.model.entity.Protocol</class>
     <class>org.openpkw.model.entity.User</class>
+    <class>org.openpkw.model.entity.UserDevice</class>
     <class>org.openpkw.model.entity.UserSession</class>
     <class>org.openpkw.model.entity.Vote</class>
     

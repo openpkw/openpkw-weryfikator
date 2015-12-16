@@ -1,27 +1,16 @@
 package org.openpkw.model.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "district_committee")
+@Table(name = "DISTRICT_COMMITTEE")
 public class DistrictCommittee implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @NotNull
     @Column(name = "DISTRICT_COMMITTEE_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer districtCommitteeId;
@@ -30,21 +19,20 @@ public class DistrictCommittee implements Serializable {
     @Column(name = "DISTRICT_COMMITTEE_NUMBER")
     private int districtCommitteeNumber;
     
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
-    @ManyToOne(optional = false)
-    private DistrictCommitteeAddress districtCommitteeAddressId;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    private DistrictCommitteeAddress districtCommitteeAddress;
 
     public DistrictCommittee() {
     }
@@ -90,12 +78,12 @@ public class DistrictCommittee implements Serializable {
         this.peripheralCommitteeCollection = peripheralCommitteeCollection;
     }
 
-    public DistrictCommitteeAddress getDistrictCommitteeAddressId() {
-        return districtCommitteeAddressId;
+    public DistrictCommitteeAddress getDistrictCommitteeAddress() {
+        return districtCommitteeAddress;
     }
 
-    public void setDistrictCommitteeAddressId(DistrictCommitteeAddress districtCommitteeAddressId) {
-        this.districtCommitteeAddressId = districtCommitteeAddressId;
+    public void setDistrictCommitteeAddress(DistrictCommitteeAddress districtCommitteeAddress) {
+        this.districtCommitteeAddress = districtCommitteeAddress;
     }
     
     public int getDistrictCommitteeNumber() {
@@ -131,6 +119,6 @@ public class DistrictCommittee implements Serializable {
         return "DistrictCommittee [districtCommitteeId=" + districtCommitteeId + ", districtCommitteeNumber="
                 + districtCommitteeNumber + ", name=" + name + ", electionCommitteeDistrictCollection="
                 + electionCommitteeDistrictCollection + ", peripheralCommitteeCollection="
-                + peripheralCommitteeCollection + ", districtCommitteeAddressId=" + districtCommitteeAddressId + "]";
+                + peripheralCommitteeCollection + ", districtCommitteeAddress=" + districtCommitteeAddress + "]";
     }
 }

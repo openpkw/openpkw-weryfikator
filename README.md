@@ -27,7 +27,7 @@ To Be Done
 Aby do nas dołączyć skontaktuj się z nami poprzez E-Mail i Skype. 
 
 Kontakt:
-  - Rafał Reguła: <rafal.regula@openpkw.pl>
+  - Rafał Reguła: <rafal.regula@open-pkw.pl>
   - Skype: rafal.regula
   
 ## Informacje o projekcie OpenPKW Java
@@ -54,9 +54,9 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 | Dillinger.io  |  http://dillinger.io |
 |  GitHub  |  https://github.com/openpkw|
 |  Mailing List|http://openpkw.pl/mailman/listinfo/openpkw-java|
-| Serwer buildów | http://dobromir.openpkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
+| Serwer buildów | http://cypisek.open-pkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
 | Środowisko TEST | http://dobromir.openpkw.pl:9080/openpkw/ |
-| Środowisko UAT | http://pat.openpkw.pl:9080/openpkw/ |
+| Środowisko UAT | http://pat.openpkw.pl:9080/openpkw/ (jeszcze nie działa|
 
 
 **Aktualnie poszukujemy!**  

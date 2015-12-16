@@ -27,6 +27,7 @@
         <spring.data.version>1.7.1.RELEASE</spring.data.version>
         <wildfly.plugin.version>1.1.0.Alpha2</wildfly.plugin.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
+		<commons-dbcp.version>1.2.2</commons-dbcp.version>
     </properties>
 
 
@@ -226,6 +227,45 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.10.8</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>${commons-dbcp.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.jayway.jsonpath</groupId>
+                <artifactId>json-path</artifactId>
+                <version>2.0.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.1.2.Final</version>
+            </dependency>
+
+
+            <!-- Database for tests-->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.189</version>
                 <scope>test</scope>
             </dependency>
 

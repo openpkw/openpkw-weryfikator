@@ -2,6 +2,7 @@ package org.openpkw.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,13 +19,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "USER")
 public class User implements Serializable {
-
     private static final long serialVersionUID = 6814143181739850328L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID", unique = true, nullable = false)
-    private Long UserID;
+    private Long userID;
 
     @Column(name = "first_name")
     private String firstName;
@@ -51,12 +52,24 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 
-    public Long getUserID() {
-        return UserID;
+    @OneToMany (mappedBy = "user")
+    private List<UserDevice> userDevices;
+
+    public User() {
+        super();
     }
 
-    public void setUserID(Long UserID) {
-        this.UserID = UserID;
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -121,5 +134,14 @@ public class User implements Serializable {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    public List<UserDevice> getUserDevices() {
+        return userDevices;
+    }
+
+    @Override
+    public String toString() {
+        return "User: ID:" + userID + ", email:" + email + ", firstName:" + firstName + ", lastName:" + lastName + ", password:" + password + ", token:" + token;
     }
 }

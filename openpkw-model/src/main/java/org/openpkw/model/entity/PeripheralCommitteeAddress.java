@@ -1,17 +1,15 @@
 package org.openpkw.model.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "PeripheralCommitteeAddress")
+@Table(name = "PERIPHERAL_COMMITTEE_ADDRESS")
 public class PeripheralCommitteeAddress implements Serializable {
 
     private static final long serialVersionUID = -5423011922592356949L;
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "peripheral_committee_address_id")
     private Long peripheralCommitteeAddressID;

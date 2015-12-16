@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "user_session")
+@Table(name = "USER_SESSION")
 public class UserSession implements Serializable {
     private static final long serialVersionUID = 1L;
 

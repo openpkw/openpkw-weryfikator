@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openpkw.utils.csv.json.Candidate;
 import org.openpkw.utils.csv.json.Comments;
@@ -22,8 +23,6 @@ import org.openpkw.utils.csv.json.ElectoralCampaign;
 import org.openpkw.utils.csv.json.PeripheryVote;
 import org.openpkw.utils.csv.json.PeripheryVoteResults;
 import org.openpkw.utils.csv.json.VotingCards;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -33,7 +32,7 @@ import com.sun.jersey.api.client.WebResource;
 
 public class Main {
 
-    private final static Logger log = LoggerFactory.getLogger(Main.class);
+    private final static Logger log = Logger.getLogger(Main.class);
 
     private final static DecimalFormat df = new DecimalFormat("0000");
     private final static DecimalFormat dfPerformance = new DecimalFormat("0.00");
@@ -189,7 +188,7 @@ public class Main {
         peripheryVoteResults.setCommune(getStringFromCsv(listAllFieldInFile, line, INDEX_Commune)); // TODO: get from CVS (gmina)
         peripheryVoteResults.setCounty("?"); // TODO: get from CVS (powiat) - brak w CSV
         peripheryVoteResults.setProvince("?"); // TODO: get from CVS (wojewodztwo) - brak w CSV
-        peripheryVoteResults.setDistrictNumber("?"); // TODO: get from CVS (nr okregu) - brak w CSV
+        peripheryVoteResults.setDistrictNumber("19"); // TODO: get from CVS (nr okregu) - brak w CSV
         peripheryVoteResults.setDistrictCommissionAddress("?"); // TODO: get from CVS (adres okregowej komisji) - brak w CSV
 
         ElectoralCampaign electoralCampaign = new ElectoralCampaign();

@@ -1,7 +1,5 @@
 package org.openpkw.utils.csv;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.apache.log4j.Logger;
 import org.openpkw.model.entity.Candidate;
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.DistrictCommitteeAddress;
@@ -18,8 +17,6 @@ import org.openpkw.model.entity.ElectionCommittee;
 import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.model.entity.PeripheralCommitteeAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import au.com.bytecode.opencsv.CSVReader;
 
@@ -27,7 +24,7 @@ public class DatabaseInitializer {
     private EntityManagerFactory factory = null;
     private EntityManager em = null;
     private final String PERSISTENCE_UNIT_NAME = "openpkw";
-    private final static Logger log = LoggerFactory.getLogger(DatabaseInitializer.class);
+    private final static Logger log = Logger.getLogger(DatabaseInitializer.class);
     private final static String FILE_NAME_DISTRICTS = "/districts.csv";
     private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
     private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
@@ -97,7 +94,7 @@ public class DatabaseInitializer {
         em.getTransaction().begin();
     }
 
-    private void commitTransacationAndClose() {
+    private void commitTransactionAndClose() {
         log.info("Committing the database transaction");
         em.getTransaction().commit();
         em.close();
@@ -128,13 +125,13 @@ public class DatabaseInitializer {
         writeToDatabaseElectionCommittee();
         writeToDatabaseElectionDistrictCommittee();
         writeToDatabaseCandidate();
-        commitTransacationAndClose();
+        commitTransactionAndClose();
     }
 
     private void writeToDatabaseDistrictCommitteeAndAddress() {
         log.info("Writing list of district committees to the database");
         for (DistrictCommittee districtCommittee : this.districtCommitteeList) {
-            em.persist(districtCommittee.getDistrictCommitteeAddressId());
+            em.persist(districtCommittee.getDistrictCommitteeAddress());
             em.persist(districtCommittee);
         }
     }
@@ -189,7 +186,7 @@ public class DatabaseInitializer {
         int committeeNumber = getIntFromCsv(listAllFieldInFile, line, PeripheralCsvLine.DistrictNumber.getLineNumber());
         DistrictCommittee districtCommittee = districtCommitteeList.stream().filter(a -> a.getDistrictCommitteeNumber() == committeeNumber).findFirst().get();
 
-        peripheralCommittee.setDistrictCommitteeId(districtCommittee);
+        peripheralCommittee.setDistrictCommittee(districtCommittee);
         return peripheralCommittee;
     }
 
@@ -197,7 +194,7 @@ public class DatabaseInitializer {
         DistrictCommitteeAddress districtCommitteeAddress = new DistrictCommitteeAddress();
         districtCommitteeAddress.setCity(getStringFromCsv(listAllFieldInFile, line, DistrictCsvLine.City.getLineNumber()));
         DistrictCommittee districtCommittee = new DistrictCommittee();
-        districtCommittee.setDistrictCommitteeAddressId(districtCommitteeAddress);
+        districtCommittee.setDistrictCommitteeAddress(districtCommitteeAddress);
         districtCommittee.setDistrictCommitteeNumber(getIntFromCsv(listAllFieldInFile, line, DistrictCsvLine.Number.getLineNumber()));
         districtCommittee.setName(getStringFromCsv(listAllFieldInFile, line, DistrictCsvLine.Name.getLineNumber()));
         return districtCommittee;
@@ -236,10 +233,10 @@ public class DatabaseInitializer {
         electionCommitteeDistrict.setListNumber(getIntFromCsv(listAllFieldInFile, line, CandidateCsvLine.ElectionCommitteeListNumber.getLineNumber()));
         int committeeNumber = getIntFromCsv(listAllFieldInFile, line, CandidateCsvLine.DistrictNumber.getLineNumber());
         DistrictCommittee districtCommittee = districtCommitteeList.stream().filter(a -> a.getDistrictCommitteeNumber() == committeeNumber).findFirst().get();
-        electionCommitteeDistrict.setDistrictCommitteeId(districtCommittee);
+        electionCommitteeDistrict.setDistrictCommittee(districtCommittee);
 
         Candidate candidate = new Candidate();
-        candidate.setElectionCommitteeDistrictId(electionCommitteeDistrict);
+        candidate.setElectionCommitteeDistrict(electionCommitteeDistrict);
         candidate.setName(getStringFromCsv(listAllFieldInFile, line, CandidateCsvLine.Name.getLineNumber()));
         candidate.setSurname(getStringFromCsv(listAllFieldInFile, line, CandidateCsvLine.Surname.getLineNumber()));
         candidate.setPositionOnList(getIntFromCsv(listAllFieldInFile, line, CandidateCsvLine.Number.getLineNumber()));
@@ -252,18 +249,18 @@ public class DatabaseInitializer {
         electionCommitteeList = new ArrayList<ElectionCommittee>();
         electionCommitteeDistrictList = new ArrayList<ElectionCommitteeDistrict>();
         for (Candidate candidate : candidateList) {
-            Optional<ElectionCommitteeDistrict> findDistrict = electionCommitteeDistrictList.stream().filter(a -> a.getDistrictCommitteeId().getDistrictCommitteeNumber() == candidate.getElectionCommitteeDistrictId().getDistrictCommitteeId().getDistrictCommitteeNumber() && a.getListNumber() == candidate.getElectionCommitteeDistrictId().getListNumber()).findFirst();
+            Optional<ElectionCommitteeDistrict> findDistrict = electionCommitteeDistrictList.stream().filter(a -> a.getDistrictCommittee().getDistrictCommitteeNumber() == candidate.getElectionCommitteeDistrict().getDistrictCommittee().getDistrictCommitteeNumber() && a.getListNumber() == candidate.getElectionCommitteeDistrict().getListNumber()).findFirst();
 
             if (findDistrict.isPresent()) {
-                candidate.setElectionCommitteeDistrictId(findDistrict.get());
+                candidate.setElectionCommitteeDistrict(findDistrict.get());
             } else {
-                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getName().trim().equals(candidate.getElectionCommitteeDistrictId().getElectionCommitteeId().getName().trim())).findFirst();
+                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getName().trim().equals(candidate.getElectionCommitteeDistrict().getElectionCommitteeId().getName().trim())).findFirst();
                 if (find.isPresent()) {
-                    electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrictId());
-                    candidate.getElectionCommitteeDistrictId().setElectionCommitteeId(find.get());
+                    electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
+                    candidate.getElectionCommitteeDistrict().setElectionCommitteeId(find.get());
                 } else {
-                    electionCommitteeList.add(candidate.getElectionCommitteeDistrictId().getElectionCommitteeId());
-                    electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrictId());
+                    electionCommitteeList.add(candidate.getElectionCommitteeDistrict().getElectionCommitteeId());
+                    electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
                 }
             }
         }
