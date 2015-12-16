@@ -1,5 +1,28 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 15 grudnia 2015 r.
+
+Obecni: Bartek Smok, Rafał Reguła, Karol Dzięgiel, Kamil Gr, Remigiusz Mrozek, Kamil Szestowicki, Łukasz Franczuk, Sebastian Pogorzelski, Sebastian Celejewski
+
+Postępy:
+
+1. Serwer buildów przeniesiony z maszyny Dobromir na maszynę Cypisek.
+
+2. Prace nad przygotowaniem następnych maszyn w toku.
+
+
+Tematy dyskusji:
+
+1. Problemy z infrastrukturą: za mało RAMu na maszynach, pozamykane porty, wygasły certyfikat, brak kontaktu z administratorami infrastruktury OpenPKW.
+
+2. Nie pojawiają się nowi ludzie. Trzeba uporządkować kod (bo aktualny stan kodu odstrasza potencjalnych nowych ludzi), zgrać wszystkie napisane dotychczas komponenty, przeprowadzić test całego procesu i można to pokazywać, co powinno zachęcić nowych ludzi.
+
+3. Jeśli trudno skontaktować się z administratorami domeny i hosta maszyn wirtualnych, warto zdobyć dostęp do domeny i hosta.
+
+4. Najpilniejsza potrzeba: specjaliści od technologii frontendowych.
+
+
+
 ## Wtorek, 27 październia 2015 r.
 
 Obecni: Rafał R., Łukasz F., Remek M., Sebastian C., Sebastian P., Kamil D., Kamil G.
