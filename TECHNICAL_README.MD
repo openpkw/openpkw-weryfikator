@@ -20,9 +20,9 @@
 #### Środowiska
 
 - TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
-- UAT (ręczne testy integracyjne i regresyjne): http://pat.openpkw.pl:9080/openpkw/
-- STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): brak
-- PROD (wykorzystywane podczas wyborów): brak
+- UAT (ręczne testy integracyjne i regresyjne): http://rumcajs.open-pkw.pl:9080/openpkw/
+- STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): jeszcze nie ma
+- PROD (wykorzystywane podczas wyborów): jeszcze nie ma
 
 ![Środowiska OpenPKW](https://raw.githubusercontent.com/openpkw/openpkw-devops/master/OpenPKW%20Environments.png)
 
