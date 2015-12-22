@@ -1,11 +1,5 @@
 package org.openpkw.web.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
 import org.openpkw.model.entity.User;
 import org.openpkw.model.entity.UserDevice;
 import org.openpkw.model.entity.UserType;
@@ -16,27 +10,36 @@ import org.openpkw.web.dto.NewUserDTO;
 import org.openpkw.web.validation.RequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
 import org.openpkw.web.validation.RestClientException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @OpenPKWAPIController
 @Transactional
 @RequestMapping("/users")
 public class UsersController {
 
-    @Autowired
+    @Inject
     private UserRepository userRepository;
 
-    @Autowired
+    @Inject
     private UserDeviceRepository deviceRepository;
 
-    @Autowired
+    @Inject
     private RequestValidator registerUserValidator;
+
+    @Inject
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
@@ -54,7 +57,7 @@ public class UsersController {
 
         User user = new User();
         user.setEmail(userRegister.getEmail());
-        user.setPassword(userRegister.getPassword());
+        user.setPassword(passwordEncoder.encode(userRegister.getPassword()));
         user.setFirstName(userRegister.getFirst_name());
         user.setLastName(userRegister.getLast_name());
         user.setIsActive(true);

@@ -2,7 +2,7 @@ package org.openpkw.weryfikator.rest;
 
 public class Configuration {
 
-    private final static String LOCALHOST = "http://localhost:8080/openpkw-rest";
+    private final static String LOCALHOST = "http://localhost:8080/openpkw";
     private final static String VAGRANT = "http://localhost:4500/openpkw";
     private final static String TEST = "http://rumcajs.open-pkw.pl:9080/openpkw";
     private final static String UAT = "http://dobromir.openpkw.pl:9080/openpkw";
@@ -12,6 +12,6 @@ public class Configuration {
      * np. mvn verivy -Dopenpkw-env=DEV
      */
     public static String getHost() {
-        return TEST;
+        return LOCALHOST;
     }
 }
