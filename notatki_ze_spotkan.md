@@ -1,5 +1,24 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 22 grudnia 2015 r.
+
+Obecni: Rafał Reguła, Kamil Szestowicki, Kamil Gr, Tomasz Dowgielewicz, Sebastian Pogorzelski, Remigiusz Mrozek, Mirosław Gołda
+
+Postępy:
+
+1. Serwer UAT skonfigurowany na maszynie Rumcajs
+
+2. Docker, wszędzie Docker.
+
+Tematy dyskusji:
+
+1. Wprowadzenie nowych osób do projektu.
+
+2. Do testowania będziemy używać narzędzia Spock.
+
+3. Do autentykacji będziemy używać OAuth.
+
+
 ## Wtorek, 15 grudnia 2015 r.
 
 Obecni: Bartek Smok, Rafał Reguła, Karol Dzięgiel, Kamil Gr, Remigiusz Mrozek, Kamil Szestowicki, Łukasz Franczuk, Sebastian Pogorzelski, Sebastian Celejewski
