@@ -1,3 +1,4 @@
+/*
 package org.openpkw.utils;
 
 import org.openpkw.mapping.PeripherialCommitteeLineMapper;
@@ -11,9 +12,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+*/
 /**
  * Created by wojciech.szostak on 15.08.2015.
- */
+ *//*
+
 public class PeripheralCommitteeCsvParserTest {
     private PeripheralCommitteeCsvParser csvParser;
 
@@ -65,3 +68,4 @@ public class PeripheralCommitteeCsvParserTest {
         csvParser.parse(tmpFile);
     }
 }
+*/
