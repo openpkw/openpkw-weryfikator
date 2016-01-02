@@ -5,9 +5,12 @@ import org.openpkw.weryfikator.rest.helper.AuthenticationHelper;
 import org.openpkw.weryfikator.rest.helper.ResponseDTO;
 import org.openpkw.weryfikator.rest.helper.UserHelper;
 
-import static org.junit.Assert.assertThat;
+import java.util.Map;
+
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Authentication test
@@ -15,20 +18,44 @@ import static org.hamcrest.core.IsEqual.equalTo;
  */
 public class AuthenticationTest {
 
-    public static final String DEFAULT_PASWORD = "testowy123";
+    public static final String DEFAULT_PASSWORD = "testowy123";
 
     @Test
     public void should_login_to_application() {
         //GIVEN
         String email = UserHelper.generateEmail();
-        UserHelper.createUser(email, DEFAULT_PASWORD);
+        UserHelper.createUser(email, DEFAULT_PASSWORD);
 
         //WHEN
-        ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASWORD);
+        ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASSWORD);
+        String token = AuthenticationHelper.retriveToken(responseDTO);
 
         //THEN
         assertThat(responseDTO.getHttpStatus(), is(equalTo(200)));
+        assertThat(token, notNullValue());
+
+        //clean up
+        UserHelper.callDeleteUser(email);
+    }
 
 
+
+    @Test
+    public void should_logout_from_application() {
+        //GIVEN
+        String email = UserHelper.generateEmail();
+        UserHelper.createUser(email, DEFAULT_PASSWORD);
+
+        ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASSWORD);
+
+        //WHEN
+        ResponseDTO logoutResponseDTO = AuthenticationHelper.logout(email);
+
+        //THEN
+        Map<String, String> stringMap = responseDTO.getResponseBody();
+        assertThat(responseDTO.getHttpStatus(), is(equalTo(200)));
+
+        //clean up
+        UserHelper.callDeleteUser(email);
     }
 }

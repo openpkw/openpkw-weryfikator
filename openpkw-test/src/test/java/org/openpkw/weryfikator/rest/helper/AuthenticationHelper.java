@@ -35,4 +35,23 @@ public class AuthenticationHelper {
         return form;
     }
 
+    public static String retriveToken(ResponseDTO responseDTO) {
+        return responseDTO.getResponseBody().get("access_token");
+    }
+
+    public static ResponseDTO logout(String email) {
+        return null;
+    }
+
+//    public static ResponseDTO checkToken(String accessToken) {
+//        Client client = ClientBuilder.newClient();
+//        WebTarget target = client.target(Configuration.getHost() + "/oauth/check_token/" + accessToken);
+//        Response response = target.request()
+//                //.header("Authorization", "Basic " + new String(Base64.getEncoder().encode(("openpkw:secret").getBytes())))
+//                .header("Authorization", "Bearer " + accessToken)  //add security token
+//                //.post(Entity.form(createLoginForm(email, password)), Response.class);
+//                .get(Response.class);
+//        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+//    }
+
 }

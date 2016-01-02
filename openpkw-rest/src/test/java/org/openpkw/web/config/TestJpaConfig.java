@@ -59,8 +59,7 @@ public class TestJpaConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-                .addDefaultScripts()
-//                .addScript("db/sql/user-insert-data.sql")
+//                .addDefaultScripts()
                 .build();
     }
 
