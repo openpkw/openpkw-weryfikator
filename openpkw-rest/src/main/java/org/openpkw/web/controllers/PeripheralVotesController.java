@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
  * @author kamil
  */
 @Path("peripheralVotes")
-public class PeripheralVotes {
+public class PeripheralVotesController {
 
     @Context
     private UriInfo context;
@@ -20,11 +20,11 @@ public class PeripheralVotes {
     /**
      * Creates a new instance of PeripheralVotes
      */
-    public PeripheralVotes() {
+    public PeripheralVotesController() {
     }
 
     /**
-     * Retrieves representation of an instance of org.openpkw.web.controllers.PeripheralVotes
+     * Retrieves representation of an instance of org.openpkw.web.controllers.PeripheralVotesController
      * @return an instance of java.lang.String
      */
     @GET

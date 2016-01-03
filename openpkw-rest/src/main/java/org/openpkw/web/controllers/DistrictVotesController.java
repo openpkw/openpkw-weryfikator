@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
  * @author kamil
  */
 @Path("districtVotes")
-public class DistrictVotes {
+public class DistrictVotesController {
 
     @Context
     private UriInfo context;
@@ -20,11 +20,11 @@ public class DistrictVotes {
     /**
      * Creates a new instance of DistrictVotes
      */
-    public DistrictVotes() {
+    public DistrictVotesController() {
     }
 
     /**
-     * Retrieves representation of an instance of org.openpkw.web.controllers.DistrictVotes
+     * Retrieves representation of an instance of org.openpkw.web.controllers.DistrictVotesController
      * @return an instance of java.lang.String
      */
     @GET

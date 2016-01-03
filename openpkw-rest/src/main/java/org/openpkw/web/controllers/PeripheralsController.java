@@ -11,23 +11,24 @@ import javax.ws.rs.Path;
  *
  * @author kamil
  */
-@Path("districts")
-public class Districts {
+@Path("peripherals")
+public class PeripheralsController {
 
     @Context
     private UriInfo context;
 
     /**
-     * Creates a new instance of Districts
+     * Creates a new instance of Peripherals
      */
-    public Districts() {
+    public PeripheralsController() {
     }
 
     /**
-     * Retrieves representation of an instance of org.openpkw.web.controllers.Districts
+     * Retrieves representation of an instance of org.openpkw.web.controllers.PeripheralsController
      * @return an instance of java.lang.String
      */
     @GET
+    @Path("{districtCommitteeNumber}/{peripheralCommitteeNumber}/{teritorialCode}/{town}/{street}")
     @Produces("application/json")
     public String getJson() {
         //TODO return proper representation object
