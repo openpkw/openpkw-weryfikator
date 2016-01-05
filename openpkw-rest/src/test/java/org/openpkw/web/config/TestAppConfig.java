@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Sebastian Pogorzelski
  */
 @Configuration
-@ComponentScan(basePackages = {"org.openpkw.qr", "org.openpkw.services"})
+@ComponentScan(basePackages = {"org.openpkw.qr", "org.openpkw.services", "org.openpkw.web"})
 public class TestAppConfig {
 
 }
