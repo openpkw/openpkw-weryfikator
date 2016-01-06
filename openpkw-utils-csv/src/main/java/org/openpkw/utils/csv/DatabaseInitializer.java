@@ -8,6 +8,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
 import org.openpkw.model.entity.Candidate;
@@ -36,8 +37,8 @@ public class DatabaseInitializer {
     private List<ElectionCommitteeDistrict> electionCommitteeDistrictList;
 
     public enum DistrictCsvLine {
-        City(2), 
-        Number(1), 
+        City(2),
+        Number(1),
         Name(3);
 
         private int lineNumber;
@@ -52,10 +53,10 @@ public class DatabaseInitializer {
     }
 
     public enum PeripheralCsvLine {
-        DistrictNumber(0), 
-        Name(4), 
-        Number(3), 
-        TeritorialCode(1), 
+        DistrictNumber(0),
+        Name(4),
+        Number(3),
+        TeritorialCode(1),
         AddressName(4);
 
         private int lineNumber;
@@ -70,11 +71,11 @@ public class DatabaseInitializer {
     }
 
     public enum CandidateCsvLine {
-        DistrictNumber(0), 
-        ElectionCommitteeListNumber(1), 
-        ElectionCommiteeListName(2), 
-        Number(3), 
-        Surname(4), 
+        DistrictNumber(0),
+        ElectionCommitteeListNumber(1),
+        ElectionCommiteeListName(2),
+        Number(3),
+        Surname(4),
         Name(5);
 
         private int lineNumber;
@@ -106,6 +107,7 @@ public class DatabaseInitializer {
             DatabaseInitializer databaseInitializer = new DatabaseInitializer();
             databaseInitializer.readCsvFiles();
             databaseInitializer.writeToDatabase();
+            databaseInitializer.verifyUpload();
         } catch (Exception ex) {
             log.error("main()", ex);
         }
@@ -119,6 +121,7 @@ public class DatabaseInitializer {
     }
 
     public void writeToDatabase() {
+        log.info("Starting writing to the database");
         setupEntityManagerAndInitTransacation();
         writeToDatabaseDistrictCommitteeAndAddress();
         writeToDatabaseDistrictPeripheralCommitteeAndAdress();
@@ -126,6 +129,7 @@ public class DatabaseInitializer {
         writeToDatabaseElectionDistrictCommittee();
         writeToDatabaseCandidate();
         commitTransactionAndClose();
+        log.info("Finished writing to the database");
     }
 
     private void writeToDatabaseDistrictCommitteeAndAddress() {
@@ -222,6 +226,7 @@ public class DatabaseInitializer {
                 log.warn("Failed to close file.", ex);
             }
         }
+        log.info("Loaded " + peripheralCommitteeList.size() + " peripheral committees.");
     }
 
     private Candidate getCandidate(int line, List<String[]> listAllFieldInFile, List<DistrictCommittee> districtCommitteeList) {
@@ -264,6 +269,7 @@ public class DatabaseInitializer {
                 }
             }
         }
+        log.info("Extracted " + electionCommitteeList.size() + " election committees and " + electionCommitteeDistrictList.size() + " election committee districts.");
     }
 
     private void readCandidateListFromCsv(String fileName) {
@@ -287,6 +293,7 @@ public class DatabaseInitializer {
                 log.warn("Failed to close file.", ex);
             }
         }
+        log.info("Loaded " + candidateList.size() + " candidates.");
     }
 
     private void readDistrictCommitteeListFromCsv(String fileName) {
@@ -309,6 +316,28 @@ public class DatabaseInitializer {
             } catch (Exception ex) {
                 log.warn("Failed to close file.", ex);
             }
+        }
+        log.info("Loaded " + districtCommitteeList.size() + " district committees.");
+    }
+
+    private void verifyUpload() {
+        log.info("Verifying data upload");
+        em = factory.createEntityManager();
+        getNumberOfRows("candidates", "from Candidate c");
+        getNumberOfRows("peripheral committees", "from PeripheralCommittee pc");
+        getNumberOfRows("district committees", "from DistrictCommittee dc");
+        getNumberOfRows("election committees", "from ElectionCommittee ec");
+        log.info("Data upload verification complete.");
+    }
+
+    private void getNumberOfRows(String entityName, String queryText) {
+        log.info("Loading " + entityName + ".");
+        try {
+            Query query = em.createQuery(queryText);
+            List<?> result = query.getResultList();
+            log.info("Loaded " + result.size() + " " + entityName + ".");
+        } catch (Exception ex) {
+            log.error("Failed to read " + entityName + ": " + ex.getMessage(), ex);
         }
     }
 }
