@@ -22,7 +22,7 @@
       <property name="javax.persistence.jdbc.url"  value="jdbc:mysql://localhost/openpkw?useUnicode=true&amp;characterEncoding=UTF-8" />
       <property name="javax.persistence.jdbc.user" value="openpkw" />
       <property name="javax.persistence.jdbc.password" value="lwejlr2k3jlsfedlk2j34" />
-      <property name="eclipselink.ddl-generation" value="create-tables" />
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
       <property name="eclipselink.ddl.default-table-suffix" value="engine=InnoDB"/>
       <property name="eclipselink.ddl-generation.output-mode" value="database" />
     </properties>

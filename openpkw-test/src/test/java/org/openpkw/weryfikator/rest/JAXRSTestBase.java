@@ -14,8 +14,8 @@ public class JAXRSTestBase {
 
     protected Client createClient() {
         ClientConfig configuration = new ClientConfig();
-        configuration.property(ClientProperties.CONNECT_TIMEOUT, 1000);
-        configuration.property(ClientProperties.READ_TIMEOUT, 1000);
+        configuration.property(ClientProperties.CONNECT_TIMEOUT, 5000);
+        configuration.property(ClientProperties.READ_TIMEOUT, 5000);
         return ClientBuilder.newClient(configuration);
     }
 
