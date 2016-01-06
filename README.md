@@ -55,9 +55,9 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 |  GitHub  |  https://github.com/openpkw|
 |  Mailing List|http://openpkw.pl/mailman/listinfo/openpkw-java|
 | Serwer buildów | http://cypisek.open-pkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
-| Środowisko TEST | http://dobromir.openpkw.pl:9080/openpkw/ |
-| Środowisko UAT | http://rumcajs.open-pkw.pl:9080/openpkw/ |
-| Środowisko STAGE | (jeszcze nie ma)/ |
+| Środowisko TEST | http://rumcajs.open-pkw.pl:9080/openpkw/ |
+| Środowisko UAT | http://dobromir.openpkw.pl:9080/openpkw/ |
+| Środowisko STAGE | (jeszcze nie ma) |
 | Środowisko PROD | (jeszcze nie ma) |
 
 
