@@ -19,8 +19,8 @@
 
 #### Środowiska
 
-- TEST (automatyczne testy integracyjne i akceptacyjne): http://dobromir.openpkw.pl:9080/openpkw/
-- UAT (ręczne testy integracyjne i regresyjne): http://rumcajs.open-pkw.pl:9080/openpkw/
+- TEST (automatyczne testy integracyjne i akceptacyjne): http://rumcajs.open-pkw.pl:9080/openpkw/
+- UAT (ręczne testy integracyjne i regresyjne): http://dobromir.openpkw.pl:9080/openpkw/
 - STAGE (ręczne testy regresyjne, demonstrowanie nowych funkcji, szkolenia): jeszcze nie ma
 - PROD (wykorzystywane podczas wyborów): jeszcze nie ma
 
