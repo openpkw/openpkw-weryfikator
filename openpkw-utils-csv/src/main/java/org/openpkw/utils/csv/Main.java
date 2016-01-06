@@ -73,7 +73,8 @@ public class Main {
     public final static int INDEX_EnvelopesThrownToBallotBox = 17;
 
     public final static String URL_ADDRESS_LOCALHOST = "http://localhost:8080/openpkw-dokument-generator/service/protocol";
-    public final static String URL_ADDRESS_DEV = "http://dobromir.openpkw.pl:9080/openpkw-dokument-generator/service/protocol";
+    public final static String URL_ADDRESS_DEV = "http://rumcajs.open-pkw.pl:9080/openpkw-dokument-generator/service/protocol";
+    public final static String URL_ADDRESS_UAT = "http://dobromir.openpkw.pl:9080/openpkw-dokument-generator/service/protocol";
 
     public static void main(String[] args) {
         try {

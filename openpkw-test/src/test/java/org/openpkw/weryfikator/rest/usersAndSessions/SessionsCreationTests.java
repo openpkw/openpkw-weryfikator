@@ -2,24 +2,23 @@ package org.openpkw.weryfikator.rest.usersAndSessions;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.*;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 import java.util.Calendar;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openpkw.weryfikator.rest.Configuration;
+import org.openpkw.weryfikator.rest.JAXRSTestBase;
 
-public class SessionsCreationTests {
+public class SessionsCreationTests extends JAXRSTestBase {
 
     private int httpStatus;
     private Map<String, String> responseBody;
@@ -90,7 +89,7 @@ public class SessionsCreationTests {
     }   
     
     private void callCreateSession(String userCredentials) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/sessions/");
         Response response = target.request().post(Entity.json(userCredentials), Response.class);
         httpStatus = response.getStatus();
@@ -98,7 +97,7 @@ public class SessionsCreationTests {
     }
 
     private void callCreateUser(String testContent) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/");
         Response response = target.request().post(Entity.json(testContent), Response.class);
         httpStatus = response.getStatus();
@@ -106,7 +105,7 @@ public class SessionsCreationTests {
     }
 
     private void callGetUser(String email) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().get(Response.class);
         httpStatus = response.getStatus();
@@ -114,29 +113,10 @@ public class SessionsCreationTests {
     }
 
     private void callDeleteUser(String email) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().delete(Response.class);
         httpStatus = response.getStatus();
         responseBody = getMessageBody(response);
-    }
-
-    private Map<String, String> getMessageBody(Response response) {
-        String json = null;
-        try {
-            json = response.readEntity(String.class);
-            return jsonToMap(json);
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to deserialize message body: " + ex.getMessage() + "\nMessage body:\n" + json, ex);
-        }
-    }
-
-    private Map<String, String> jsonToMap(String json) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, Map.class);
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to convert String to json: " + ex.getMessage() + " Input: " + json, ex);
-        }
     }
 }

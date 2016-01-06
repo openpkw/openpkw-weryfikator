@@ -1,22 +1,21 @@
 package org.openpkw.weryfikator.rest.qrCodes;
 
-import org.junit.Test;
-import org.openpkw.weryfikator.rest.Configuration;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.openpkw.weryfikator.rest.Configuration;
+import org.openpkw.weryfikator.rest.JAXRSTestBase;
 
 /**
  * Test for QR REST service
  * @author Sebastian Pogorzelski
  */
-public class When_sending_POST_request_to_qrResult {
-
+public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
 
     private static final String QR_EMPTY_JSON = "{}";
     private static final String QR_JSON = "{\n" +
@@ -37,7 +36,7 @@ public class When_sending_POST_request_to_qrResult {
     @Test
     public void Should_return_BAD_REQUEST_status_for_empty_request() {
 
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_EMPTY_JSON));
 
@@ -48,7 +47,7 @@ public class When_sending_POST_request_to_qrResult {
     // Requires initial data to be present in the database
     public void Should_return_OK_status() {
 
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_JSON));
 
@@ -58,7 +57,7 @@ public class When_sending_POST_request_to_qrResult {
     @Test
     public void Should_return_NOT_FOUND_status() {
 
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
         Response response = target.request().post(Entity.json(QR_WRONG_DATA_JSON));
 

@@ -13,11 +13,14 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openpkw.weryfikator.rest.Configuration;
+import org.openpkw.weryfikator.rest.JAXRSTestBase;
 
-public class UsersCreationTests {
+public class UsersCreationTests extends JAXRSTestBase {
 
     private int httpStatus;
     private Map<String, String> responseBody;
@@ -72,7 +75,7 @@ public class UsersCreationTests {
     }
 
     private void callCreateUser(String testContent) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/");
         Response response = target.request().post(Entity.json(testContent), Response.class);
         httpStatus = response.getStatus();
@@ -80,7 +83,7 @@ public class UsersCreationTests {
     }
 
     private void callGetUser(String email) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().get(Response.class);
         httpStatus = response.getStatus();
@@ -88,29 +91,10 @@ public class UsersCreationTests {
     }
 
     private void callDeleteUser(String email) {
-        Client client = ClientBuilder.newClient();
+        Client client = createClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().delete(Response.class);
         httpStatus = response.getStatus();
         responseBody = getMessageBody(response);
-    }
-
-    private Map<String, String> getMessageBody(Response response) {
-        String json = null;
-        try {
-            json = response.readEntity(String.class);
-            return jsonToMap(json);
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to deserialize message body: " + ex.getMessage() + "\nMessage body:\n" + json, ex);
-        }
-    }
-
-    private Map<String, String> jsonToMap(String json) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, Map.class);
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to convert String to json: " + ex.getMessage() + " Input: " + json, ex);
-        }
     }
 }
