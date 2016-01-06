@@ -10,6 +10,10 @@
     <artifactId>openpkw-test</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <skipIntegrationTests>true</skipIntegrationTests>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -61,7 +65,7 @@
                         <include>**/When*.java</include>
                         <include>**/*Tests.java</include>
                     </includes>
-                    <skipTests>true</skipTests>
+                    <skipTests>${skipIntegrationTests}</skipTests>
                 </configuration>
             </plugin>
         </plugins>
