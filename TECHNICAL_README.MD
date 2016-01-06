@@ -70,7 +70,7 @@ Parametr *openpkw-env* określa na które środowisko robimy deployment. Podczas
 
 W katalogu głównym projektu:
 
-*mvn verify*
+*mvn verify -Dmaven.test.failure.ignore=false -DskipIntegrationTests=false*
 
 Komenda ta uruchomi testy względem aplikacji rozproszonej w środowisku TEST (i zawsze na tym, na razie URLe są zahardcodowane).
 
