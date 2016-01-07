@@ -45,7 +45,7 @@
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
-                <target.server.url>http://${wildfly.management.host}:9080/openpkw</target.server.url>
+                <target.server.url>http://${wildfly.management.host}:8080/openpkw</target.server.url>
             </properties>
         </profile>
         <profile>
@@ -61,7 +61,7 @@
                 <wildfly.management.port>4501</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
-                <target.server.url>http://${wildfly.management.host}:9080/openpkw</target.server.url>
+                <target.server.url>http://${wildfly.management.host}:4500/openpkw</target.server.url>
             </properties>
         </profile>
         <profile>
