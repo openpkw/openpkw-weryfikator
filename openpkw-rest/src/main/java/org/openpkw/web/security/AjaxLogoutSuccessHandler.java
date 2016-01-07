@@ -40,7 +40,6 @@ public class AjaxLogoutSuccessHandler extends AbstractAuthenticationTargetUrlReq
                 tokenStore.removeAccessToken(oAuth2AccessToken);
             }
         }
-
         response.setStatus(HttpServletResponse.SC_OK);
     }
 }

@@ -2,9 +2,8 @@ package org.openpkw.web.security.helper;
 
 import org.openpkw.model.entity.User;
 import org.openpkw.model.entity.UserType;
-import org.openpkw.web.security.entity.Authority;
-import org.openpkw.web.security.entity.UserDTO;
-import org.springframework.security.core.GrantedAuthority;
+import org.openpkw.web.security.dto.Authority;
+import org.openpkw.web.security.dto.AuthUserDTO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
@@ -13,21 +12,21 @@ import java.time.ZoneId;
 import java.util.List;
 
 /**
- * Builder for user security entity
+ * Builder for user security dto
  *
  * @author sebastian.pogorzelski
  */
-public class UserBuilder {
+public class AuthUserBuilder {
 
-    private UserDTO userDTO = new UserDTO();
+    private AuthUserDTO authUserDTO = new AuthUserDTO();
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserBuilder(String username, String password, List<Authority> authorities) {
-        userDTO.setUsername(username);
-        userDTO.setPassword(encoder.encode(password));
-        userDTO.setAuthorities(authorities);
-        userDTO.setEnabled(true);
-        userDTO.setExpirationDate(
+    public AuthUserBuilder(String username, String password, List<Authority> authorities) {
+        authUserDTO.setUsername(username);
+        authUserDTO.setPassword(encoder.encode(password));
+        authUserDTO.setAuthorities(authorities);
+        authUserDTO.setEnabled(true);
+        authUserDTO.setExpirationDate(
                 Date.from(
                         LocalDate
                                 .now()
@@ -39,14 +38,14 @@ public class UserBuilder {
         );
     }
 
-    public UserBuilder(User user) {
-        userDTO.setUsername(user.getEmail());
-        userDTO.setPassword(user.getPassword());
+    public AuthUserBuilder(User user) {
+        authUserDTO.setUsername(user.getEmail());
+        authUserDTO.setPassword(user.getPassword());
         if (user.getUserType() != null) {
-            userDTO.addAuthority(createAuthority(user.getUserType()));
+            authUserDTO.addAuthority(createAuthority(user.getUserType()));
         }
-        userDTO.setEnabled(user.getIsActive());
-        userDTO.setExpirationDate(
+        authUserDTO.setEnabled(user.getIsActive());
+        authUserDTO.setExpirationDate(
                 Date.from(
                         LocalDate
                                 .now()
@@ -63,8 +62,8 @@ public class UserBuilder {
         return new Authority(userType.toString());
     }
 
-    public UserDTO build() {
-        return userDTO;
+    public AuthUserDTO build() {
+        return authUserDTO;
     }
 
 }

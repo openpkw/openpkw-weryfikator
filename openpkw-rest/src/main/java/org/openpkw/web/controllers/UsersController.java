@@ -6,7 +6,9 @@ import org.openpkw.model.entity.UserType;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.UserDeviceRepository;
 import org.openpkw.repositories.UserRepository;
-import org.openpkw.web.dto.NewUserDTO;
+import org.openpkw.web.dto.ResponseDTO;
+import org.openpkw.web.dto.UserDTO;
+import org.openpkw.web.helper.UserBuilder;
 import org.openpkw.web.validation.RequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
 import org.openpkw.web.validation.RestClientException;
@@ -43,7 +45,7 @@ public class UsersController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<Map<String, String>> register(@RequestBody NewUserDTO userRegister) {
+    public ResponseEntity<Map<String, String>> register(@RequestBody UserDTO userRegister) {
         try {
             registerUserValidator.validateUserRegistration(userRegister);
         } catch (RestClientException ex) {
@@ -77,13 +79,13 @@ public class UsersController {
      */
     @RequestMapping(value = "/{email:.+}", method = RequestMethod.GET, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<Map<String, String>> get(@PathVariable String email) {
+    public ResponseEntity<UserDTO> get(@PathVariable String email) throws InstantiationException, IllegalAccessException {
         Optional<User> user = userRepository.findByEmailAddress(email);
 
         if (user.isPresent()) {
-            return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, userToJson(user.get()));
+            return new ResponseEntity<>(userToJson(user.get()), HttpStatus.OK);
         } else {
-            return buildResponse(RestClientErrorMessage.USER_NOT_FOUND, HttpStatus.BAD_REQUEST, null);
+            return new ResponseEntity<>(ResponseDTO.buildErrorMessage(RestClientErrorMessage.USER_NOT_FOUND, UserDTO.class), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -112,12 +114,11 @@ public class UsersController {
     }
 
     // TODO: Użyć jakiejś biblioteki
-    private String userToJson(User user) {
-        String result = "{";
-        result += "\"firstName\":\"" + user.getFirstName() + "\",";
-        result += "\"lastName\":\"" + user.getLastName() + "\",";
-        result += "\"email\":\"" + user.getEmail() + "\"";
-        result += "}";
-        return result;
+    private UserDTO userToJson(User user) {
+        return new UserBuilder()
+                .withEmail(user.getEmail())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .build();
     }
 }

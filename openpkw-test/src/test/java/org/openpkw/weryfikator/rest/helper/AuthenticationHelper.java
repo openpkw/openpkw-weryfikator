@@ -39,8 +39,13 @@ public class AuthenticationHelper {
         return responseDTO.getResponseBody().get("access_token");
     }
 
-    public static ResponseDTO logout(String email) {
-        return null;
+    public static ResponseDTO logout(String token) {
+        Client client = ClientBuilder.newClient();
+        WebTarget target = client.target(Configuration.getHost() + "/api/logout");
+        Response response = target.request()
+                .header("Authorization", "Bearer " + token)  //add security token
+                .delete();
+        return new ResponseDTO(response.getStatus(), null);
     }
 
 //    public static ResponseDTO checkToken(String accessToken) {

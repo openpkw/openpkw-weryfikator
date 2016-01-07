@@ -1,4 +1,4 @@
-package org.openpkw.web.security.entity;
+package org.openpkw.web.security.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 

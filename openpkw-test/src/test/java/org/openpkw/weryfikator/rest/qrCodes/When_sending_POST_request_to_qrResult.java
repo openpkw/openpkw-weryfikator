@@ -42,14 +42,12 @@ public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
     @Test
     public void Should_return_BAD_REQUEST_status_for_empty_request() {
 
-        Client client = createClient();
         //GIVEN
         String email = UserHelper.generateEmail();
         String token = createUserAndLogin(email);
 
         //WHEN
-        String qrEmptyJson = QR_EMPTY_JSON;
-        Response response = callQr(token, qrEmptyJson);
+        Response response = callQr(token, QR_EMPTY_JSON);
 
         //THEN
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST_STATUS);
@@ -58,30 +56,16 @@ public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
         UserHelper.callDeleteUser(email);
     }
 
-    private Response callQr(String token, String qrEmptyJson) {
-        Client client;
-        client = ClientBuilder.newClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        return target.request()
-                .header("Authorization", "Bearer " + token)  //add security token
-                .post(Entity.json(qrEmptyJson));
-    }
-
     @Test
     // Requires initial data to be present in the database
     public void Should_return_OK_status() {
 
-        Client client = createClient();
         //GIVEN
         String email = UserHelper.generateEmail();
         String token = createUserAndLogin(email);
 
         //WHEN
-        client = ClientBuilder.newClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        Response response = target.request()
-                .header("Authorization", "Bearer " + token)  //add security token
-                .post(Entity.json(QR_JSON));
+        Response response = callQr(token, QR_JSON);
 
         //THEN
         assertThat(response.getStatus()).isEqualTo(OK_STATUS);
@@ -93,16 +77,13 @@ public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
     @Test
     public void Should_return_NOT_FOUND_status() {
 
-        Client client = createClient();
         //GIVEN
         String email = UserHelper.generateEmail();
         String token = createUserAndLogin(email);
 
-        client = ClientBuilder.newClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        Response response = target.request()
-                .header("Authorization", "Bearer " + token)  //add security token
-                .post(Entity.json(QR_WRONG_DATA_JSON));
+        //WHEN
+        Response response = callQr(token, QR_WRONG_DATA_JSON);
+
 
         //THEN
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND_STATUS);
@@ -116,5 +97,14 @@ public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
 
         ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASSWORD);
         return AuthenticationHelper.retriveToken(responseDTO);
+    }
+
+    private Response callQr(String token, String jsonMessage) {
+        Client client;
+        client = ClientBuilder.newClient();
+        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
+        return target.request()
+                .header("Authorization", "Bearer " + token)  //add security token
+                .post(Entity.json(jsonMessage));
     }
 }

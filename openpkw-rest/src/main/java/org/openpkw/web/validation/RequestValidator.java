@@ -2,13 +2,13 @@ package org.openpkw.web.validation;
 
 import org.openpkw.utils.StringUtils;
 import org.openpkw.web.dto.UserCredentialsDTO;
-import org.openpkw.web.dto.NewUserDTO;
+import org.openpkw.web.dto.UserDTO;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RequestValidator {
 
-    public void validateUserRegistration(NewUserDTO newUser) throws RestClientException {
+    public void validateUserRegistration(UserDTO newUser) throws RestClientException {
         if (StringUtils.isEmpty(newUser.getEmail())) {
             throw new RestClientException(RestClientErrorMessage.USER_EMAIL_IS_MANDATORY);
         }

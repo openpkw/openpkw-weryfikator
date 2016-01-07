@@ -1,4 +1,4 @@
-package org.openpkw.web.security.entity;
+package org.openpkw.web.security.dto;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,7 @@ import java.util.List;
  * User for authentication
  * @author sebastian.pogorzelski
  */
-public class UserDTO implements UserDetails {
+public class AuthUserDTO implements UserDetails {
 
     private String username;
     private String password;
@@ -22,7 +22,7 @@ public class UserDTO implements UserDetails {
     private List<Authority> authorities = new ArrayList<>();
 
 
-    public UserDTO() {
+    public AuthUserDTO() {
     }
 
     @Override

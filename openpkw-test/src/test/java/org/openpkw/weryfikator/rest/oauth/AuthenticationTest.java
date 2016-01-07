@@ -5,8 +5,6 @@ import org.openpkw.weryfikator.rest.helper.AuthenticationHelper;
 import org.openpkw.weryfikator.rest.helper.ResponseDTO;
 import org.openpkw.weryfikator.rest.helper.UserHelper;
 
-import java.util.Map;
-
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -47,12 +45,12 @@ public class AuthenticationTest {
         UserHelper.createUser(email, DEFAULT_PASSWORD);
 
         ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASSWORD);
+        String token = AuthenticationHelper.retriveToken(responseDTO);
 
         //WHEN
-        ResponseDTO logoutResponseDTO = AuthenticationHelper.logout(email);
+        ResponseDTO logoutResponseDTO = AuthenticationHelper.logout(token);
 
         //THEN
-        Map<String, String> stringMap = responseDTO.getResponseBody();
         assertThat(responseDTO.getHttpStatus(), is(equalTo(200)));
 
         //clean up
