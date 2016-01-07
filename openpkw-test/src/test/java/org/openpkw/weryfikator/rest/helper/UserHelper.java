@@ -20,21 +20,21 @@ public class UserHelper {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/");
         Response response = target.request().post(Entity.json(testContent), Response.class);
-        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+        return MessageHelper.getResponseDTO(response);
     }
 
     public static  ResponseDTO callGetUser(String email) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().get(Response.class);
-        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+        return MessageHelper.getResponseDTO(response);
     }
 
     public static  ResponseDTO callDeleteUser(String email) {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
         Response response = target.request().delete(Response.class);
-        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+        return MessageHelper.getResponseDTO(response);
     }
 
     public static ResponseDTO createUser(String email, String password) {

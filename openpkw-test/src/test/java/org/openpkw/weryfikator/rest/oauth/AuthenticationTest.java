@@ -51,7 +51,7 @@ public class AuthenticationTest {
         ResponseDTO logoutResponseDTO = AuthenticationHelper.logout(token);
 
         //THEN
-        assertThat(responseDTO.getHttpStatus(), is(equalTo(200)));
+        assertThat(logoutResponseDTO.getHttpStatus(), is(equalTo(200)));
 
         //clean up
         UserHelper.callDeleteUser(email);

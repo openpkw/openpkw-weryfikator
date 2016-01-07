@@ -29,4 +29,8 @@ public class MessageHelper {
             throw new RuntimeException("Failed to convert String to json: " + ex.getMessage() + " Input: " + json, ex);
         }
     }
+
+    public static ResponseDTO getResponseDTO(Response response) {
+        return new ResponseDTO(response.getStatus(), getMessageBody(response));
+    }
 }

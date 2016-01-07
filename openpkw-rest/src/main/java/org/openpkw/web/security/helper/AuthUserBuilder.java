@@ -21,23 +21,6 @@ public class AuthUserBuilder {
     private AuthUserDTO authUserDTO = new AuthUserDTO();
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public AuthUserBuilder(String username, String password, List<Authority> authorities) {
-        authUserDTO.setUsername(username);
-        authUserDTO.setPassword(encoder.encode(password));
-        authUserDTO.setAuthorities(authorities);
-        authUserDTO.setEnabled(true);
-        authUserDTO.setExpirationDate(
-                Date.from(
-                        LocalDate
-                                .now()
-                                .plusDays(30)
-                                .atStartOfDay()
-                                .atZone(ZoneId.systemDefault())
-                                .toInstant()
-                )
-        );
-    }
-
     public AuthUserBuilder(User user) {
         authUserDTO.setUsername(user.getEmail());
         authUserDTO.setPassword(user.getPassword());

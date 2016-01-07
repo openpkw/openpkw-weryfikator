@@ -1,15 +1,9 @@
 package org.openpkw.weryfikator.rest.usersAndSessions;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-
-import java.util.Calendar;
-import java.util.Map;
-import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openpkw.weryfikator.rest.Configuration;
+import org.openpkw.weryfikator.rest.JAXRSTestBase;
 import org.openpkw.weryfikator.rest.helper.MessageHelper;
 import org.openpkw.weryfikator.rest.helper.ResponseDTO;
 
@@ -21,10 +15,6 @@ import javax.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openpkw.weryfikator.rest.Configuration;
-import org.openpkw.weryfikator.rest.JAXRSTestBase;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -105,7 +95,7 @@ public class SessionsCreationTests extends JAXRSTestBase {
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.getHost() + "/sessions/");
         Response response = target.request().post(Entity.json(userCredentials), Response.class);
-        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+        return MessageHelper.getResponseDTO(response);
     }
 
 }

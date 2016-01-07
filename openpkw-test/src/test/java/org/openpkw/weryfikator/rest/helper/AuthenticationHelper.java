@@ -22,7 +22,7 @@ public class AuthenticationHelper {
         Response response = target.request()
                 .header("Authorization", "Basic " + new String(Base64.getEncoder().encode(("openpkw:secret").getBytes())))
                 .post(Entity.form(createLoginForm(email, password)), Response.class);
-        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
+        return MessageHelper.getResponseDTO(response);
     }
 
     private static Form createLoginForm(String email, String password) {
@@ -47,16 +47,5 @@ public class AuthenticationHelper {
                 .delete();
         return new ResponseDTO(response.getStatus(), null);
     }
-
-//    public static ResponseDTO checkToken(String accessToken) {
-//        Client client = ClientBuilder.newClient();
-//        WebTarget target = client.target(Configuration.getHost() + "/oauth/check_token/" + accessToken);
-//        Response response = target.request()
-//                //.header("Authorization", "Basic " + new String(Base64.getEncoder().encode(("openpkw:secret").getBytes())))
-//                .header("Authorization", "Bearer " + accessToken)  //add security token
-//                //.post(Entity.form(createLoginForm(email, password)), Response.class);
-//                .get(Response.class);
-//        return new ResponseDTO(response.getStatus(), MessageHelper.getMessageBody(response));
-//    }
 
 }

@@ -1,30 +1,28 @@
 package org.openpkw.web.controllers;
 
-import java.security.SecureRandom;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-
 import org.openpkw.model.entity.User;
 import org.openpkw.model.entity.UserDevice;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.UserDeviceRepository;
 import org.openpkw.repositories.UserRepository;
-import org.openpkw.web.dto.UserCredentialsDTO;
 import org.openpkw.web.dto.Token;
+import org.openpkw.web.dto.UserCredentialsDTO;
 import org.openpkw.web.validation.RequestValidator;
 import org.openpkw.web.validation.RestClientErrorMessage;
 import org.openpkw.web.validation.RestClientException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @OpenPKWAPIController
 @Transactional
