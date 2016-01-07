@@ -12,7 +12,40 @@
 
     <properties>
         <skipIntegrationTests>true</skipIntegrationTests>
+        <testServerAddress>http://rumcajs.open-pkw.pl:9080/openpkw</testServerAddress>
     </properties>
+
+    <!-- Test environments -->
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <skipIntegrationTests>false</skipIntegrationTests>
+                <testServerAddress>http://localhost:8080/openpkw</testServerAddress>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <skipIntegrationTests>false</skipIntegrationTests>
+                <testServerAddress>http://rumcajs.open-pkw.pl:9080/openpkw</testServerAddress>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <skipIntegrationTests>false</skipIntegrationTests>
+                <testServerAddress>http://dobromir.openpkw.pl:9080/openpkw</testServerAddress>
+            </properties>
+        </profile>
+        <profile>
+            <id>vagrant</id>
+            <properties>
+                <skipIntegrationTests>false</skipIntegrationTests>
+                <testServerAddress>http://localhost:4500/openpkw</testServerAddress>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
         <dependency>
@@ -71,6 +104,9 @@
                         <include>**/*Tests.java</include>
                     </includes>
                     <skipTests>${skipIntegrationTests}</skipTests>
+                    <systemPropertyVariables>
+                        <testServerAddress>${testServerAddress}</testServerAddress>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>
