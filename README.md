@@ -8,19 +8,15 @@ W obecnej chwili podstawowym celem zespołu developerów Java jest stworzenie ro
 
 | Członek  | Rola  |
 | ------------- | ------------- |
-|Kamil Gr|   Developer Android|
-|Karol_D | Developer Java BackEnd |
-|Lukasz_F |  Developer Java  BackEnd  |
+| Bartek S| Frontend Developer |
+|Kamil S| Java BackEnd Developer |
+|Kamil Gr|  Android Developer |
+|Lukasz_F |  Java  BackEnd Developer  |
 |Rafal_R | Koordynacja/Organizacja  |
-|Remek M |  Developer Java  BackEnd |
-|Sebastian C|  Developer Java  BackEnd  |
-|Sebastian P|   Developer Java  BackEnd|
-|Waldek M|  Developer Java  BackEnd |
-
-
-## RoadMap
-
-To Be Done
+|Remek M |  Java  BackEnd Developer |
+|Sebastian C|  Java  BackEnd Developer   |
+|Sebastian P|  Java  BackEnd Developer |
+|Mirososlaw G| Frontend & Test Developer |
 
 
 ## Jak do nas dołączyć?
@@ -32,7 +28,7 @@ Kontakt:
   
 ## Informacje o projekcie OpenPKW Java
 
-Strona główna projektu: https://openpkw.pl/ 
+Strona główna projektu: http://openpkw.pl/ 
 
 GitHub: https://github.com/openpkw/openpkw/tree/master/java
 
@@ -44,7 +40,7 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 - Wszyscy developerzy mają pełny dostęp do repozytorium
 - Każdy feature implementowany jest na branchu. Przed mergem do mastera deweloperzy spotykają się i omawiają propozycje zmian
 - Wykorzystujemy metodologie Agile i spotykamy sie w sprinatch co wtorek o 20
-- Jesli zajdzie potrzeba spotykamy się częsciej komunikując sie na Skype (grupa OpenPKWJava ) bądz przez liste mailingową ( openpkw-java@openpkw.pl ) 
+- Jesli zajdzie potrzeba spotykamy się częsciej komunikując sie na Skype (grupa OpenPKWJava ) 
 
 
 | Element  | Link  |
@@ -53,7 +49,6 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 |  Draw.io |    https://www.draw.io  |
 | Dillinger.io  |  http://dillinger.io |
 |  GitHub  |  https://github.com/openpkw|
-|  Mailing List|http://openpkw.pl/mailman/listinfo/openpkw-java|
 | Serwer buildów | http://cypisek.open-pkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
 | Środowisko TEST | http://rumcajs.open-pkw.pl:9080/openpkw/ |
 | Środowisko UAT | http://dobromir.openpkw.pl:9080/openpkw/ |
@@ -65,6 +60,7 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 
 1. Doświadczonych (bądz tez nie - ale pełnych zapału) developerów JAVA
 2. Programistę HTML, JavaScript, Angular, Bootstrap  
+3. Testerów Spock 
 
 
 ## Wizja Systemu
@@ -117,8 +113,8 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 
 ### Mobile
 1. Android 4.x - Lolipop
-2. Ios 7.xx
-3. WindowsPhone 8.x
+2. Ios 7.xx 
+3. WindowsPhone 8.x 
 
 
 ### Backend (Przewidziana Architektura)
