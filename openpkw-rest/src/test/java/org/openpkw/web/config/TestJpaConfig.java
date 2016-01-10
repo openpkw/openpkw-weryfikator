@@ -40,7 +40,7 @@ public class TestJpaConfig {
         jpaProperties.put("hibernate.hbm2ddl.auto", true);
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         jpaProperties.put("hibernate.hbm2ddl.auto", "create-drop");
-//        jpaProperties.put("hibernate.hbm2ddl.import_files", "db/sql/user-insert-data.sql");
+        //jpaProperties.put("hibernate.hbm2ddl.import_files", "scheme.sql");
         factory.setJpaProperties(jpaProperties);
         factory.afterPropertiesSet();
         factory.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
@@ -59,7 +59,7 @@ public class TestJpaConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-//                .addScript("db/sql/user-insert-data.sql")
+//                .addDefaultScripts()
                 .build();
     }
 

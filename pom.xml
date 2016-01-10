@@ -28,6 +28,8 @@
         <wildfly.plugin.version>1.1.0.Alpha2</wildfly.plugin.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
 		<commons-dbcp.version>1.2.2</commons-dbcp.version>
+	
+	<target.server.url>http://rumcajs.open-pkw.pl:9080/openpkw</target.server.url>
     </properties>
 
 
@@ -45,6 +47,7 @@
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
+                <target.server.url>http://${wildfly.management.host}:8080/openpkw</target.server.url>
             </properties>
         </profile>
         <profile>
@@ -60,6 +63,7 @@
                 <wildfly.management.port>4501</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
+                <target.server.url>http://${wildfly.management.host}:4500/openpkw</target.server.url>
             </properties>
         </profile>
         <profile>
@@ -75,6 +79,7 @@
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
+                <target.server.url>http://${wildfly.management.host}:9080/openpkw</target.server.url>
             </properties>
         </profile>
         <profile>
@@ -90,6 +95,7 @@
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>
+                <target.server.url>http://${wildfly.management.host}:9080/openpkw</target.server.url>
             </properties>
         </profile>
     </profiles>
@@ -167,6 +173,28 @@
                 <artifactId>spring-security-config</artifactId>
                 <version>${spring.security.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.security.oauth</groupId>
+                <artifactId>spring-security-oauth2</artifactId>
+                <version>2.0.7.RELEASE</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-aop</artifactId>
+                    </exclusion>
+
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-expression</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.4</version>
+            </dependency>
 
             <!--JDBC -->
             <dependency>
@@ -219,12 +247,6 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
                 <version>1.10.8</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

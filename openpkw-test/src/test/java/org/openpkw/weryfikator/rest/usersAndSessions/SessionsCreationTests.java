@@ -1,27 +1,26 @@
 package org.openpkw.weryfikator.rest.usersAndSessions;
 
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsNull.notNullValue;
-
-import java.util.Calendar;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openpkw.weryfikator.rest.Configuration;
 import org.openpkw.weryfikator.rest.JAXRSTestBase;
+import org.openpkw.weryfikator.rest.helper.MessageHelper;
+import org.openpkw.weryfikator.rest.helper.ResponseDTO;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+import java.util.Calendar;
+import java.util.UUID;
+
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.openpkw.weryfikator.rest.helper.UserHelper.*;
 
 public class SessionsCreationTests extends JAXRSTestBase {
-
-    private int httpStatus;
-    private Map<String, String> responseBody;
 
     @Test
     public void Should_return_session_token_if_user_exists_and_password_is_valid() {
@@ -30,24 +29,26 @@ public class SessionsCreationTests extends JAXRSTestBase {
         String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"password\":\"" + password + "\"}";
 
         // Creating user
-        callCreateUser(testContent);
-        Assert.assertThat(responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
-        Assert.assertThat(responseBody.get("errorCode"), is(equalTo("0")));
-        Assert.assertThat(responseBody.get("errorMessage"), is(equalTo("OK")));
+        ResponseDTO createUserResponse = callCreateUser(testContent);
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorMessage"), createUserResponse.getHttpStatus(), is(equalTo(200)));
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorCode"), is(equalTo("0")));
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorMessage"), is(equalTo("OK")));
 
         // Trygint to log in
         String userCredentials = "{\"email\":\"" + testEmail + "\",\"password\":\"" + password + "\"}";
-        callCreateSession(userCredentials);
-        Assert.assertThat("Failed to log in using valid credentials:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
-        Assert.assertThat("Session token was not returned: " + responseBody.get("data"), responseBody.get("data"), is(notNullValue()));
+        ResponseDTO session = callCreateSession(userCredentials);
+        Assert.assertThat("Failed to log in using valid credentials:" + session.getResponseBody().get("errorMessage"), session.getHttpStatus(), is(equalTo(200)));
+        Assert.assertThat("Session token was not returned: " + session.getResponseBody().get("data"), session.getResponseBody().get("data"), is(notNullValue()));
 
         // Deleting user after test
-        callDeleteUser(testEmail);
-        Assert.assertThat("Failed to delete test user during test teardown: " + responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
+        ResponseDTO callDeleteUserResponse = callDeleteUser(testEmail);
+        Assert.assertThat("Failed to delete test user during test teardown: " + callDeleteUserResponse.getResponseBody().get("errorMessage"),
+                                                                                callDeleteUserResponse.getHttpStatus(), is(equalTo(200)));
 
         // Checking that user has been deleted
-        callGetUser(testEmail);
-        Assert.assertThat("Test user has not been deleted after test teardown:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
+        ResponseDTO callGetUserResponse = callGetUser(testEmail);
+        Assert.assertThat("Test user has not been deleted after test teardown:" + callGetUserResponse.getResponseBody().get("errorMessage"),
+                                                                                  callGetUserResponse.getHttpStatus(), is(equalTo(400)));
     }
 
     @Test
@@ -57,24 +58,26 @@ public class SessionsCreationTests extends JAXRSTestBase {
         String testContent = "{\"email\":\"" + testEmail + "\",\"first_name\":\"first-name\",\"last_name\":\"last-name\",\"password\":\"" + password+"\"}";
 
         // Creating user
-        callCreateUser(testContent);
-        Assert.assertThat(responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
-        Assert.assertThat(responseBody.get("errorCode"), is(equalTo("0")));
-        Assert.assertThat(responseBody.get("errorMessage"), is(equalTo("OK")));
+        ResponseDTO createUserResponse = callCreateUser(testContent);
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorMessage"), createUserResponse.getHttpStatus(), is(equalTo(200)));
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorCode"), is(equalTo("0")));
+        Assert.assertThat(createUserResponse.getResponseBody().get("errorMessage"), is(equalTo("OK")));
 
         // Trygint to log in
         String userCredentials = "{\"email\":\"" + testEmail + "\",\"password\":\"invalid-password\"}";
-        callCreateSession(userCredentials);
-        Assert.assertThat("Failed to log in using valid credentials:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
-        Assert.assertThat("Error code for INVALID_PASSWORD should be returned", responseBody.get("errorCode"), is(equalTo("301")));
+        ResponseDTO session = callCreateSession(userCredentials);
+        Assert.assertThat("Failed to log in using valid credentials:" + session.getResponseBody().get("errorMessage"), session.getHttpStatus(), is(equalTo(400)));
+        Assert.assertThat("Error code for INVALID_PASSWORD should be returned", session.getResponseBody().get("errorCode"), is(equalTo("301")));
 
         // Deleting user after test
-        callDeleteUser(testEmail);
-        Assert.assertThat("Failed to delete test user during test teardown: " + responseBody.get("errorMessage"), httpStatus, is(equalTo(200)));
+        ResponseDTO callDeleteUserResponse = callDeleteUser(testEmail);
+        Assert.assertThat("Failed to delete test user during test teardown: " + callDeleteUserResponse.getResponseBody().get("errorMessage"),
+                                                                                callDeleteUserResponse.getHttpStatus(), is(equalTo(200)));
 
         // Checking that user has been deleted
-        callGetUser(testEmail);
-        Assert.assertThat("Test user has not been deleted after test teardown:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
+        ResponseDTO callGetUserResponse = callGetUser(testEmail);
+        Assert.assertThat("Test user has not been deleted after test teardown:" + callGetUserResponse.getResponseBody().get("errorMessage"),
+                                                                                  callGetUserResponse.getHttpStatus(), is(equalTo(400)));
     }    
     
     @Test
@@ -83,40 +86,16 @@ public class SessionsCreationTests extends JAXRSTestBase {
 
         // Trygint to log in
         String userCredentials = "{\"email\":\"" + testEmail + "\",\"password\":\"random-password\"}";
-        callCreateSession(userCredentials);
-        Assert.assertThat("Failed to log in using valid credentials:" + responseBody.get("errorMessage"), httpStatus, is(equalTo(400)));
-        Assert.assertThat("Error code for USER_NOT_FOUND should be returned", responseBody.get("errorCode"), is(equalTo("300")));
-    }   
-    
-    private void callCreateSession(String userCredentials) {
-        Client client = createClient();
+        ResponseDTO session = callCreateSession(userCredentials);
+        Assert.assertThat("Failed to log in using valid credentials:" + session.getResponseBody().get("errorMessage"), session.getHttpStatus(), is(equalTo(400)));
+        Assert.assertThat("Error code for USER_NOT_FOUND should be returned", session.getResponseBody().get("errorCode"), is(equalTo("300")));
+    }
+
+    private ResponseDTO callCreateSession(String userCredentials) {
+        Client client = ClientBuilder.newClient();
         WebTarget target = client.target(Configuration.getHost() + "/sessions/");
         Response response = target.request().post(Entity.json(userCredentials), Response.class);
-        httpStatus = response.getStatus();
-        responseBody = getMessageBody(response);
+        return MessageHelper.getResponseDTO(response);
     }
 
-    private void callCreateUser(String testContent) {
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + "/users/");
-        Response response = target.request().post(Entity.json(testContent), Response.class);
-        httpStatus = response.getStatus();
-        responseBody = getMessageBody(response);
-    }
-
-    private void callGetUser(String email) {
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
-        Response response = target.request().get(Response.class);
-        httpStatus = response.getStatus();
-        responseBody = getMessageBody(response);
-    }
-
-    private void callDeleteUser(String email) {
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + "/users/" + email);
-        Response response = target.request().delete(Response.class);
-        httpStatus = response.getStatus();
-        responseBody = getMessageBody(response);
-    }
 }

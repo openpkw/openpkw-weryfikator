@@ -1,15 +1,19 @@
 package org.openpkw.weryfikator.rest.qrCodes;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
+import org.openpkw.weryfikator.rest.Configuration;
+import org.openpkw.weryfikator.rest.JAXRSTestBase;
+import org.openpkw.weryfikator.rest.helper.AuthenticationHelper;
+import org.openpkw.weryfikator.rest.helper.ResponseDTO;
+import org.openpkw.weryfikator.rest.helper.UserHelper;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import org.junit.Test;
-import org.openpkw.weryfikator.rest.Configuration;
-import org.openpkw.weryfikator.rest.JAXRSTestBase;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test for QR REST service
@@ -33,34 +37,74 @@ public class When_sending_POST_request_to_qrResult extends JAXRSTestBase {
     public static final int BAD_REQUEST_STATUS = 400;
     public static final String QR_TEST_URL = "/api/qr";
 
+    public static final String DEFAULT_PASSWORD = "testowy123";
+
     @Test
     public void Should_return_BAD_REQUEST_status_for_empty_request() {
 
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        Response response = target.request().post(Entity.json(QR_EMPTY_JSON));
+        //GIVEN
+        String email = UserHelper.generateEmail();
+        String token = createUserAndLogin(email);
 
+        //WHEN
+        Response response = callQr(token, QR_EMPTY_JSON);
+
+        //THEN
         assertThat(response.getStatus()).isEqualTo(BAD_REQUEST_STATUS);
+
+        //clean up
+        UserHelper.callDeleteUser(email);
     }
 
     @Test
     // Requires initial data to be present in the database
     public void Should_return_OK_status() {
 
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        Response response = target.request().post(Entity.json(QR_JSON));
+        //GIVEN
+        String email = UserHelper.generateEmail();
+        String token = createUserAndLogin(email);
 
+        //WHEN
+        Response response = callQr(token, QR_JSON);
+
+        //THEN
         assertThat(response.getStatus()).isEqualTo(OK_STATUS);
+
+        //clean up
+        UserHelper.callDeleteUser(email);
     }
 
     @Test
     public void Should_return_NOT_FOUND_status() {
 
-        Client client = createClient();
-        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
-        Response response = target.request().post(Entity.json(QR_WRONG_DATA_JSON));
+        //GIVEN
+        String email = UserHelper.generateEmail();
+        String token = createUserAndLogin(email);
 
+        //WHEN
+        Response response = callQr(token, QR_WRONG_DATA_JSON);
+
+
+        //THEN
         assertThat(response.getStatus()).isEqualTo(NOT_FOUND_STATUS);
+
+        //clean up
+        UserHelper.callDeleteUser(email);
+    }
+
+    private String createUserAndLogin(String email) {
+        UserHelper.createUser(email, DEFAULT_PASSWORD);
+
+        ResponseDTO responseDTO = AuthenticationHelper.login(email, DEFAULT_PASSWORD);
+        return AuthenticationHelper.retriveToken(responseDTO);
+    }
+
+    private Response callQr(String token, String jsonMessage) {
+        Client client;
+        client = ClientBuilder.newClient();
+        WebTarget target = client.target(Configuration.getHost() + QR_TEST_URL);
+        return target.request()
+                .header("Authorization", "Bearer " + token)  //add security token
+                .post(Entity.json(jsonMessage));
     }
 }
