@@ -36,7 +36,7 @@ public class DistrictCommitteeAddress implements Serializable {
     @Column(name = "POST")
     private String post;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddress")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommitteeAddress",fetch = FetchType.LAZY)
     private Collection<DistrictCommittee> districtCommitteeCollection;
 
     public DistrictCommitteeAddress() {
