@@ -10,7 +10,6 @@
         <module>openpkw-repositories</module>
         <module>openpkw-services</module>
         <module>openpkw-rest</module>
-        <module>openpkw-etc</module>
         <module>openpkw-test</module>
         <module>openpkw-utils</module>
         <module>openpkw-utils-csv</module>
