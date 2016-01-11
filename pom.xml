@@ -11,7 +11,6 @@
         <module>openpkw-services</module>
         <module>openpkw-rest</module>
         <module>openpkw-test</module>
-        <module>openpkw-utils</module>
         <module>openpkw-utils-csv</module>
     </modules>
     <packaging>pom</packaging>
@@ -26,8 +25,9 @@
         <spring.data.version>1.7.1.RELEASE</spring.data.version>
         <wildfly.plugin.version>1.1.0.Alpha2</wildfly.plugin.version>
         <hibernate.version>4.3.10.Final</hibernate.version>
-		<commons-dbcp.version>1.2.2</commons-dbcp.version>
-	
+        <jackson.version>2.5.4</jackson.version>
+        <hibernate.validator.version>5.1.2.Final</hibernate.validator.version>
+        <commons-dbcp.version>1.2.2</commons-dbcp.version>
 	<target.server.url>http://rumcajs.open-pkw.pl:9080/openpkw</target.server.url>
     </properties>
 
@@ -195,46 +195,44 @@
                 <version>3.4</version>
             </dependency>
 
-            <!--JDBC -->
-            <dependency>
-                <groupId>c3p0</groupId>
-                <artifactId>c3p0</artifactId>
-                <version>0.9.1.2</version>
-            </dependency>
-
             <!-- Jackson JSON Mapper -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-core</artifactId>
-                <version>2.5.4</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.5.4</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
-                <version>2.5.4</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-mapper</artifactId>
-                <version>2.5.4</version>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-mapping-asl</artifactId>
-                <version>2.5.4</version>
+                <version>${jackson.version}</version>
             </dependency>
 
             <!-- Logging -->
             <dependency>
                 <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${org.slf4j-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${org.slf4j-version}</version>
-                <scope>runtime</scope>
+
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
@@ -270,7 +268,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>5.1.2.Final</version>
+                <version>${hibernate.validator.version}</version>
             </dependency>
 
 
@@ -312,6 +310,11 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
