@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @ComponentScan(basePackages = "org.openpkw", excludeFilters = {@ComponentScan.Filter(value = {Controller.class, RestController.class})})
 @ImportResource(value = {"classpath*:/META-INF/spring/openpkw-*.xml"})
-@Import(JpaRepoConfiguration.class)
-public class AppConfig {	
+public class AppConfig {
 
 }

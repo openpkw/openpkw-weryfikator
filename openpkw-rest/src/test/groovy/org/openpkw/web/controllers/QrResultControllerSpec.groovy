@@ -12,6 +12,8 @@ import org.openpkw.repositories.PeripheralCommitteeRepository
 import org.openpkw.repositories.UserRepository
 import org.openpkw.web.config.TestAppConfig
 import org.openpkw.web.config.TestJpaConfig
+import org.openpkw.web.configuration.AppConfig
+import org.openpkw.web.configuration.AppInitializer
 import org.openpkw.web.configuration.MVCConfig
 import org.openpkw.web.configuration.OAuth2ServerConfiguration
 import org.openpkw.web.configuration.SecurityConfig
@@ -32,7 +34,7 @@ import javax.ws.rs.core.MediaType
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, TestAppConfig, SecurityConfig, OAuth2ServerConfiguration])
+@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig ])
 @WebAppConfiguration
 class QrResultControllerSpec extends Specification {
 
