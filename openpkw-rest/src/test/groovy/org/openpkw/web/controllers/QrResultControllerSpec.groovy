@@ -4,7 +4,7 @@ import com.jayway.jsonpath.JsonPath
 import groovy.json.JsonOutput
 import org.apache.commons.codec.binary.Base64
 import org.openpkw.model.entity.*
-import org.openpkw.qr.dto.QrDTO
+import org.openpkw.services.qr.dto.QrDTO
 import org.openpkw.repositories.CandidateRepository
 import org.openpkw.repositories.DistrictCommitteeRepository
 import org.openpkw.repositories.ElectionCommitteeRepository
