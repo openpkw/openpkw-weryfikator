@@ -1,5 +1,27 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 12 stycznia 2016 r.
+
+Obecni: Sebastian Celejewski, Rafał Reguła, Mirosław Gołda, Kamil Szestowicki, Remigiusz Mrozek, Kamil Grabowski
+
+Tematy:
+
+1. Postępy w komponencie prezentowania wyników Weryfikatora OpenPKW.
+
+2. Budowanie i deployment ww. komponentu.
+
+3. Postępy w komponencie aplikacji moblilnej odczytywania kodów QR dla Weryfikatora OpenPKW.
+
+4. Budowanie i deployment ww. komponentu.
+
+5. Dostęp do infrastruktury OpenPKW (serwery, domeny, poczta, media społecznościowe itd.).
+
+6. Dostęp do listy wszystkich osób, które zgłosiły się do pracy w OpenPKW.
+
+7. Przegląd zadań w Trello, usunięcie zaszłości, dopisanie nowych zadań.
+
+
+
 ## Wtorek, 22 grudnia 2015 r.
 
 Obecni: Rafał Reguła, Kamil Szestowicki, Kamil Gr, Tomasz Dowgielewicz, Sebastian Pogorzelski, Remigiusz Mrozek, Mirosław Gołda
