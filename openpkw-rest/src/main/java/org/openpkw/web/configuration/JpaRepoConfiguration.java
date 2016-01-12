@@ -1,4 +1,4 @@
-package configuration;
+package org.openpkw.web.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
