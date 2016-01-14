@@ -51,12 +51,8 @@ public class UserServiceImpl implements UserService{
         user.setLastName(userRegister.getLast_name());
         user.setIsActive(true);
         user.setUserType(UserType.VOLUNTEER);
+        userRepository.saveAndFlush(user);
 
-        try {
-            userRepository.saveAndFlush(user);
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to register new user: " + ex.getMessage(), ex);
-        }
 
 
     }

@@ -7,7 +7,7 @@ package org.openpkw.validation;
  * Przykładowe sytuacje: błąd składniowy przysłanych danych (brak jakiejś wartości, nieprawidłowa wartość), błąd semantyczny przysłanych danych (np. próba utworzenia użytkownika z adresem e-mail, który już istnieje w bazie danycy). itd.
  * </p>
  */
-public class RestClientException extends RuntimeException {
+public class RestClientException extends Exception { // extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
