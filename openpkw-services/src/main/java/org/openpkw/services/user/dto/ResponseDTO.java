@@ -1,6 +1,6 @@
-package org.openpkw.web.dto;
+package org.openpkw.services.user.dto;
 
-import org.openpkw.web.validation.RestClientErrorMessage;
+import org.openpkw.validation.RestClientErrorMessage;
 
 import java.io.Serializable;
 import java.util.ArrayList;

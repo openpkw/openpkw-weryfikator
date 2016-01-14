@@ -1,8 +1,7 @@
-package org.openpkw.web.validation;
+package org.openpkw.validation;
 
-import org.openpkw.utils.StringUtils;
-import org.openpkw.web.dto.UserCredentialsDTO;
-import org.openpkw.web.dto.UserDTO;
+import org.openpkw.services.user.dto.UserCredentialsDTO;
+import org.openpkw.services.user.dto.UserDTO;
 import org.springframework.stereotype.Component;
 
 @Component

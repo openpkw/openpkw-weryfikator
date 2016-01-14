@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ImportResource;
  * @author Sebastian Pogorzelski
  */
 @Configuration
-@ComponentScan(basePackages = {"org.openpkw.services.qr", "org.openpkw.services","org.openpkw.web.validation"})
+@ComponentScan(basePackages = {"org.openpkw.services.qr", "org.openpkw.services","org.openpkw.validation"})
 public class TestAppConfig {
 
 }

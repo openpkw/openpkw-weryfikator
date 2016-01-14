@@ -1,6 +1,6 @@
 package org.openpkw.web.validation;
 
-import org.openpkw.web.dto.UserCredentialsDTO;
+import org.openpkw.services.user.dto.UserCredentialsDTO;
 
 public class UserCredentialsBuilder {
 

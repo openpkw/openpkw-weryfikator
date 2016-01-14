@@ -1,4 +1,4 @@
-package org.openpkw.web.validation;
+package org.openpkw.validation;
 
 /**
  * Wyjątek rzucany w sytuacji, kiedy aplikacja stwierdzi, że nie może wykonać zadania ze względu na błąd klienta web serwisu.

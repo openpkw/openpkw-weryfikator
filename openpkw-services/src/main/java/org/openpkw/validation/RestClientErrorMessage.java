@@ -1,4 +1,4 @@
-package org.openpkw.web.validation;
+package org.openpkw.validation;
 
 /**
  * Katalog odpowiedzi web serwisu

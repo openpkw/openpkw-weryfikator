@@ -5,7 +5,10 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openpkw.web.dto.UserDTO;
+import org.openpkw.services.user.dto.UserDTO;
+import org.openpkw.validation.RequestValidator;
+import org.openpkw.validation.RestClientErrorMessage;
+import org.openpkw.validation.RestClientException;
 import org.openpkw.web.helper.UserBuilder;
 
 public class When_validating_user_registartion_request {
@@ -41,7 +44,7 @@ public class When_validating_user_registartion_request {
             r.run();
             Assert.fail("An exception was expected but no exception has been thrown.");
         } catch (RestClientException ex) {
-            Assert.assertThat("Error code " + errorCode + " was expected but error code " + ex.getErrorCode().getErrorCode() + " found. Validation message: " + ex.getErrorCode().getErrorMessage(), ex.getErrorCode().errorCode, is(equalTo(errorCode)));
+            Assert.assertThat("Error code " + errorCode + " was expected but error code " + ex.getErrorCode().getErrorCode() + " found. Validation message: " + ex.getErrorCode().getErrorMessage(), ex.getErrorCode().getErrorCode(), is(equalTo(errorCode)));
         }
     }
 }

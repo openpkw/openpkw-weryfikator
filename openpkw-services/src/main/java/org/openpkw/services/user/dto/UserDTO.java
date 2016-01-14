@@ -1,4 +1,4 @@
-package org.openpkw.web.dto;
+package org.openpkw.services.user.dto;
 
 public class UserDTO extends ResponseDTO {
 
