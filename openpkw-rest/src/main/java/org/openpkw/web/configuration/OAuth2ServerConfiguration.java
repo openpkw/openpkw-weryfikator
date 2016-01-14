@@ -96,7 +96,8 @@ public class OAuth2ServerConfiguration {
                     .scopes("read", "write")
                     .authorizedGrantTypes("password", "refresh_token")
                     .secret("secret")
-                    .accessTokenValiditySeconds(1800);
+                    .refreshTokenValiditySeconds(900)
+                    .accessTokenValiditySeconds(10);
         }
     }
 }

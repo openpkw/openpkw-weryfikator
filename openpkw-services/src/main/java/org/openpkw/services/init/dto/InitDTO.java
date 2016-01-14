@@ -4,6 +4,7 @@ package org.openpkw.services.init.dto;
  * Created by mrozi on 14.01.16.
  */
 public class InitDTO {
+    private String errorMessage;
     private long candidate;
     private long peripheralCommitte;
     private long peripheralCommitteeAddress;
@@ -11,6 +12,21 @@ public class InitDTO {
     private long districtCommitteeAddres;
     private long electionCommittee;
     private long electionCommitteeDistrict;
+
+
+    public InitDTO()
+    {
+
+    }
+
+    public InitDTO(String errorMessage)
+    {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 
     public long getCandidate() {
         return candidate;
