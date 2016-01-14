@@ -74,7 +74,7 @@ public class UsersController {
     @RequestMapping(value = "/{email:.+}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     @Transactional
     public ResponseEntity<Map<String, String>> delete(@PathVariable("email") String email) {
-        Optional<User> user = userRepository.findByEmailAddress(email);
+        Optional<User> user = userService.delete(email);
 
         if (user.isPresent())
             return buildResponse(RestClientErrorMessage.OK, HttpStatus.OK, null);
