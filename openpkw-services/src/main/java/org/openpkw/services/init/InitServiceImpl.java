@@ -1,18 +1,26 @@
 package org.openpkw.services.init;
 import org.openpkw.model.entity.*;
 import org.openpkw.repositories.*;
+import org.openpkw.services.init.dto.InitDTO;
+import org.openpkw.validation.RestClientErrorMessage;
+import org.openpkw.validation.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openpkw.services.init.parse.*;
 import au.com.bytecode.opencsv.CSVReader;
+import org.springframework.stereotype.Service;
+
 import javax.inject.Inject;
 import java.util.List;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Optional;
+import org.openpkw.services.init.dto.*;
+
 /**
  * Created by mrozi on 12.01.16.
  */
+@Service
 public class InitServiceImpl implements  InitService {
 
 
@@ -48,16 +56,69 @@ public class InitServiceImpl implements  InitService {
         private ElectionCommitteeDistrictRepository electionCommitteeDistrictRepository;
 
         @Inject
+        private ElectionCommitteeVoteRepository electionCommitteeVoteRepository;
+
+        @Inject
         private CandidateRepository candidateRepository;
+
+        @Inject
+        private ProtocolRepository protocolRepository;
+
+        @Inject
+        private VoteRepository voteRepository;
 
 
         @Override
-        public void initDatabase() {
+        public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException {
+
+            if (deleteDatabase)
+                deleteDatabase();
+
+            if (!deleteDatabase && isAlreadyInit())
+                throw new RestClientException(RestClientErrorMessage.ALREADY_INIT);
+
             readCsvFiles();
             writeToDatabase();
-            //verifyUpload();
+            return getResult();
         }
 
+       private void deleteDatabase()
+       {
+           electionCommitteeVoteRepository.deleteAllInBatch();
+           voteRepository.deleteAllInBatch();
+           candidateRepository.deleteAllInBatch();
+           protocolRepository.deleteAllInBatch();
+           peripheralCommitteeRepository.deleteAllInBatch();
+           peripherialCommitteeAddressRepository.deleteAllInBatch();;
+           electionCommitteeDistrictRepository.deleteAllInBatch();
+           electionCommitteeRepository.deleteAllInBatch();
+           districtCommitteeRepository.deleteAllInBatch();
+           districtCommitteeAddressRepository.deleteAllInBatch();
+       }
+
+       private InitDTO getResult()
+       {
+            InitDTO initDTO = new InitDTO();
+            initDTO.setCandidate(candidateRepository.count());
+            initDTO.setDistrictCommittee(districtCommitteeRepository.count());
+            initDTO.setDistrictCommitteeAddres(districtCommitteeAddressRepository.count());
+            initDTO.setPeripheralCommitte(peripheralCommitteeRepository.count());
+            initDTO.setPeripheralCommitteeAddress(peripherialCommitteeAddressRepository.count());
+            initDTO.setElectionCommittee(electionCommitteeRepository.count());
+            initDTO.setElectionCommitteeDistrict(electionCommitteeDistrictRepository.count());
+            return initDTO;
+       }
+
+       private boolean isAlreadyInit()
+       {
+           return  districtCommitteeRepository.count()>0 ||
+                   districtCommitteeAddressRepository.count()>0 ||
+                   peripheralCommitteeRepository.count()>0 ||
+                   peripherialCommitteeAddressRepository.count()>0 ||
+                   electionCommitteeRepository.count()>0 ||
+                   electionCommitteeDistrictRepository.count()>0 ||
+                   candidateRepository.count()>0;
+       }
 
 
         public void readCsvFiles() {

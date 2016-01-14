@@ -21,8 +21,10 @@ public enum RestClientErrorMessage {
     
     USER_NOT_FOUND (300, "User with given e-mail address does not exist"),
     
-    INVALID_PASSWORD (301, "Invalid password");    
-    
+    INVALID_PASSWORD (301, "Invalid password"),
+
+    ALREADY_INIT(401,"Already init");
+
     
     int errorCode;
     String errorMessage;
