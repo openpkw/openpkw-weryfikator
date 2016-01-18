@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.core.MediaType;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,36 +20,27 @@ import javax.inject.Inject;
 /**
  * Created by mrozi on 14.01.16.
  */
-@OpenPKWAPIController
-@RequestMapping("/api")
-public class InitController {
+@OpenPKWAPIController @RequestMapping("/api") public class InitController {
 
-    @Inject
-    private InitService initService;
+    @Inject private InitService initService;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
-    @RequestMapping(value = "/init", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<InitDTO> init() {
+    @RequestMapping(value = "/init", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> init() {
         try {
-            return new ResponseEntity<>(initService.initDatabase(false),HttpStatus.OK);
-        }
-        catch(RestClientException exception)
-        {
+            return new ResponseEntity<>(initService.initDatabase(false), HttpStatus.OK);
+        } catch (RestClientException exception) {
             LOGGER.warn("Can't init", exception);
-            return new ResponseEntity<>(new InitDTO(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InitDTO(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/reinit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<InitDTO> reInit() {
+    @RequestMapping(value = "/reinit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> reInit() {
         try {
-            return new ResponseEntity<>(initService.initDatabase(true),HttpStatus.OK);
-        }
-        catch(RestClientException exception)
-        {
+            return new ResponseEntity<>(initService.initDatabase(true), HttpStatus.OK);
+        } catch (RestClientException exception) {
             LOGGER.warn("Can't reinit", exception);
-            return new ResponseEntity<>(new InitDTO(exception.getErrorCode().getErrorMessage()),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InitDTO(exception.getErrorCode().getErrorMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 }

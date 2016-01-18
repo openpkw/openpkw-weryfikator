@@ -13,13 +13,11 @@ public class InitDTO {
     private long electionCommitteeCount;
     private long electionCommitteeDistrictCount;
 
-    public InitDTO()
-    {
+    public InitDTO() {
 
     }
 
-    public InitDTO(String errorMessage)
-    {
+    public InitDTO(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
