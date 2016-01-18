@@ -26,7 +26,7 @@ public class InitController {
     @Inject
     private InitService initService;
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(QrResultController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
     @RequestMapping(value = "/init", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InitDTO> init() {

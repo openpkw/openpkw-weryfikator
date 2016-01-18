@@ -75,7 +75,7 @@ public class InitServiceImpl implements  InitService {
                 deleteDatabase();
 
             if (!deleteDatabase && isAlreadyInit())
-                throw new RestClientException(RestClientErrorMessage.ALREADY_INIT);
+                throw new RestClientException(RestClientErrorMessage.DATABASE_ALREADY_INIT);
 
             readCsvFiles();
             writeToDatabase();
@@ -99,13 +99,13 @@ public class InitServiceImpl implements  InitService {
        private InitDTO getResult()
        {
             InitDTO initDTO = new InitDTO();
-            initDTO.setCandidate(candidateRepository.count());
-            initDTO.setDistrictCommittee(districtCommitteeRepository.count());
-            initDTO.setDistrictCommitteeAddres(districtCommitteeAddressRepository.count());
-            initDTO.setPeripheralCommitte(peripheralCommitteeRepository.count());
-            initDTO.setPeripheralCommitteeAddress(peripherialCommitteeAddressRepository.count());
-            initDTO.setElectionCommittee(electionCommitteeRepository.count());
-            initDTO.setElectionCommitteeDistrict(electionCommitteeDistrictRepository.count());
+            initDTO.setCandidateCount(candidateRepository.count());
+            initDTO.setDistrictCommitteeCount(districtCommitteeRepository.count());
+            initDTO.setDistrictCommitteeAddresCount(districtCommitteeAddressRepository.count());
+            initDTO.setPeripheralCommitteCount(peripheralCommitteeRepository.count());
+            initDTO.setPeripheralCommitteeAddressCount(peripherialCommitteeAddressRepository.count());
+            initDTO.setElectionCommitteeCount(electionCommitteeRepository.count());
+            initDTO.setElectionCommitteeDistrictCount(electionCommitteeDistrictRepository.count());
             return initDTO;
        }
 

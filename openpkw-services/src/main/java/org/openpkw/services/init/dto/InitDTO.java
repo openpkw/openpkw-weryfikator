@@ -5,14 +5,13 @@ package org.openpkw.services.init.dto;
  */
 public class InitDTO {
     private String errorMessage;
-    private long candidate;
-    private long peripheralCommitte;
-    private long peripheralCommitteeAddress;
-    private long districtCommittee;
-    private long districtCommitteeAddres;
-    private long electionCommittee;
-    private long electionCommitteeDistrict;
-
+    private long candidateCount;
+    private long peripheralCommitteCount;
+    private long peripheralCommitteeAddressCount;
+    private long districtCommitteeCount;
+    private long districtCommitteeAddresCount;
+    private long electionCommitteeCount;
+    private long electionCommitteeDistrictCount;
 
     public InitDTO()
     {
@@ -28,60 +27,63 @@ public class InitDTO {
         return errorMessage;
     }
 
-    public long getCandidate() {
-        return candidate;
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
-    public void setCandidate(long candidate) {
-        this.candidate = candidate;
+    public long getCandidateCount() {
+        return candidateCount;
     }
 
-
-    public long getPeripheralCommitte() {
-        return peripheralCommitte;
+    public void setCandidateCount(long candidateCount) {
+        this.candidateCount = candidateCount;
     }
 
-    public void setPeripheralCommitte(long peripheralCommitte) {
-        this.peripheralCommitte = peripheralCommitte;
+    public long getPeripheralCommitteCount() {
+        return peripheralCommitteCount;
     }
 
-    public long getPeripheralCommitteeAddress() {
-        return peripheralCommitteeAddress;
+    public void setPeripheralCommitteCount(long peripheralCommitteCount) {
+        this.peripheralCommitteCount = peripheralCommitteCount;
     }
 
-    public void setPeripheralCommitteeAddress(long peripheralCommitteeAddress) {
-        this.peripheralCommitteeAddress = peripheralCommitteeAddress;
+    public long getPeripheralCommitteeAddressCount() {
+        return peripheralCommitteeAddressCount;
     }
 
-    public long getDistrictCommittee() {
-        return districtCommittee;
+    public void setPeripheralCommitteeAddressCount(long peripheralCommitteeAddressCount) {
+        this.peripheralCommitteeAddressCount = peripheralCommitteeAddressCount;
     }
 
-    public void setDistrictCommittee(long districtCommittee) {
-        this.districtCommittee = districtCommittee;
+    public long getDistrictCommitteeCount() {
+        return districtCommitteeCount;
     }
 
-    public long getDistrictCommitteeAddres() {
-        return districtCommitteeAddres;
+    public void setDistrictCommitteeCount(long districtCommitteeCount) {
+        this.districtCommitteeCount = districtCommitteeCount;
     }
 
-    public void setDistrictCommitteeAddres(long districtCommitteeAddres) {
-        this.districtCommitteeAddres = districtCommitteeAddres;
+    public long getDistrictCommitteeAddresCount() {
+        return districtCommitteeAddresCount;
     }
 
-    public long getElectionCommittee() {
-        return electionCommittee;
+    public void setDistrictCommitteeAddresCount(long districtCommitteeAddresCount) {
+        this.districtCommitteeAddresCount = districtCommitteeAddresCount;
     }
 
-    public void setElectionCommittee(long electionCommittee) {
-        this.electionCommittee = electionCommittee;
+    public long getElectionCommitteeCount() {
+        return electionCommitteeCount;
     }
 
-    public long getElectionCommitteeDistrict() {
-        return electionCommitteeDistrict;
+    public void setElectionCommitteeCount(long electionCommitteeCount) {
+        this.electionCommitteeCount = electionCommitteeCount;
     }
 
-    public void setElectionCommitteeDistrict(long electionCommitteeDistrict) {
-        this.electionCommitteeDistrict = electionCommitteeDistrict;
+    public long getElectionCommitteeDistrictCount() {
+        return electionCommitteeDistrictCount;
+    }
+
+    public void setElectionCommitteeDistrictCount(long electionCommitteeDistrictCount) {
+        this.electionCommitteeDistrictCount = electionCommitteeDistrictCount;
     }
 }
