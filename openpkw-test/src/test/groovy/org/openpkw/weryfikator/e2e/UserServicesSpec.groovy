@@ -30,7 +30,6 @@ class UserServicesSpec extends Specification {
         then:
 
         getUserResponse.status == 200
-        getUserResponse.status == 200
         getUserResponse.jsonObject.email == testEmail
         getUserResponse.jsonObject.errors == null
 
