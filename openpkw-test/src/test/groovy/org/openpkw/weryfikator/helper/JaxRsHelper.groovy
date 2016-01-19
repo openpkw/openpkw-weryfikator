@@ -21,7 +21,12 @@ class JaxRsHelper {
     }
 
     def static getResponseContent(Response response) {
-        return new JsonResponseDTO(response.getStatus(), jsonSlurper.parseText(response.readEntity(String)))
+        def data = response.readEntity(String)
+        def json = null
+        if (data) {
+            json = jsonSlurper.parseText(data)
+        }
+        return new JsonResponseDTO(response.getStatus(), json)
     }
 
     def static toJson(content) {

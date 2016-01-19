@@ -21,7 +21,8 @@ class UserServicesSpec extends Specification {
         then:
 
         createUserResponse.status == 200
-        //TODO add status check
+        createUserResponse.jsonObject.errorCode == "0"
+        createUserResponse.jsonObject.errorMessage == "OK"
 
         and:
         def getUserResponse = getUser(testEmail)
@@ -29,7 +30,9 @@ class UserServicesSpec extends Specification {
         then:
 
         getUserResponse.status == 200
-        //TODO add status check
+        getUserResponse.status == 200
+        getUserResponse.jsonObject.email == testEmail
+        getUserResponse.jsonObject.errors == null
 
 
         cleanup:
@@ -50,15 +53,13 @@ class UserServicesSpec extends Specification {
         then:
 
         createUserResponse.status == 400
-        //TODO add status check
-
+        createUserResponse.jsonObject.errorMessage == "User with given e-mail address already exists"
+        createUserResponse.jsonObject.errorCode == "200"
 
         cleanup:
         deleteUser(testEmail)
     }
 
-    //TODO getUser test
-    //TODO delete users test
 
     def "should login to application"() {
         given:
@@ -94,6 +95,24 @@ class UserServicesSpec extends Specification {
 
         cleanup:
         deleteUser(email);
+    }
+
+    def "should get created user"() {
+        given:
+
+        def testEmail = generateEmail()
+        createUser(testEmail, DEFAULT_PASSWORD)
+
+        when:
+        def userResponse = getUser(testEmail)
+
+        then:
+        userResponse.status == 200
+        userResponse.jsonObject.email == testEmail
+        userResponse.jsonObject.errors == null
+
+        cleanup:
+        deleteUser(testEmail)
     }
 
 }
