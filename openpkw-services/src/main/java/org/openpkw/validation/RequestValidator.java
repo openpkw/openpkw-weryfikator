@@ -11,11 +11,11 @@ public class RequestValidator {
             throw new RestClientException(RestClientErrorMessage.USER_EMAIL_IS_MANDATORY);
         }
 
-        if (StringUtils.isEmpty(newUser.getFirst_name())) {
+        if (StringUtils.isEmpty(newUser.getFirstName())) {
             throw new RestClientException(RestClientErrorMessage.USER_FIRST_NAME_IS_MANDATORY);
         }
 
-        if (StringUtils.isEmpty(newUser.getLast_name())) {
+        if (StringUtils.isEmpty(newUser.getLastName())) {
             throw new RestClientException(RestClientErrorMessage.USER_LAST_NAME_IS_MANDATORY);
         }
 

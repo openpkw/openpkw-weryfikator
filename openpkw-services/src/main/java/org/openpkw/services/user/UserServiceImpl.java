@@ -9,10 +9,8 @@ import org.openpkw.services.user.dto.UserDTO;
 import org.openpkw.validation.RestClientErrorMessage;
 import org.openpkw.validation.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -49,13 +47,11 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         user.setEmail(userRegister.getEmail());
         user.setPassword(passwordEncoder.encode(userRegister.getPassword()));
-        user.setFirstName(userRegister.getFirst_name());
-        user.setLastName(userRegister.getLast_name());
+        user.setFirstName(userRegister.getFirstName());
+        user.setLastName(userRegister.getLastName());
         user.setIsActive(true);
         user.setUserType(UserType.VOLUNTEER);
         userRepository.saveAndFlush(user);
-
-
 
     }
 

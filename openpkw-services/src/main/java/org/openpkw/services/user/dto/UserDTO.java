@@ -1,5 +1,7 @@
 package org.openpkw.services.user.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDTO extends ResponseDTO {
 
     private static final long serialVersionUID = 1L;
@@ -9,6 +11,8 @@ public class UserDTO extends ResponseDTO {
     private String lastName;
     private String password;
 
+    private String publicKey;
+
     public String getEmail() {
         return email;
     }
@@ -17,19 +21,21 @@ public class UserDTO extends ResponseDTO {
         this.email = email;
     }
 
-    public String getFirst_name() {
+    @JsonProperty("first_name")
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirst_name(String first_name) {
+    public void setFirstName(String first_name) {
         this.firstName = first_name;
     }
 
-    public String getLast_name() {
+    @JsonProperty("last_name")
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLast_name(String last_name) {
+    public void setLastName(String last_name) {
         this.lastName = last_name;
     }
 
@@ -39,5 +45,14 @@ public class UserDTO extends ResponseDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonProperty("public_key")
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 }

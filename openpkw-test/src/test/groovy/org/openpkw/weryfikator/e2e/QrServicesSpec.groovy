@@ -6,6 +6,7 @@ import spock.lang.Specification
 
 import javax.ws.rs.client.Entity
 
+import static org.openpkw.weryfikator.helper.SignHelper.createPairKey
 import static org.openpkw.weryfikator.invoker.UserServicesInvoker.*
 
 class QrServicesSpec extends Specification {
@@ -24,12 +25,18 @@ class QrServicesSpec extends Specification {
     def static final QR_TEST_URL = "/api/qr";
     def static final DEFAULT_PASSWORD = "testowy123";
 
+    def pairKey = createPairKey()
+
+//    def setup() {
+//        def pairKey = createPairKey()
+//        pairKey.getPublic()
+//    }
 
     def "should return bad request status for empty qr"() {
 
         given:
         def email = generateEmail()
-        def token = createUserAndLogin(email, DEFAULT_PASSWORD)
+        def token = createUserAndLogin(email, DEFAULT_PASSWORD, pairKey.getPublic().)
 
         when:
         def response = callQr(token, EMPTY_QR)
