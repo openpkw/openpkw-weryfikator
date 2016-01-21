@@ -14,11 +14,11 @@ public class PeripheralsController {
 
     @RequestMapping("/peripherals/{districtCommitteeNumber}/{peripheralCommitteeNumber}/{teritorialCode}/{town}/{street}")
     public String getPeripherals(
-            @PathVariable int districtCommitteeNumber,
-            @PathVariable int peripheralCommitteeNumber,
-            @PathVariable String teritorialCode,
-            @PathVariable String town,
-            @PathVariable String street
+            @PathVariable(value = "districtCommitteeNumber") int districtCommitteeNumber,
+            @PathVariable(value = "peripheralCommitteeNumber") int peripheralCommitteeNumber,
+            @PathVariable(value = "teritorialCode") String teritorialCode,
+            @PathVariable(value = "town") String town,
+            @PathVariable(value = "street") String street
     ) {
         //TODO return proper representation object
         throw new UnsupportedOperationException();

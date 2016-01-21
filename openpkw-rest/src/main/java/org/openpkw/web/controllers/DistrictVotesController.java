@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DistrictVotesController {
 
     @RequestMapping("/districtVotes/{districtCommitteeNumber}")
-    public String getDistrictVotesInCommittee(@PathVariable int districtCommitteeNumber) {
+    public String getDistrictVotesInCommittee(@PathVariable("districtCommitteeNumber") int districtCommitteeNumber) {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
     }

@@ -2,7 +2,7 @@ package org.openpkw.web.controllers;
 
 import java.util.List;
 import org.openpkw.model.entity.DistrictCommittee;
-import org.openpkw.qr.dto.DistrictCommitteeDTO;
+import org.openpkw.rest.dto.DistrictCommitteeDTO;
 import org.openpkw.repositories.DistrictCommitteeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +30,11 @@ public class DistrictsController {
         List<DistrictCommittee> districtCommitteeList = (List<DistrictCommittee>) districtCommitteeRepository.findAll();
 
         try {
-            result = new ResponseEntity<>(new DistrictCommitteeDTO(districtCommitteeList), HttpStatus.OK);
+            result = new ResponseEntity<>(new DistrictCommitteeDTO(), HttpStatus.OK);
         } catch (NullPointerException nex) {
             String errorMsg = "Can't get districts [NullPointerException]";
             LOGGER.warn(errorMsg, nex);
-            result = new ResponseEntity<>(new DistrictCommitteeDTO(errorMsg), HttpStatus.NOT_FOUND);
+            result = new ResponseEntity<>(new DistrictCommitteeDTO(), HttpStatus.NOT_FOUND);
         }
         return result;
     }

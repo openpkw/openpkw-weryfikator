@@ -14,9 +14,9 @@ public class PeripheralVotesController {
 
     @RequestMapping("peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}")
     public String getPeripheralVotes(
-            @PathVariable int districtCommitteeNumber,
-            @PathVariable String teritorialCode,
-            @PathVariable int peripheralCommitteeNumber
+            @PathVariable(value = "districtCommitteeNumber") int districtCommitteeNumber,
+            @PathVariable(value = "teritorialCode") String teritorialCode,
+            @PathVariable(value = "peripheralCommitteeNumber") int peripheralCommitteeNumber
     ) {
         //TODO return proper representation object
         throw new UnsupportedOperationException();
