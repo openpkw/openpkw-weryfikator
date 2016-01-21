@@ -155,7 +155,9 @@ public class QrServiceImpl implements QrService {
 
     private PeripheralCommittee findPeripheralCommittee(String peripheryNumber, String territorialCode, String districtNumber) {
         Optional<PeripheralCommittee> committee = peripheralCommitteeRepository.findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(Integer.parseInt(peripheryNumber),
-                                                                                                                                    territorialCode, Integer.parseInt(districtNumber));
+                territorialCode, 
+                Integer.parseInt(districtNumber)
+        );
         if (committee.isPresent()) {
             return committee.get();
         }
