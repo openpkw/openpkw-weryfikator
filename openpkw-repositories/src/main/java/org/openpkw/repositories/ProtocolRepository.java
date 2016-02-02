@@ -9,9 +9,11 @@ import org.springframework.stereotype.Repository;
 public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
 
     //int selectSumFromBallotBox();
-    @Query(value = "SELECT sum(p.fromBallotBox) FROM protocol p")
+    @Query(value = "SELECT sum(p.fromBallotBox) FROM Protocol p")
     public int getVotersVoteNumber();
 
-    @Query(value = "SELECT sum(p.totalEntitledToVote) FROM protocol p")
+    @Query(value = "SELECT sum(p.totalEntitledToVote) FROM Protocol p")
     public int getAllEntitledToVote();
+
+
 }

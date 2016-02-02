@@ -12,26 +12,26 @@ public class VotesAnswerDTO {
     private int protocolAllNumber;
     private int votersVoteNumber;
     private int allVotersNumber;
-    private List<VoteCommitteeDTO> voteCommittees;
+    private List<AllVoteCommitteeDTO> allVoteCommittees;
 
     public VotesAnswerDTO() {
     }
 
-    public VotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<VoteCommitteeDTO> voteCommittees) {
+    public VotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<AllVoteCommitteeDTO> allVoteCommittees) {
         this.errorMessage = errorMessage;
         this.protocolNumber = protocolNumber;
         this.protocolAllNumber = protocolAllNumber;
         this.votersVoteNumber = votersVoteNumber;
         this.allVotersNumber = allVotersNumber;
-        this.voteCommittees = voteCommittees;
+        this.allVoteCommittees = allVoteCommittees;
     }
 
-    public List<VoteCommitteeDTO> getVoteCommittees() {
-        return voteCommittees;
+    public List<VoteCommitteeDTO> getAllVoteCommittees() {
+        return allVoteCommittees;
     }
 
-    public void setVoteCommittees(List<VoteCommitteeDTO> voteCommittees) {
-        this.voteCommittees = voteCommittees;
+    public void setAllVoteCommittees(List<VoteCommitteeDTO> allVoteCommittees) {
+        this.allVoteCommittees = allVoteCommittees;
     }
 
     public String getErrorMessage() {

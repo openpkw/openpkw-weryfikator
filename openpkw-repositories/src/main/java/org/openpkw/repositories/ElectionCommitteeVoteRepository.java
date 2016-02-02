@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Sebastian Pogorzelski
  */
 public interface ElectionCommitteeVoteRepository extends JpaRepository<ElectionCommitteeVote, Integer> {
+
 }

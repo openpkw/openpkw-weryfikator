@@ -2,6 +2,7 @@ package org.openpkw.repositories;
 
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -12,5 +13,8 @@ public interface PeripheralCommitteeRepository extends JpaRepository<PeripheralC
     Optional<PeripheralCommittee> findByPeripheralCommitteeNumberAndTerritorialCode(int peripheralNumber, String territorialCode);
 
     Optional<PeripheralCommittee> findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(int peripheralNumber, String territorialCode, int committeeNumber);
+
+    @Query("SELECT sum(pc.allowedToVote) FROM PeripheralCommittee pc")
+    Optional<Integer> getAllAllowedToVote();
 
 }
