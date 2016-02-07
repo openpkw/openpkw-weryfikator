@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Sebastian Pogorzelski
  */
 public interface DistrictCommitteeRepository extends JpaRepository<DistrictCommittee, Long> {
+    DistrictCommittee findByDistrictCommitteeNumber(int districtCommitteeNumber);
 }

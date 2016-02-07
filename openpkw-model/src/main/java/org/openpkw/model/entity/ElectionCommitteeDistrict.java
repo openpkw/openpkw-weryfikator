@@ -61,7 +61,7 @@ public class ElectionCommitteeDistrict implements Serializable {
         this.listNumber = listNumber;
     }
 
-    public ElectionCommittee getElectionCommitteeId() {
+    public ElectionCommittee getElectionCommittee() {
         return electionCommitteeId;
     }
 

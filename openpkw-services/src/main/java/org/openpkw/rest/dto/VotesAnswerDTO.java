@@ -12,12 +12,12 @@ public class VotesAnswerDTO {
     private int protocolAllNumber;
     private int votersVoteNumber;
     private int allVotersNumber;
-    private List<AllVoteCommitteeDTO> allVoteCommittees;
+    private List<VoteCommitteeDTO> allVoteCommittees;
 
     public VotesAnswerDTO() {
     }
 
-    public VotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<AllVoteCommitteeDTO> allVoteCommittees) {
+    public VotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<VoteCommitteeDTO> allVoteCommittees) {
         this.errorMessage = errorMessage;
         this.protocolNumber = protocolNumber;
         this.protocolAllNumber = protocolAllNumber;

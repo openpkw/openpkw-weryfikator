@@ -254,12 +254,12 @@ public class DatabaseInitializer {
             if (findDistrict.isPresent()) {
                 candidate.setElectionCommitteeDistrict(findDistrict.get());
             } else {
-                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getName().trim().equals(candidate.getElectionCommitteeDistrict().getElectionCommitteeId().getName().trim())).findFirst();
+                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getName().trim().equals(candidate.getElectionCommitteeDistrict().getElectionCommittee().getName().trim())).findFirst();
                 if (find.isPresent()) {
                     electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
                     candidate.getElectionCommitteeDistrict().setElectionCommitteeId(find.get());
                 } else {
-                    electionCommitteeList.add(candidate.getElectionCommitteeDistrict().getElectionCommitteeId());
+                    electionCommitteeList.add(candidate.getElectionCommitteeDistrict().getElectionCommittee());
                     electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
                 }
             }

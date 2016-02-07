@@ -18,16 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DistrictsController {
 
-    @Autowired
-    private DistrictCommitteeRepository districtCommitteeRepository;
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictsController.class);
 
     //zwraca listę wszystkich okręgów
     @RequestMapping("/districts")
     public ResponseEntity<DistrictCommitteeDTO> getDistricts() {
         ResponseEntity<DistrictCommitteeDTO> result;
-
-        List<DistrictCommittee> districtCommitteeList = (List<DistrictCommittee>) districtCommitteeRepository.findAll();
 
         try {
             result = new ResponseEntity<>(new DistrictCommitteeDTO(), HttpStatus.OK);

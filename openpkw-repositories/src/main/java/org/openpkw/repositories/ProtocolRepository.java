@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
 
@@ -15,5 +18,5 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
     @Query(value = "SELECT sum(p.totalEntitledToVote) FROM Protocol p")
     public int getAllEntitledToVote();
 
-
+    List<Protocol> findByPeripheralCommittee(int peripheralCommittee);
 }

@@ -10,10 +10,12 @@ import org.openpkw.rest.dto.DistrictsDTO;
 import org.openpkw.rest.dto.PeripheralCommitteeDTO;
 import org.openpkw.rest.dto.VotesAnswerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author kamil
  */
+@Service
 public class RESTServiceImpl implements RESTService {
 
     @Inject
@@ -33,9 +35,10 @@ public class RESTServiceImpl implements RESTService {
         return new AllVotesAnswerDTOService().generate();
     }
 
+    //return answer to "/districtVotes/{districtCommitteeNumber}" request
     @Override
     public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber) {
-        return null;
+        return new VotesAnswerDTOinDistrictService().generate(districtCommitteeNumber);
     }
 
     @Override

@@ -9,9 +9,9 @@ import java.util.List;
 public class VoteCommitteeDTO {
 
     private String errorMessage;
-    private String name;
-    private int number;
-    private int votes;
+    private String name;                //nazwa komitetu wyborczego
+    private int number;                 //numer na liście
+    private int votes;                  //liczba oddanych głosów
     private List<CandidateDTO> candidates;
 
     public VoteCommitteeDTO() {

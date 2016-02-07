@@ -8,7 +8,7 @@ import org.openpkw.repositories.ProtocolRepository;
 import org.openpkw.rest.dto.AllVoteCommitteeDTO;
 import org.openpkw.rest.dto.AllVotesAnswerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * @author kamil on 02.02.16.
  */
-@Service
+@Component
 public class AllVotesAnswerDTOService {
 
     @Autowired
-    ProtocolRepository protocolRepository;
+    ProtocolRepository protocol;
 
     @Autowired
     PeripheralCommitteeRepository peripheralCommittee;
@@ -65,7 +65,7 @@ public class AllVotesAnswerDTOService {
 
 
     private int getActualCountProtocol() {
-        return (int) protocolRepository.count();
+        return (int) protocol.count();
     }
 
     private int getAllCountProtocols() {
@@ -73,11 +73,11 @@ public class AllVotesAnswerDTOService {
     }
 
     private int getActualCountVote() {
-        return protocolRepository.getVotersVoteNumber();
+        return protocol.getVotersVoteNumber();
     }
 
     private int getAllEntitledToVote() {
         //tutaj zmiana, trzeba zliczyc liczbe uprawnionych z tabeli PERIPHERAL_COMMITTEE.allowed_to_vote
-        return protocolRepository.getAllEntitledToVote();
+        return protocol.getAllEntitledToVote();
     }
 }
