@@ -1,60 +1,69 @@
 package org.openpkw.weryfikator.helper
 
+import org.bouncycastle.jce.ECNamedCurveTable
+import org.bouncycastle.jce.provider.BouncyCastleProvider
+import org.bouncycastle.jce.spec.ECParameterSpec
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import java.security.InvalidAlgorithmParameterException
+import java.security.InvalidKeyException
+import java.security.KeyPair
 import java.security.KeyPairGenerator
+import java.security.NoSuchAlgorithmException
+import java.security.NoSuchProviderException
+import java.security.PrivateKey
+
 import java.security.SecureRandom
+import java.security.Security
+import java.security.Signature
+import java.security.SignatureException
+
 
 class SignHelper {
 
-    def static createPairKey() {
-        def keyGen = KeyPairGenerator.getInstance("EC");
-        def random = SecureRandom.getInstance("SHA1PRNG");
+    private static final Logger LOGGER = LoggerFactory.getLogger(SignHelper.class);
 
-        keyGen.initialize(256, random);
+    private static final String SIGNATURE_INSTANCE = "SHA256withECDSA";
 
-        keyGen.generateKeyPair();
+    private static final String ALGORITHM = "ECDSA";
+
+    private static final String SECURITY_PROVIDER = "BC";
+
+    private static final String CURVE = "B-571";
+
+    private static final String CHARACTER_ENCODING = "UTF-8";
+
+    static {
+        Security.addProvider(new BouncyCastleProvider());
     }
 
-    /*
+    public static KeyPair createPairKey() {
+        try {
+            ECParameterSpec ecSpec = ECNamedCurveTable.getParameterSpec(CURVE);
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(ALGORITHM, SECURITY_PROVIDER);
+            keyPairGenerator.initialize(ecSpec, new SecureRandom());
+            return keyPairGenerator.generateKeyPair();
+        }
+        catch (InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchProviderException e) {
+            LOGGER.error("Can't generate key pair", e);
+        }
+        return null;
+    }
 
-    public static void main(String[] args) throws Exception {
+    public static byte[] generateSignature(String data, PrivateKey privateKey) {
+        try {
+            Signature signature = Signature.getInstance(SIGNATURE_INSTANCE, SECURITY_PROVIDER);
+            signature.initSign(privateKey);
+            signature.update(data.getBytes(CHARACTER_ENCODING));
+            return signature.sign();
 
-        // Generate an ECDSA signature
-
-
-
-      //Generate a key pair
-
-
-    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
-    SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
-
-    keyGen.initialize(256, random);
-
-    KeyPair pair = keyGen.generateKeyPair();
-    PrivateKey priv = pair.getPrivate();
-    PublicKey pub = pair.getPublic();
-
-
-    // Create a Signature object and initialize it with the private key
-
-
-    Signature dsa = Signature.getInstance("SHA1withECDSA");
-
-    dsa.initSign(priv);
-
-    String str = "This is string to sign";
-    byte[] strByte = str.getBytes("UTF-8");
-    dsa.update(strByte);
-
-
-     //Now that all the data to be signed has been read in, generate a  signature for it
-
-
-    byte[] realSig = dsa.sign();
-    System.out.println("Signature: " + new BigInteger(1, realSig).toString(16));
-
-}
-
-     */
+        }
+        catch (NoSuchAlgorithmException | NoSuchProviderException |
+        SignatureException | InvalidKeyException | UnsupportedEncodingException e) {
+            LOGGER.error("Can't sign data", e);
+        }
+        return null;
+    }
 
 }

@@ -44,8 +44,16 @@ class UserServicesInvoker {
         return createUser(JaxRsHelper.toJson([email: email, password: password, first_name: "first_name", last_name: "last_name"]))
     }
 
+    def static createUser(String email, String password, String publicKey) {
+        return createUser(JaxRsHelper.toJson([email: email, password: password, first_name: "first_name", last_name: "last_name", public_key: publicKey]))
+    }
+
     def static createUserAndLogin(String email, String password) {
-        createUser(email, password);
+        return createUserAndLogin(email, password, null)
+    }
+
+    def static createUserAndLogin(String email, String password, String publicKey) {
+        createUser(email, password, publicKey);
 
         def loginResponse = login(email, password)
         return retriveToken(loginResponse)

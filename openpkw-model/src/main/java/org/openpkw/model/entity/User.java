@@ -45,6 +45,9 @@ public class User implements Serializable {
     @OneToMany (mappedBy = "user")
     private List<UserDevice> userDevices;
 
+    @Column(name = "public_key")
+    private String publicKey;
+
     public User() {
         super();
     }
@@ -128,6 +131,14 @@ public class User implements Serializable {
 
     public List<UserDevice> getUserDevices() {
         return userDevices;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
     }
 
     @Override

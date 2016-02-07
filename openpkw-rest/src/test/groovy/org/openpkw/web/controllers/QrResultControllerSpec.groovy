@@ -10,6 +10,7 @@ import org.openpkw.repositories.DistrictCommitteeRepository
 import org.openpkw.repositories.ElectionCommitteeRepository
 import org.openpkw.repositories.PeripheralCommitteeRepository
 import org.openpkw.repositories.UserRepository
+import org.openpkw.services.sign.SignService
 import org.openpkw.web.config.TestAppConfig
 import org.openpkw.web.config.TestJpaConfig
 import org.openpkw.web.configuration.AppConfig
@@ -42,6 +43,9 @@ class QrResultControllerSpec extends Specification {
     static final String ADMIN_USER = "admin@openpkw.pl";
     static final String ADMIN_PASSWORD = "admin";
 
+    static final String PRIVATE_KEY = "MIIBCQIBADAQBgcqhkjOPQIBBgUrgQQAJwSB8TCB7gIBAQRIAie7ReLT9TUheJy5S+h77VoMl1SIOFRkOmrTzrAWcXHeo4q5JhifwHAELPlO9wfiqfKvSQHszINFkJCN/8qBHpUHxPvN4AUAoAcGBSuBBAAnoYGVA4GSAAQESuzfne0O40uBLgBHwJ5oBMSZusvPX0XfkU8KoJ6PywEQSNjNSQ4z2z6Tqra32TMKh8RR1bGH/eWVIm759aoZE4xBZ1sI7+4BQMdC5/ErCUkCxlRPkNYoWTmCMGkHeUWI2vhJwgChdMVFsEYE7W3ZRbFkT9EvULQwnRBZLOlGTlIweyZ8Pn5bK1SUmywaflc="
+    static final String PUBLIC_KEY = "MIGnMBAGByqGSM49AgEGBSuBBAAnA4GSAAQESuzfne0O40uBLgBHwJ5oBMSZusvPX0XfkU8KoJ6PywEQSNjNSQ4z2z6Tqra32TMKh8RR1bGH/eWVIm759aoZE4xBZ1sI7+4BQMdC5/ErCUkCxlRPkNYoWTmCMGkHeUWI2vhJwgChdMVFsEYE7W3ZRbFkT9EvULQwnRBZLOlGTlIweyZ8Pn5bK1SUmywaflc="
+
     @Inject
     WebApplicationContext context
 
@@ -62,6 +66,9 @@ class QrResultControllerSpec extends Specification {
 
     @Inject
     Filter springSecurityFilterChain;
+
+    @Inject
+    private SignService signService;
 
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -108,6 +115,7 @@ class QrResultControllerSpec extends Specification {
         user.setIsActive(true);
         user.setEmail(ADMIN_USER);
         user.setPassword(passwordEncoder.encode(ADMIN_PASSWORD));
+        user.setPublicKey(PUBLIC_KEY)
         userRepository.save(user);
     }
 
@@ -136,7 +144,9 @@ class QrResultControllerSpec extends Specification {
 
     def "should save result to database"() {
         given:
-        def dto = new QrDTO(QR_CODE, '')
+        def signature = java.util.Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(PRIVATE_KEY)))
+        def dto = new QrDTO(QR_CODE, signature)
+
         def content = JsonOutput.toJson(dto)
 
         def token = authenticate()

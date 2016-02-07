@@ -58,10 +58,6 @@ public class QrServiceImpl implements QrService {
     @Override
     public QrResultDTO saveResult(QrDTO qrDTO) {
 
-        //TODO add necessary validations
-        if (qrDTO.getQr() == null) {
-            throw new NullPointerException();
-        }
 
         QrWrapper qrWrapper = parserService.parse(qrDTO.getQr());
 
