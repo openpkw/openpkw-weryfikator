@@ -17,6 +17,9 @@ public class PeripheralCommitteeDTO {
         this.number = number;
     }
 
+    public PeripheralCommitteeDTO() {
+    }
+
     public int getNumber() {
         return number;
     }

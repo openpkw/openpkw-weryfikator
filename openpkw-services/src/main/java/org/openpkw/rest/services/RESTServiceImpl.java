@@ -48,7 +48,7 @@ public class RESTServiceImpl implements RESTService {
 
     @Override
     public DistrictsDTO getDistricts() {
-        return null;
+        return new DistrictsDTOService().generate();
     }
 
     @Override
