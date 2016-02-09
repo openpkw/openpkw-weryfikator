@@ -18,31 +18,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class RESTServiceImpl implements RESTService {
 
+    //+ /votes
     @Override
     public AllVotesAnswerDTO getAllVotesAnswer() {
         return new AllVotesAnswerDTOService().generate();
     }
 
-    //return answer to "/districtVotes/{districtCommitteeNumber}" request
+    //+  /districtVotes/{districtCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber) {
         return new VotesAnswerDTOinDistrictService().generate(districtCommitteeNumber);
     }
 
+    //+ /peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
         return new VotesAnswerDTOinPeripheralService().
-                generate(districtCommitteeNumber,teritorialCode,peripheralCommitteeNumber);
+                generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
     }
 
+    //+ /districts
     @Override
     public DistrictsDTO getDistricts() {
         return new DistrictsDTOService().generate();
     }
 
+    // /peripheral...
     @Override
-    public PeripheralCommitteeDTO getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
-        return null;
+    public PeripheralCommitteeDTO getPeripherals(
+            int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
+        return new PeripheralCommitteeDTOService().generate(districtCommitteeNumber,
+                peripheralCommitteeNumber,
+                teritorialCode,
+                town,
+                street);
     }
 
 }
