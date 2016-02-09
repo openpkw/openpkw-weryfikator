@@ -11,7 +11,7 @@ public class VotesAnswerDTO {
     private int protocolNumber;
     private int protocolAllNumber;
     private int votersVoteNumber;
-    private int allVotersNumber;
+    private long allVotersNumber;
     private List<VoteCommitteeDTO> allVoteCommittees;
 
     public VotesAnswerDTO() {
@@ -66,11 +66,11 @@ public class VotesAnswerDTO {
         this.votersVoteNumber = votersVoteNumber;
     }
 
-    public int getAllVotersNumber() {
+    public long getAllVotersNumber() {
         return allVotersNumber;
     }
 
-    public void setAllVotersNumber(int allVotersNumber) {
+    public void setAllVotersNumber(Long allVotersNumber) {
         this.allVotersNumber = allVotersNumber;
     }
     

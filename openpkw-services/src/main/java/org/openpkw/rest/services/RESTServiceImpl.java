@@ -18,18 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class RESTServiceImpl implements RESTService {
 
-    @Inject
-    private ProtocolRepository protocolRepository;
-
-    @Inject
-    private PeripheralCommitteeRepository peripheralCommittee;
-
-    @Inject
-    private PeripheralCommitteeRepository getPeripheralCommittee;
-
-    @Autowired
-    private ElectionCommitteeDistrictRepository electionCommitteeDistrict;
-
     @Override
     public AllVotesAnswerDTO getAllVotesAnswer() {
         return new AllVotesAnswerDTOService().generate();
@@ -42,8 +30,9 @@ public class RESTServiceImpl implements RESTService {
     }
 
     @Override
-    public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber, String teritorialCode, String peripheralCommitteeNumber) {
-        return null;
+    public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
+        return new VotesAnswerDTOinPeripheralService().
+                generate(districtCommitteeNumber,teritorialCode,peripheralCommitteeNumber);
     }
 
     @Override

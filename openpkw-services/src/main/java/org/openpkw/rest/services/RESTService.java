@@ -15,7 +15,7 @@ public interface RESTService {
     VotesAnswerDTO getVotesAnswer(
             int districtCommitteeNumber,
             String teritorialCode,
-            String peripheralCommitteeNumber
+            int peripheralCommitteeNumber
     );
 
     DistrictsDTO getDistricts();

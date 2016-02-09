@@ -7,6 +7,7 @@ import org.openpkw.rest.dto.DistrictCommitteeDTO;
 import org.openpkw.rest.dto.DistrictsDTO;
 import org.openpkw.rest.dto.PeripheralCommitteeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Created by kamil on 08.02.16.
  */
+@Component
 public class DistrictsDTOService {
 
     @Autowired
