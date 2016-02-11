@@ -1,8 +1,8 @@
 package org.openpkw.web.controllers;
 
-import org.openpkw.qr.dto.QrDTO;
-import org.openpkw.qr.dto.QrResultDTO;
-import org.openpkw.qr.services.QrService;
+import org.openpkw.services.qr.dto.QrDTO;
+import org.openpkw.services.qr.dto.QrResultDTO;
+import org.openpkw.services.qr.QrService;
 import org.openpkw.qualifier.OpenPKWAPIController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

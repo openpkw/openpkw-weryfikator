@@ -1,1 +1,0 @@
-Wspólne Klasy Narzedziowe 

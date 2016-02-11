@@ -1,6 +1,5 @@
 package org.openpkw.web.configuration;
 
-import org.openpkw.configuration.ServiceConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @ComponentScan(basePackages = "org.openpkw", excludeFilters = {@ComponentScan.Filter(value = {Controller.class, RestController.class})})
 @ImportResource(value = {"classpath*:/META-INF/spring/openpkw-*.xml"})
-@Import(ServiceConfiguration.class)
-public class AppConfig {	
+public class AppConfig {
 
 }

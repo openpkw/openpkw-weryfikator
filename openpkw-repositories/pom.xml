@@ -39,10 +39,5 @@
             <artifactId>spring-orm</artifactId>
         </dependency>
 
-        <!-- Zdefiniować profil dla budowania lokalnego i jee -->
-        <dependency>
-            <groupId>c3p0</groupId>
-            <artifactId>c3p0</artifactId>
-        </dependency>
     </dependencies>
 </project>

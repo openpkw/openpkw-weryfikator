@@ -21,7 +21,7 @@ public class PeripheralCommittee implements Serializable {
     
 
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     private DistrictCommittee districtCommittee;
     
     @Column(name = "NAME",columnDefinition = "TEXT")
@@ -39,7 +39,7 @@ public class PeripheralCommittee implements Serializable {
     @Column(name = "peripheral_code")
     private String peripheralCode;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "peripheral_committee_address_id")
     private PeripheralCommitteeAddress peripheralCommitteeAddress;
 

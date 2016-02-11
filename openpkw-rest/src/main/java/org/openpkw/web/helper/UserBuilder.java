@@ -1,6 +1,6 @@
 package org.openpkw.web.helper;
 
-import org.openpkw.web.dto.UserDTO;
+import org.openpkw.services.user.dto.UserDTO;
 
 public class UserBuilder {
 
