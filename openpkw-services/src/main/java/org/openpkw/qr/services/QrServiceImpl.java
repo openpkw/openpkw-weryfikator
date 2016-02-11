@@ -9,6 +9,7 @@ import org.openpkw.qr.parser.QrWrapper;
 import org.openpkw.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -25,21 +26,31 @@ public class QrServiceImpl implements QrService {
     private QrParserService parserService;
 
     @Inject
+    @Qualifier("districtCommitteeRepository")
+    private DistrictCommitteeRepository districtCommitteeRepository;
+
+    @Inject
+    @Qualifier("protocolRepository")
     private ProtocolRepository protocolRepository;
 
     @Inject
+    @Qualifier("peripheralCommitteeRepository")
     private PeripheralCommitteeRepository peripheralCommitteeRepository;
 
     @Inject
+    @Qualifier("candidateRepository")
     private CandidateRepository candidateRepository;
 
     @Inject
+    @Qualifier("voteRepository")
     private VoteRepository voteRepository;
 
     @Inject
+    @Qualifier("electionCommitteeVoteRepository")
     private ElectionCommitteeVoteRepository electionCommitteeVoteRepository;
 
     @Inject
+    @Qualifier("electionCommitteeDistrictRepository")
     private ElectionCommitteeDistrictRepository electionCommitteeDistrictRepository;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(QrServiceImpl.class);
@@ -155,7 +166,7 @@ public class QrServiceImpl implements QrService {
 
     private PeripheralCommittee findPeripheralCommittee(String peripheryNumber, String territorialCode, String districtNumber) {
         Optional<PeripheralCommittee> committee = peripheralCommitteeRepository.findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(Integer.parseInt(peripheryNumber),
-                                                                                                                                    territorialCode, Integer.parseInt(districtNumber));
+                territorialCode, Integer.parseInt(districtNumber));
         if (committee.isPresent()) {
             return committee.get();
         }

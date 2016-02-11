@@ -9,18 +9,22 @@ import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.repositories.PeripheralCommitteeRepository;
 import org.openpkw.services.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.inject.Inject;
 
 @OpenPKWAPIController
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
+    @Qualifier("peripheralCommitteeRepository")
+    @Inject
     private PeripheralCommitteeRepository pcRepository;
 
-    @Autowired
+    @Inject
     TestService testService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)

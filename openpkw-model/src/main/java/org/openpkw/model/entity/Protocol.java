@@ -9,8 +9,8 @@ public class Protocol {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "protocol_id")
-    private Long protocolID;
+    @Column(name = "PROTOCOL_ID")
+    private Long protocolId;
 
     @Column(name = "name")
     private String name;
@@ -82,14 +82,6 @@ public class Protocol {
 
     @Column(name = "envelopes_thrown_to_ballot_box")
     private String envelopesThrownToBallotBox;
-
-    public Long getProtocolID() {
-        return protocolID;
-    }
-
-    public void setProtocolID(Long protocolID) {
-        this.protocolID = protocolID;
-    }
 
     public String getName() {
         return name;
@@ -273,5 +265,13 @@ public class Protocol {
 
     public void setEnvelopesThrownToBallotBox(String envelopesThrownToBallotBox) {
         this.envelopesThrownToBallotBox = envelopesThrownToBallotBox;
+    }
+
+    public Long getProtocolId() {
+        return protocolId;
+    }
+
+    public void setProtocolId(Long protocolId) {
+        this.protocolId = protocolId;
     }
 }
