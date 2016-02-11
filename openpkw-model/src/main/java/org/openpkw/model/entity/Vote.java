@@ -20,12 +20,12 @@ public class Vote implements Serializable {
     
 
     @JoinColumn(name = "PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Protocol protocol;
     
 
     @JoinColumn(name = "CANDIDATE_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Candidate candidate;
 
     public Vote() {
