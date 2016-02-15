@@ -74,7 +74,7 @@ public class VotesAnswerDTOinPeripheralService {
                     ElectionCommitteeDistrict electionCommitteeDistrict = vote.getElectionCommitteeDistrict();
 
                     voteCommitteeDTO.setNumber(electionCommitteeDistrict.getListNumber());
-                    voteCommitteeDTO.setName(electionCommitteeDistrict.getElectionCommitteeId().getName());
+                    voteCommitteeDTO.setName(electionCommitteeDistrict.getElectionCommittee().getName());
 
                     Collection<Candidate> candidateCollection = electionCommitteeDistrict.getCandidateCollection();
 
