@@ -9,12 +9,13 @@ import java.util.Collection;
 @Entity
 @Table(name = "ELECTION_COMMITTEE")
 public class ElectionCommittee implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ELECTION_COMMITTEE_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer electionCommitteeId;
+    @Id
+    @Column(name = "ELECTION_COMMITTEE_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer electionCommitteeId;
 
     @NotNull
     @Column(name = "NAME")
