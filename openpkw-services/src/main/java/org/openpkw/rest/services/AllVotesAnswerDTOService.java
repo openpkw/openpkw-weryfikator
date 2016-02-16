@@ -55,7 +55,7 @@ public class AllVotesAnswerDTOService {
             }
 
             allVoteCommittee = new AllVoteCommitteeDTO();
-            String name = electionCommiteeInDistrinct.getElectionCommitteeId().getName();
+            String name = electionCommiteeInDistrinct.getElectionCommittee().getName();
             Integer listNumber = electionCommiteeInDistrinct.getListNumber();
 
             allVoteCommittee.setName(name);
