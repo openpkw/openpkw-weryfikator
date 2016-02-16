@@ -16,7 +16,7 @@ class BasicPageLoadingSpec extends Specification {
         def response = target.request().get(String.class);
 
         then:
-        response == "Hello World"
+        response.indexOf("Hello World!")>=0
 
     }
 }
