@@ -1,5 +1,22 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 23 lutego 2016 r.
+
+Obecni: Mirosław Gołda, Kamil Grabowski, Sebastian Celejewski, Bartek Sonta, Kamil Szestowicki, Rafał Reguła, Remigiusz Mrozek
+
+Tematy:
+
+1. Potrzebne zmiany w API wykorzystywanym przez OpenPKW Weryfikator Frontend.
+
+2. Przetestowanie działania OpenPKW Weryfikator Backend.
+
+3. Dokończenie konfigurowania build pipeline dla OpenPKW Weryfikator Frontend.
+
+4. Niedługo wejdą zmiany w kodach QR.
+
+5. Jak testować aplikację androidową bez używania Androida.
+
+
 ## Wtorek, 12 stycznia 2016 r.
 
 Obecni: Sebastian Celejewski, Rafał Reguła, Mirosław Gołda, Kamil Szestowicki, Remigiusz Mrozek, Kamil Grabowski
