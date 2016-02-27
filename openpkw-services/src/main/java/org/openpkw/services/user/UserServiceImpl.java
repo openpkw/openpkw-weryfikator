@@ -8,6 +8,7 @@ import org.openpkw.repositories.UserRepository;
 import org.openpkw.services.user.dto.UserDTO;
 import org.openpkw.validation.RestClientErrorMessage;
 import org.openpkw.validation.*;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,11 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
 
-
+    @Qualifier("userRepository")
     @Inject
     private UserRepository userRepository;
 
+    @Qualifier("userDeviceRepository")
     @Inject
     private UserDeviceRepository deviceRepository;
 

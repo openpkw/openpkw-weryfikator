@@ -3,16 +3,18 @@ package org.openpkw.services.test;
 import org.openpkw.model.entity.User;
 import org.openpkw.model.entity.UserType;
 import org.openpkw.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import javax.inject.Inject;
 
 /**
  * Created by Lukasz Franczuk on 2015-11-19.
  */
 @Service
 public class TestService {
-
-    @Autowired
+    @Qualifier("userRepository")
+    @Inject
     private UserRepository userRepository;
 
     public void addUser() {

@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.openpkw.services.init.parse.*;
 import au.com.bytecode.opencsv.CSVReader;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -33,25 +34,45 @@ import java.util.Optional;
     private List<ElectionCommittee> electionCommitteeList;
     private List<ElectionCommitteeDistrict> electionCommitteeDistrictList;
 
-    @Inject private DistrictCommitteeRepository districtCommitteeRepository;
+    @Qualifier("districtCommitteeRepository")
+    @Inject
+    private DistrictCommitteeRepository districtCommitteeRepository;
 
-    @Inject private DistrictCommitteeAddressRepository districtCommitteeAddressRepository;
+    @Qualifier("districtCommitteeAddressRepository")
+    @Inject
+    private DistrictCommitteeAddressRepository districtCommitteeAddressRepository;
 
-    @Inject private PeripheralCommitteeRepository peripheralCommitteeRepository;
+    @Qualifier("peripheralCommitteeRepository")
+    @Inject
+    private PeripheralCommitteeRepository peripheralCommitteeRepository;
 
-    @Inject private PeripherialCommitteeAddressRepository peripherialCommitteeAddressRepository;
+    @Qualifier("peripherialCommitteeAddressRepository")
+    @Inject
+    private PeripherialCommitteeAddressRepository peripherialCommitteeAddressRepository;
 
-    @Inject private ElectionCommitteeRepository electionCommitteeRepository;
+    @Qualifier("electionCommitteeRepository")
+    @Inject
+    private ElectionCommitteeRepository electionCommitteeRepository;
 
-    @Inject private ElectionCommitteeDistrictRepository electionCommitteeDistrictRepository;
+    @Qualifier("electionCommitteeDistrictRepository")
+    @Inject
+    private ElectionCommitteeDistrictRepository electionCommitteeDistrictRepository;
 
-    @Inject private ElectionCommitteeVoteRepository electionCommitteeVoteRepository;
+    @Qualifier("electionCommitteeVoteRepository")
+    @Inject
+    private ElectionCommitteeVoteRepository electionCommitteeVoteRepository;
 
-    @Inject private CandidateRepository candidateRepository;
+    @Qualifier("candidateRepository")
+    @Inject
+    private CandidateRepository candidateRepository;
 
-    @Inject private ProtocolRepository protocolRepository;
+    @Qualifier("protocolRepository")
+    @Inject
+    private ProtocolRepository protocolRepository;
 
-    @Inject private VoteRepository voteRepository;
+    @Qualifier("voteRepository")
+    @Inject
+    private VoteRepository voteRepository;
 
     @Override public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException {
 
