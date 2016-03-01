@@ -42,7 +42,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private UserType userType;
 
-    @OneToMany (mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany (mappedBy = "user")
     private List<UserDevice> userDevices;
 
     public User() {

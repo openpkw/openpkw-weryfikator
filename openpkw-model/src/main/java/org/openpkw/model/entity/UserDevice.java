@@ -26,7 +26,7 @@ public class UserDevice implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date tokenCreatedDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "user_id")
     private User user;
 

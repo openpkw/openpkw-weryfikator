@@ -23,19 +23,19 @@ public class ElectionCommitteeDistrict implements Serializable {
 
     
     @JoinColumn(name = "ELECTION_COMMITTEE_ID", referencedColumnName = "ELECTION_COMMITTEE_ID")
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private ElectionCommittee electionCommitteeId;
 
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private DistrictCommittee districtCommittee;
 
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<ElectionCommitteeVote> electionCommitteeVoteCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<Candidate> candidateCollection = new ArrayList<>();
 
     public ElectionCommitteeDistrict() {

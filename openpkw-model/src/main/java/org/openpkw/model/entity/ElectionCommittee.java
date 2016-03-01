@@ -20,7 +20,7 @@ public class ElectionCommittee implements Serializable {
     @Column(name = "NAME")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeId")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection = new ArrayList<>();
 
     public ElectionCommittee() {

@@ -22,7 +22,7 @@ public class Protocol {
     @Column(name = "received_date")
     private Date receivedDate;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     @JoinColumn(name = "peripheral_committee_id")
     private PeripheralCommittee peripheralCommittee;
 

@@ -24,14 +24,14 @@ public class DistrictCommittee implements Serializable {
     @Column(name = "NAME",columnDefinition = "TEXT")
     private String name;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private DistrictCommitteeAddress districtCommitteeAddress;
 
     public DistrictCommittee() {
