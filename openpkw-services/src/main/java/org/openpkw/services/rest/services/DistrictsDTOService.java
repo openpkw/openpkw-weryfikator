@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -33,14 +34,14 @@ public class DistrictsDTOService {
 
         districtsDTO.setDistricts(new ArrayList<>());
         List<DistrictCommittee> districtCommitteeAll = districtCommitteeRepository.findAll();
-
+        Random r = new Random();
         for (DistrictCommittee districtCommittee : districtCommitteeAll) {
             districtCommitteeDTO = new DistrictCommitteeDTO();
             districtCommitteeDTO.setNumber(districtCommittee.getDistrictCommitteeNumber());
             districtCommitteeDTO.setName(districtCommittee.getName());
             districtCommitteeDTO.setCities(getCities(districtCommittee));
             districtCommitteeDTO.setPeripherals(getPeripherals(districtCommittee));
-            districtCommitteeDTO.setProtocolNumber(districtCommitteeDTO.getPeripherals().size()-10);
+            districtCommitteeDTO.setProtocolNumber(r.nextInt(districtCommitteeDTO.getPeripherals().size()));
             districtsDTO.getDistricts().add(districtCommitteeDTO);
         }
         return districtsDTO;
