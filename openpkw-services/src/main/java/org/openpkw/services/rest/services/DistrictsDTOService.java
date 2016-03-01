@@ -60,15 +60,15 @@ public class DistrictsDTOService {
 
     private List<PeripheralCommitteeDTO> getPeripherals(DistrictCommittee districtCommittee) {
         List<PeripheralCommitteeDTO> peripheralCommitteeDTOs = new ArrayList<>();
-        PeripheralCommitteeDTO peripheralCommitteeDTO = new PeripheralCommitteeDTO();
+
 
         Collection<PeripheralCommittee> peripheralCommittees = districtCommittee.getPeripheralCommitteeCollection();
 
         for (PeripheralCommittee peripheralCommittee : peripheralCommittees) {
+            PeripheralCommitteeDTO peripheralCommitteeDTO = new PeripheralCommitteeDTO();
             peripheralCommitteeDTO.setNumber(peripheralCommittee.getPeripheralCommitteeNumber());
             peripheralCommitteeDTO.setName(peripheralCommittee.getName());
             peripheralCommitteeDTO.setTeritorialCode(peripheralCommittee.getTerritorialCode());
-
             peripheralCommitteeDTOs.add(peripheralCommitteeDTO);
         }
         return peripheralCommitteeDTOs;
