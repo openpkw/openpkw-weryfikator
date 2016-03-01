@@ -31,6 +31,7 @@ public class DistrictsDTOService {
         DistrictsDTO districtsDTO = new DistrictsDTO();
         DistrictCommitteeDTO districtCommitteeDTO;
 
+        districtsDTO.setDistricts(new ArrayList<>());
         List<DistrictCommittee> districtCommitteeAll = districtCommitteeRepository.findAll();
 
         for (DistrictCommittee districtCommittee : districtCommitteeAll) {
@@ -39,7 +40,8 @@ public class DistrictsDTOService {
             districtCommitteeDTO.setName(districtCommittee.getName());
             districtCommitteeDTO.setCities(getCities(districtCommittee));
             districtCommitteeDTO.setPeripherals(getPeripherals(districtCommittee));
-            districtCommitteeDTO.setProtocoloNumber(0);
+            districtCommitteeDTO.setProtocoloNumber(districtCommitteeDTO.getPeripherals().size()-10);
+            districtsDTO.getDistricts().add(districtCommitteeDTO);
         }
         return districtsDTO;
     }
@@ -50,6 +52,7 @@ public class DistrictsDTOService {
 
         cities.addAll(peripheralCommittees.stream().map(
                 committee -> committee.getPeripheralCommitteeAddress().getCity()).
+                filter(a->a!=null).
                 collect(Collectors.toList()));
 
         return cities;

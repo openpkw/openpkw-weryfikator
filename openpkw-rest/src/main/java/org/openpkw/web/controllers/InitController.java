@@ -20,13 +20,13 @@ import javax.inject.Inject;
 /**
  * Created by mrozi on 14.01.16.
  */
-@OpenPKWAPIController @RequestMapping("/api") public class InitController {
+@OpenPKWAPIController @RequestMapping("/database") public class InitController {
 
     @Inject private InitService initService;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
-    @RequestMapping(value = "/init", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> init() {
+    @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> init() {
         try {
             return new ResponseEntity<>(initService.initDatabase(false), HttpStatus.OK);
         } catch (RestClientException exception) {
@@ -35,7 +35,7 @@ import javax.inject.Inject;
         }
     }
 
-    @RequestMapping(value = "/reinit", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> reInit() {
+    @RequestMapping(value = "/reinit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> reInit() {
         try {
             return new ResponseEntity<>(initService.initDatabase(true), HttpStatus.OK);
         } catch (RestClientException exception) {

@@ -144,8 +144,8 @@ import java.util.Optional;
     private void writeToDatabaseDistrictCommitteeAndAddress() {
         log.info("Writing list of district committees to the database");
         for (DistrictCommittee districtCommittee : this.districtCommitteeList) {
-            districtCommitteeAddressRepository.save(districtCommittee.getDistrictCommitteeAddress());
             districtCommitteeRepository.save(districtCommittee);
+            districtCommitteeAddressRepository.save(districtCommittee.getDistrictCommitteeAddress());
 
         }
     }
