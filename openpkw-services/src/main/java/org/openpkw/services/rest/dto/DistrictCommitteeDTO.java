@@ -12,7 +12,7 @@ public class DistrictCommitteeDTO {
     private List<String> cities;
     private String name;
     private List<PeripheralCommitteeDTO> peripherals;
-    private int protocoloNumber;
+    private int protocolNumber;
 
     public DistrictCommitteeDTO() {
     }
@@ -23,7 +23,7 @@ public class DistrictCommitteeDTO {
         this.cities = cities;
         this.name = name;
         this.peripherals = peripherals;
-        this.protocoloNumber = protocolNumber;
+        this.protocolNumber = protocolNumber;
     }
 
     public List<PeripheralCommitteeDTO> getPeripherals() {
@@ -66,11 +66,11 @@ public class DistrictCommitteeDTO {
         this.name = name;
     }
 
-    public int getProtocoloNumber() {
-        return protocoloNumber;
+    public int getProtocolNumber() {
+        return protocolNumber;
     }
 
-    public void setProtocoloNumber(int protocoloNumber) {
-        this.protocoloNumber = protocoloNumber;
+    public void setProtocolNumber(int protocolNumber) {
+        this.protocolNumber = protocolNumber;
     }
 }

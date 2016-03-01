@@ -40,7 +40,7 @@ public class DistrictsDTOService {
             districtCommitteeDTO.setName(districtCommittee.getName());
             districtCommitteeDTO.setCities(getCities(districtCommittee));
             districtCommitteeDTO.setPeripherals(getPeripherals(districtCommittee));
-            districtCommitteeDTO.setProtocoloNumber(districtCommitteeDTO.getPeripherals().size()-10);
+            districtCommitteeDTO.setProtocolNumber(districtCommitteeDTO.getPeripherals().size()-10);
             districtsDTO.getDistricts().add(districtCommitteeDTO);
         }
         return districtsDTO;
