@@ -1,17 +1,12 @@
-package org.openpkw.rest.services;
+package org.openpkw.services.rest.services;
 
-import javax.inject.Inject;
-
-import org.openpkw.repositories.ElectionCommitteeDistrictRepository;
-import org.openpkw.repositories.PeripheralCommitteeRepository;
-import org.openpkw.repositories.ProtocolRepository;
-import org.openpkw.rest.dto.AllVotesAnswerDTO;
-import org.openpkw.rest.dto.DistrictsDTO;
-import org.openpkw.rest.dto.PeripheralCommitteeDTO;
-import org.openpkw.rest.dto.VotesAnswerDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
+import org.openpkw.services.rest.dto.DistrictsDTO;
+import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
+import org.openpkw.services.rest.dto.VotesAnswerDTO;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -20,6 +15,8 @@ import java.util.List;
 @Service
 public class RESTServiceImpl implements RESTService {
 
+    @Inject
+    DistrictsDTOService districtsDTOService;
     //+ /votes
     @Override
     public AllVotesAnswerDTO getAllVotesAnswer() {
@@ -42,7 +39,7 @@ public class RESTServiceImpl implements RESTService {
     //+ /districts
     @Override
     public DistrictsDTO getDistricts() {
-        return new DistrictsDTOService().generate();
+        return districtsDTOService.generate();
     }
 
     // /peripheral...

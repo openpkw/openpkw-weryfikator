@@ -1,14 +1,12 @@
-package org.openpkw.rest.services;
+package org.openpkw.services.rest.services;
 
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.repositories.PeripheralCommitteeRepository;
-import org.openpkw.rest.dto.PeripheralCommitteeDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 

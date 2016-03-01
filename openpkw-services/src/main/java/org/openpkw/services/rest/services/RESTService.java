@@ -1,6 +1,10 @@
-package org.openpkw.rest.services;
+package org.openpkw.services.rest.services;
 
-import org.openpkw.rest.dto.*;
+
+import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
+import org.openpkw.services.rest.dto.DistrictsDTO;
+import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
+import org.openpkw.services.rest.dto.VotesAnswerDTO;
 
 import java.util.List;
 

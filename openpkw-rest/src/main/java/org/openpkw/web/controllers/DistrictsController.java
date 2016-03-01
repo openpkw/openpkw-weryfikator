@@ -1,14 +1,9 @@
 package org.openpkw.web.controllers;
 
-import java.util.List;
-import org.openpkw.model.entity.DistrictCommittee;
-import org.openpkw.rest.dto.DistrictCommitteeDTO;
-import org.openpkw.repositories.DistrictCommitteeRepository;
-import org.openpkw.rest.dto.DistrictsDTO;
-import org.openpkw.rest.services.RESTService;
+import org.openpkw.services.rest.dto.DistrictsDTO;
+import org.openpkw.services.rest.services.RESTService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

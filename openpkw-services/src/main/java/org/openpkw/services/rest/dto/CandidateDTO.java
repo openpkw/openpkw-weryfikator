@@ -1,4 +1,4 @@
-package org.openpkw.rest.dto;
+package org.openpkw.services.rest.dto;
 
 /**
  *

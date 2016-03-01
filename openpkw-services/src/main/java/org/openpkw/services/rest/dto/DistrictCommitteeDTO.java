@@ -1,4 +1,4 @@
-package org.openpkw.rest.dto;
+package org.openpkw.services.rest.dto;
 
 import java.util.List;
 
@@ -12,16 +12,18 @@ public class DistrictCommitteeDTO {
     private List<String> cities;
     private String name;
     private List<PeripheralCommitteeDTO> peripherals;
+    private int protocoloNumber;
 
     public DistrictCommitteeDTO() {
     }
 
-    public DistrictCommitteeDTO(String errorMessage, int number, List<String> cities, String name, List<PeripheralCommitteeDTO> peripherals) {
+    public DistrictCommitteeDTO(String errorMessage, int number, List<String> cities, String name, List<PeripheralCommitteeDTO> peripherals,int protocolNumber) {
         this.errorMessage = errorMessage;
         this.number = number;
         this.cities = cities;
         this.name = name;
         this.peripherals = peripherals;
+        this.protocoloNumber = protocolNumber;
     }
 
     public List<PeripheralCommitteeDTO> getPeripherals() {
@@ -64,4 +66,11 @@ public class DistrictCommitteeDTO {
         this.name = name;
     }
 
+    public int getProtocoloNumber() {
+        return protocoloNumber;
+    }
+
+    public void setProtocoloNumber(int protocoloNumber) {
+        this.protocoloNumber = protocoloNumber;
+    }
 }

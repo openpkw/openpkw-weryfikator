@@ -1,17 +1,16 @@
-package org.openpkw.rest.services;
+package org.openpkw.services.rest.services;
 
 import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.openpkw.model.entity.ElectionCommitteeVote;
 import org.openpkw.repositories.ElectionCommitteeDistrictRepository;
 import org.openpkw.repositories.PeripheralCommitteeRepository;
 import org.openpkw.repositories.ProtocolRepository;
-import org.openpkw.rest.dto.AllVoteCommitteeDTO;
-import org.openpkw.rest.dto.AllVotesAnswerDTO;
+import org.openpkw.services.rest.dto.AllVoteCommitteeDTO;
+import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Collection;
 import java.util.List;
 

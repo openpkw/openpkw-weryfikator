@@ -1,4 +1,4 @@
-package org.openpkw.rest.dto;
+package org.openpkw.services.rest.dto;
 
 import java.util.List;
 
@@ -6,31 +6,21 @@ import java.util.List;
  *
  * @author kamil
  */
-public class VoteCommitteeDTO {
+public class AllVoteCommitteeDTO {
 
     private String errorMessage;
-    private String name;                //nazwa komitetu wyborczego
-    private int number;                 //numer na liście
-    private int votes;                  //liczba oddanych głosów
-    private List<CandidateDTO> candidates;
+    private String name;
+    private int number;
+    private int votes;
 
-    public VoteCommitteeDTO() {
+    public AllVoteCommitteeDTO() {
     }
 
-    public VoteCommitteeDTO(String errorMessage, String name, int number, int votes, List<CandidateDTO> candidates) {
+    public AllVoteCommitteeDTO(String errorMessage, String name, int number, int votes) {
         this.errorMessage = errorMessage;
         this.name = name;
         this.number = number;
         this.votes = votes;
-        this.candidates = candidates;
-    }
-
-    public List<CandidateDTO> getCandidates() {
-        return candidates;
-    }
-
-    public void setCandidates(List<CandidateDTO> candidates) {
-        this.candidates = candidates;
     }
 
     public String getErrorMessage() {
@@ -64,5 +54,6 @@ public class VoteCommitteeDTO {
     public void setVotes(int votes) {
         this.votes = votes;
     }
+
 
 }

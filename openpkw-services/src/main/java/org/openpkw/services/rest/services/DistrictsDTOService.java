@@ -1,17 +1,16 @@
-package org.openpkw.rest.services;
+package org.openpkw.services.rest.services;
 
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.repositories.DistrictCommitteeRepository;
-import org.openpkw.rest.dto.DistrictCommitteeDTO;
-import org.openpkw.rest.dto.DistrictsDTO;
-import org.openpkw.rest.dto.PeripheralCommitteeDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openpkw.services.rest.dto.DistrictCommitteeDTO;
+import org.openpkw.services.rest.dto.DistrictsDTO;
+import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -40,6 +39,7 @@ public class DistrictsDTOService {
             districtCommitteeDTO.setName(districtCommittee.getName());
             districtCommitteeDTO.setCities(getCities(districtCommittee));
             districtCommitteeDTO.setPeripherals(getPeripherals(districtCommittee));
+            districtCommitteeDTO.setProtocoloNumber(0);
         }
         return districtsDTO;
     }
