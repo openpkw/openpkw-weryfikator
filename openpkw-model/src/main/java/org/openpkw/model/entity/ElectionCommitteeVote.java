@@ -18,11 +18,11 @@ public class ElectionCommitteeVote implements Serializable {
     private Integer voteNumber;
     
     @JoinColumn(name = "PROTOCOL_ID", referencedColumnName = "PROTOCOL_ID")
-    @ManyToOne(optional = false )
+    @ManyToOne(fetch = FetchType.EAGER,optional = false )
     private Protocol protocol;
     
     @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     private ElectionCommitteeDistrict electionCommitteeDistrict;
 
     public ElectionCommitteeVote() {

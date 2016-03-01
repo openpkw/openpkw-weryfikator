@@ -26,11 +26,11 @@ public class Candidate implements Serializable {
     @Column(name = "IS_ACTIVE")
     private Boolean isActive;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidate")
+    @OneToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL, mappedBy = "candidate")
     private Collection<Vote> votes;
 
-    @JoinColumn(name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
-    @ManyToOne(optional = false)
+    @JoinColumn( name = "ELECTION_COMMITTEE_DISTRICT_ID", referencedColumnName = "ELECTION_COMMITTEE_DISTRICT_ID")
+    @ManyToOne(fetch = FetchType.EAGER,optional = false)
     private ElectionCommitteeDistrict electionCommitteeDistrict;
 
     public Candidate() {

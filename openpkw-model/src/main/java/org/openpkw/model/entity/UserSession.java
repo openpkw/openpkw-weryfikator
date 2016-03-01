@@ -34,7 +34,7 @@ public class UserSession implements Serializable {
     private Date validUntil;
 
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private User userId;
 
     public UserSession() {
