@@ -28,6 +28,8 @@ import java.util.Optional;
     private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
     private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
 
+    public static final String CHARSET_NAME = "UTF-8";
+
     private List<DistrictCommittee> districtCommitteeList;
     private List<PeripheralCommittee> peripheralCommitteeList;
     private List<Candidate> candidateList;
@@ -219,7 +221,9 @@ import java.util.Optional;
         peripheralCommitteeList = new ArrayList<PeripheralCommittee>();
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName),"UTF8"), ',', '\"');
+
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), CHARSET_NAME), ',', '\"');
+
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 peripheralCommitteeList.add(getPeripheralCommitte(i, listAllFieldInFile, districtCommitteeList));
@@ -287,7 +291,8 @@ import java.util.Optional;
         candidateList = new ArrayList<Candidate>();
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName),"UTF8"), ',', '\"');
+
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), CHARSET_NAME), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 candidateList.add(getCandidate(i, listAllFieldInFile, districtCommitteeList));
@@ -311,7 +316,8 @@ import java.util.Optional;
         CSVReader reader = null;
         districtCommitteeList = new ArrayList<DistrictCommittee>();
         try {
-            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName),"UTF8"), ',', '\"');
+
+            reader = new CSVReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), CHARSET_NAME), ',', '\"');
             List<String[]> listAllFieldInFile = reader.readAll();
             for (int i = 0; i < listAllFieldInFile.size(); i++) {
                 districtCommitteeList.add(getDistrictCommittee(i, listAllFieldInFile));
