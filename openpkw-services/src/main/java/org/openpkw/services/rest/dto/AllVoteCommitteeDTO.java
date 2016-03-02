@@ -13,15 +13,6 @@ public class AllVoteCommitteeDTO {
     private int number;
     private int votes;
 
-    public AllVoteCommitteeDTO() {
-    }
-
-    public AllVoteCommitteeDTO(String errorMessage, String name, int number, int votes) {
-        this.errorMessage = errorMessage;
-        this.name = name;
-        this.number = number;
-        this.votes = votes;
-    }
 
     public String getErrorMessage() {
         return errorMessage;

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,14 +36,17 @@ public class DistrictsDTOService {
             districtCommitteeDTO = new DistrictCommitteeDTO();
             districtCommitteeDTO.setNumber(districtCommittee.getDistrictCommitteeNumber());
             districtCommitteeDTO.setName(districtCommittee.getName());
-            districtCommitteeDTO.setCities(getCities(districtCommittee));
-            districtCommitteeDTO.setPeripherals(getPeripherals(districtCommittee));
-            districtCommitteeDTO.setProtocolNumber(r.nextInt(districtCommitteeDTO.getPeripherals().size()));
+            //districtCommitteeDTO.setCities(getCities(districtCommittee));
+            Optional<Long> peripheralsNumber = districtCommitteeRepository.getPeripheralNumber(districtCommittee.getDistrictCommitteeNumber());
+            if (peripheralsNumber.isPresent())
+                districtCommitteeDTO.setPeripheralsNumber(peripheralsNumber.get());
+
+            districtCommitteeDTO.setProtocolNumber(r.nextInt(peripheralsNumber.get().intValue()));
             districtsDTO.getDistricts().add(districtCommitteeDTO);
         }
         return districtsDTO;
     }
-
+    /*
     private List<String> getCities(DistrictCommittee districtCommittee) {
         List<String> cities = new ArrayList<>();
         Collection<PeripheralCommittee> peripheralCommittees = districtCommittee.getPeripheralCommitteeCollection();
@@ -57,21 +57,7 @@ public class DistrictsDTOService {
                 collect(Collectors.toList()));
 
         return cities;
-    }
-
-    private List<PeripheralCommitteeDTO> getPeripherals(DistrictCommittee districtCommittee) {
-        List<PeripheralCommitteeDTO> peripheralCommitteeDTOs = new ArrayList<>();
+    }*/
 
 
-        Collection<PeripheralCommittee> peripheralCommittees = districtCommittee.getPeripheralCommitteeCollection();
-
-        for (PeripheralCommittee peripheralCommittee : peripheralCommittees) {
-            PeripheralCommitteeDTO peripheralCommitteeDTO = new PeripheralCommitteeDTO();
-            peripheralCommitteeDTO.setNumber(peripheralCommittee.getPeripheralCommitteeNumber());
-            peripheralCommitteeDTO.setName(peripheralCommittee.getName());
-            peripheralCommitteeDTO.setTeritorialCode(peripheralCommittee.getTerritorialCode());
-            peripheralCommitteeDTOs.add(peripheralCommitteeDTO);
-        }
-        return peripheralCommitteeDTOs;
-    }
 }

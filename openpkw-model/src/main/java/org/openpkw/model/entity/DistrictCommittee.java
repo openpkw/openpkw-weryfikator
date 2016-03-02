@@ -27,7 +27,7 @@ public class DistrictCommittee implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "districtCommittee")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "districtCommittee")
     private Collection<PeripheralCommittee> peripheralCommitteeCollection;
     
     @JoinColumn(name = "DISTRICT_COMMITTEE_ADDRESS_ID", referencedColumnName = "DISTRICT_COMMITTEE_ADDRESS_ID")

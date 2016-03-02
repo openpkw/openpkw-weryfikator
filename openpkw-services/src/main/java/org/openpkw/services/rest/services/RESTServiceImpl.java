@@ -17,10 +17,14 @@ public class RESTServiceImpl implements RESTService {
 
     @Inject
     DistrictsDTOService districtsDTOService;
+
+    @Inject
+    AllVotesAnswerDTOService allVotesAnswerDTOService;
+
     //+ /votes
     @Override
     public AllVotesAnswerDTO getAllVotesAnswer() {
-        return new AllVotesAnswerDTOService().generate();
+        return allVotesAnswerDTOService.generate();
     }
 
     //+  /districtVotes/{districtCommitteeNumber}

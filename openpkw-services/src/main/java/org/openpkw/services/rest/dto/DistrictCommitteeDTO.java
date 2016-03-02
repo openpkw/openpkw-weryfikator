@@ -12,27 +12,8 @@ public class DistrictCommitteeDTO {
     private List<String> cities;
     private String name;
     private List<PeripheralCommitteeDTO> peripherals;
-    private int protocolNumber;
-
-    public DistrictCommitteeDTO() {
-    }
-
-    public DistrictCommitteeDTO(String errorMessage, int number, List<String> cities, String name, List<PeripheralCommitteeDTO> peripherals,int protocolNumber) {
-        this.errorMessage = errorMessage;
-        this.number = number;
-        this.cities = cities;
-        this.name = name;
-        this.peripherals = peripherals;
-        this.protocolNumber = protocolNumber;
-    }
-
-    public List<PeripheralCommitteeDTO> getPeripherals() {
-        return peripherals;
-    }
-
-    public void setPeripherals(List<PeripheralCommitteeDTO> peripherals) {
-        this.peripherals = peripherals;
-    }
+    private long protocolNumber;
+    private long peripheralsNumber;
 
     public String getErrorMessage() {
         return errorMessage;
@@ -66,11 +47,27 @@ public class DistrictCommitteeDTO {
         this.name = name;
     }
 
-    public int getProtocolNumber() {
+    public List<PeripheralCommitteeDTO> getPeripherals() {
+        return peripherals;
+    }
+
+    public void setPeripherals(List<PeripheralCommitteeDTO> peripherals) {
+        this.peripherals = peripherals;
+    }
+
+    public long getProtocolNumber() {
         return protocolNumber;
     }
 
-    public void setProtocolNumber(int protocolNumber) {
+    public void setProtocolNumber(long protocolNumber) {
         this.protocolNumber = protocolNumber;
+    }
+
+    public long getPeripheralsNumber() {
+        return peripheralsNumber;
+    }
+
+    public void setPeripheralsNumber(long peripheralsNumber) {
+        this.peripheralsNumber = peripheralsNumber;
     }
 }

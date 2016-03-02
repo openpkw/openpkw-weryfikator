@@ -8,31 +8,11 @@ import java.util.List;
  */
 public class AllVotesAnswerDTO {
     private String errorMessage;
-    private int protocolNumber;
-    private int protocolAllNumber;
-    private int votersVoteNumber;
-    private int allVotersNumber;
-    private List<AllVoteCommitteeDTO> allVoteCommittees;
-
-    public AllVotesAnswerDTO() {
-    }
-
-    public AllVotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<AllVoteCommitteeDTO> voteCommittees) {
-        this.errorMessage = errorMessage;
-        this.protocolNumber = protocolNumber;
-        this.protocolAllNumber = protocolAllNumber;
-        this.votersVoteNumber = votersVoteNumber;
-        this.allVotersNumber = allVotersNumber;
-        this.allVoteCommittees = voteCommittees;
-    }
-
-    public List<AllVoteCommitteeDTO> getVoteCommittees() {
-        return allVoteCommittees;
-    }
-
-    public void setVoteCommittees(List<AllVoteCommitteeDTO> voteCommittees) {
-        this.allVoteCommittees = voteCommittees;
-    }
+    private long protocolNumber;
+    private long protocolAllNumber;
+    private long votersVoteNumber;
+    private long allVotersNumber;
+    private List<AllVoteCommitteeDTO> voteCommittees;
 
     public String getErrorMessage() {
         return errorMessage;
@@ -42,36 +22,43 @@ public class AllVotesAnswerDTO {
         this.errorMessage = errorMessage;
     }
 
-    public int getProtocolNumber() {
+    public long getProtocolNumber() {
         return protocolNumber;
     }
 
-    public void setProtocolNumber(int protocolNumber) {
+    public void setProtocolNumber(long protocolNumber) {
         this.protocolNumber = protocolNumber;
     }
 
-    public int getProtocolAllNumber() {
+    public long getProtocolAllNumber() {
         return protocolAllNumber;
     }
 
-    public void setProtocolAllNumber(int protocolAllNumber) {
+    public void setProtocolAllNumber(long protocolAllNumber) {
         this.protocolAllNumber = protocolAllNumber;
     }
 
-    public int getVotersVoteNumber() {
+    public long getVotersVoteNumber() {
         return votersVoteNumber;
     }
 
-    public void setVotersVoteNumber(int votersVoteNumber) {
+    public void setVotersVoteNumber(long votersVoteNumber) {
         this.votersVoteNumber = votersVoteNumber;
     }
 
-    public int getAllVotersNumber() {
+    public long getAllVotersNumber() {
         return allVotersNumber;
     }
 
-    public void setAllVotersNumber(int allVotersNumber) {
+    public void setAllVotersNumber(long allVotersNumber) {
         this.allVotersNumber = allVotersNumber;
     }
-    
+
+    public List<AllVoteCommitteeDTO> getVoteCommittees() {
+        return voteCommittees;
+    }
+
+    public void setVoteCommittees(List<AllVoteCommitteeDTO> voteCommittees) {
+        this.voteCommittees = voteCommittees;
+    }
 }
