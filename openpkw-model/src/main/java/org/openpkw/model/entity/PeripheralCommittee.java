@@ -1,6 +1,11 @@
 package org.openpkw.model.entity;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -40,6 +45,7 @@ public class PeripheralCommittee implements Serializable {
     private String peripheralCode;
 
     @OneToOne()
+    @Cascade({ CascadeType.ALL} )
     @JoinColumn(name = "peripheral_committee_address_id")
     private PeripheralCommitteeAddress peripheralCommitteeAddress;
 
