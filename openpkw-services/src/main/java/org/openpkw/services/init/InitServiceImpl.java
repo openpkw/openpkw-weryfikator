@@ -153,7 +153,7 @@ import java.util.Optional;
     private void writeToDatabaseDistrictPeripheralCommitteeAndAdress() {
         log.info("Writing list of district peripheral committees to the database");
         for (PeripheralCommittee peripheralCommittee : this.peripheralCommitteeList) {
-            peripherialCommitteeAddressRepository.save(peripheralCommittee.getPeripheralCommitteeAddress());
+            //peripherialCommitteeAddressRepository.save(peripheralCommittee.getPeripheralCommitteeAddress());
             peripheralCommitteeRepository.save(peripheralCommittee);
         }
     }
