@@ -1,5 +1,18 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 8 marca 2016 r.
+
+Obecni: Sebastian Celejewski, Rafał Reguła, Sebastian Pogorzelski, Bartek Smok, Remigiusz Mrozek, Kamil Grabowski
+
+Tematy:
+
+1. Komunikacja frontendu weryfikatora z backendem. Na razie to jest cross-site, Sebastian skonfiguruje proxy na Apache.
+
+2. Przegląd zadań w Trello.
+
+3. Zmiany w GUI frontendu weryfikatora.
+
+
 ## Wtorek, 23 lutego 2016 r.
 
 Obecni: Mirosław Gołda, Kamil Grabowski, Sebastian Celejewski, Bartek Sonta, Kamil Szestowicki, Rafał Reguła, Remigiusz Mrozek
