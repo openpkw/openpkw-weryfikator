@@ -1,21 +1,20 @@
 package org.openpkw.web.controllers;
 
+import javax.inject.Inject;
+
 import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
 import org.openpkw.services.rest.services.RESTService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
-
-import javax.inject.Inject;
 
 /**
  * REST Web Service
  *
- * @author kamil
+ * @author Kamil Szestowicki
  */
 @RestController
 public class VotesController {
@@ -29,10 +28,7 @@ public class VotesController {
     public ResponseEntity<AllVotesAnswerDTO> getJson() {
         ResponseEntity<AllVotesAnswerDTO> result;
         try {
-            HttpHeaders htppHeaders = new HttpHeaders();
-            htppHeaders.add("Access-Control-Allow-Origin", "*");
-            htppHeaders.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
-            result = new ResponseEntity<>(restService.getAllVotesAnswer(), htppHeaders, HttpStatus.OK);
+            result = new ResponseEntity<>(restService.getAllVotesAnswer(), HttpStatus.OK);
         } catch (NullPointerException nex) {
             String errorMsg = "Can't get votes [NullPointerException]";
             LOGGER.warn(errorMsg, nex);
