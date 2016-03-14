@@ -25,7 +25,7 @@ public class SignService {
 
     private static final String SECURITY_PROVIDER = "BC";
 
-    private static final String CURVE = "B-571";
+    private static final String CURVE = "secp256k1";
 
     private static final String CHARACTER_ENCODING = "UTF-8";
 
@@ -100,5 +100,8 @@ public class SignService {
         }
         return null;
     }
+
+
+
 
 }

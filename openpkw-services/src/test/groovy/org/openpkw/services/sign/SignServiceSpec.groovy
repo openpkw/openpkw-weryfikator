@@ -68,5 +68,4 @@ class SignServiceSpec extends Specification {
     }
 
 
-
 }
