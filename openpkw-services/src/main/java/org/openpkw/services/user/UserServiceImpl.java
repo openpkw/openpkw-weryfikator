@@ -5,21 +5,19 @@ import org.openpkw.model.entity.UserDevice;
 import org.openpkw.model.entity.UserType;
 import org.openpkw.repositories.UserDeviceRepository;
 import org.openpkw.repositories.UserRepository;
+import org.openpkw.services.sign.SignService;
 import org.openpkw.services.user.dto.UserDTO;
 import org.openpkw.validation.RestClientErrorMessage;
 import org.openpkw.validation.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.Base64;
 import java.util.Optional;
 
-/**
- * Created by mrozi on 14.01.16.
- */
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -35,10 +33,11 @@ public class UserServiceImpl implements UserService{
     @Inject
     private PasswordEncoder passwordEncoder;
 
+    @Inject
+    private SignService signService;
+
     @Transactional
     public void register(UserDTO userRegister) throws RestClientException {
-
-
 
         Optional<User> userOptional = userRepository.findByEmailAddress(userRegister.getEmail());
         if (userOptional.isPresent()) {
@@ -49,20 +48,18 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         user.setEmail(userRegister.getEmail());
         user.setPassword(passwordEncoder.encode(userRegister.getPassword()));
-        user.setFirstName(userRegister.getFirst_name());
-        user.setLastName(userRegister.getLast_name());
+        user.setFirstName(userRegister.getFirstName());
+        user.setLastName(userRegister.getLastName());
         user.setIsActive(true);
         user.setUserType(UserType.VOLUNTEER);
+        user.setPublicKey(userRegister.getPublicKey());
         userRepository.saveAndFlush(user);
-
-
 
     }
 
     public Optional<User> get(String email) {
-        Optional<User> user = userRepository.findByEmailAddress(email);
 
-        return user;
+        return userRepository.findByEmailAddress(email);
     }
 
     public Optional<User> delete(String email)

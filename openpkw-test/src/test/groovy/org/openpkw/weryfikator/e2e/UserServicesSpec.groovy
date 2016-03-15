@@ -32,6 +32,8 @@ class UserServicesSpec extends Specification {
         getUserResponse.status == 200
         getUserResponse.jsonObject.email == testEmail
         getUserResponse.jsonObject.errors == null
+        getUserResponse.jsonObject.first_name == "first_name"
+        getUserResponse.jsonObject.last_name == "last_name"
 
 
         cleanup:

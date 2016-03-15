@@ -192,6 +192,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.4</version>
             </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.54</version>
+            </dependency>
 
             <!--JDBC -->
             <dependency>
@@ -276,7 +281,6 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.1.2.Final</version>
             </dependency>
-
 
             <!-- Database for tests-->
             <dependency>

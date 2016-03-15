@@ -6,6 +6,8 @@ import spock.lang.Specification
 
 import javax.ws.rs.client.Entity
 
+import static org.openpkw.weryfikator.helper.SignHelper.createPairKey
+import static org.openpkw.weryfikator.helper.SignHelper.generateSignature
 import static org.openpkw.weryfikator.invoker.UserServicesInvoker.*
 
 class QrServicesSpec extends Specification {
@@ -24,12 +26,14 @@ class QrServicesSpec extends Specification {
     def static final QR_TEST_URL = "/api/qr";
     def static final DEFAULT_PASSWORD = "testowy123";
 
+    def pairKey = createPairKey()
+
 
     def "should return bad request status for empty qr"() {
 
         given:
         def email = generateEmail()
-        def token = createUserAndLogin(email, DEFAULT_PASSWORD)
+        def token = createUserAndLogin(email, DEFAULT_PASSWORD, Base64.encoder.encodeToString(pairKey.public.encoded))
 
         when:
         def response = callQr(token, EMPTY_QR)
@@ -41,30 +45,34 @@ class QrServicesSpec extends Specification {
         deleteUser(email)
     }
 
-    def "should return ok status for empty qr"() {
+    def "should return ok status for correct qr"() {
 
         given:
         def email = generateEmail()
-        def token = createUserAndLogin(email, DEFAULT_PASSWORD)
+        def authToken = createUserAndLogin(email, DEFAULT_PASSWORD, Base64.encoder.encodeToString(pairKey.public.encoded))
+        def signToken = generateSignature(CORRECT_QR, pairKey.getPrivate())
 
         when:
-        def response = callQr(token, JaxRsHelper.toJson([qr: CORRECT_QR]))
+        def response = callQr(authToken, JaxRsHelper.toJson([qr: CORRECT_QR, token: Base64.encoder.encodeToString(signToken)]))
 
         then:
         response.getStatus() == OK_STATUS
 
         cleanup:
         deleteUser(email)
+
+
     }
 
     def "should return not found status for empty qr"() {
 
         given:
         def email = generateEmail()
-        def token = createUserAndLogin(email, DEFAULT_PASSWORD)
+        def authToken = createUserAndLogin(email, DEFAULT_PASSWORD, Base64.encoder.encodeToString(pairKey.public.encoded))
+        def signToken = generateSignature(WRONG_QR, pairKey.getPrivate())
 
         when:
-        def response = callQr(token, JaxRsHelper.toJson([qr: WRONG_QR]))
+        def response = callQr(authToken, JaxRsHelper.toJson([qr: WRONG_QR, token: Base64.encoder.encodeToString(signToken)]))
 
         then:
         response.getStatus() == NOT_FOUND_STATUS
