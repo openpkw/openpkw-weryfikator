@@ -7,5 +7,9 @@ import org.openpkw.validation.RestClientException;
  * Created by mrozi on 12.01.16.
  */
 public interface InitService {
-    InitDTO initDatabase(boolean deleteDatabase) throws RestClientException;
+
+    public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException;
+
+    public void generateVotes() throws RestClientException;
+
 }

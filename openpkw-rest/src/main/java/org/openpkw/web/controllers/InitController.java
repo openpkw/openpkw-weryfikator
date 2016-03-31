@@ -26,7 +26,8 @@ import javax.inject.Inject;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
-    @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> init() {
+    @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InitDTO> init() {
         try {
             return new ResponseEntity<>(initService.initDatabase(false), HttpStatus.OK);
         } catch (RestClientException exception) {
@@ -35,12 +36,24 @@ import javax.inject.Inject;
         }
     }
 
-    @RequestMapping(value = "/reinit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> reInit() {
+    @RequestMapping(value = "/reinit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InitDTO> reInit() {
         try {
             return new ResponseEntity<>(initService.initDatabase(true), HttpStatus.OK);
         } catch (RestClientException exception) {
             LOGGER.warn("Can't reinit", exception);
             return new ResponseEntity<>(new InitDTO(exception.getErrorCode().getErrorMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/generateVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InitDTO> generateVotes() {
+        try {
+            initService.generateVotes();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RestClientException exception) {
+            LOGGER.warn("Can't init", exception);
+            return new ResponseEntity<>(new InitDTO(), HttpStatus.BAD_REQUEST);
         }
     }
 }

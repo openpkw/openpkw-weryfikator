@@ -15,8 +15,7 @@ import java.util.Optional;
 @Repository
 public interface ElectionCommitteeDistrictRepository extends JpaRepository<ElectionCommitteeDistrict, Integer> {
 
-    Optional<ElectionCommitteeDistrict> findByDistrictCommitteeAndListNumber(
-           DistrictCommittee districtCommittee, Integer listNumber);
+    public Optional<ElectionCommitteeDistrict> findByDistrictCommitteeAndListNumber(DistrictCommittee districtCommittee, Integer listNumber);
 
-    List<ElectionCommitteeDistrict> findByDistrictCommittee(DistrictCommittee districtCommittee);
+    public List<ElectionCommitteeDistrict> findByDistrictCommittee(DistrictCommittee districtCommittee);
 }

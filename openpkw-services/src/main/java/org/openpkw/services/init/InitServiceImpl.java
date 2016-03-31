@@ -89,6 +89,12 @@ import java.util.Optional;
         return getResult();
     }
 
+
+    @Override
+    public void generateVotes() throws RestClientException {
+        Protocol protocol = new Protocol();
+    }
+
     private void deleteDatabase() {
         electionCommitteeVoteRepository.deleteAllInBatch();
         voteRepository.deleteAllInBatch();
