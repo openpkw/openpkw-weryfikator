@@ -20,9 +20,12 @@ import javax.inject.Inject;
 /**
  * Created by mrozi on 14.01.16.
  */
-@OpenPKWAPIController @RequestMapping("/database") public class InitController {
+@OpenPKWAPIController
+@RequestMapping("/database")
+public class InitController {
 
-    @Inject private InitService initService;
+    @Inject
+    private InitService initService;
 
     private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
@@ -47,13 +50,14 @@ import javax.inject.Inject;
     }
 
     @RequestMapping(value = "/generateVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<InitDTO> generateVotes() {
-        try {
-            initService.generateVotes();
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (RestClientException exception) {
-            LOGGER.warn("Can't init", exception);
-            return new ResponseEntity<>(new InitDTO(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> generateVotes() {
+        initService.generateVotes();
+        return new ResponseEntity<>("Votes generation completed successfully..", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/deleteVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<String> deleteVotes() {
+        initService.deleteVotes();
+        return new ResponseEntity<>("Votes deleted successfully.", HttpStatus.OK);
     }
 }

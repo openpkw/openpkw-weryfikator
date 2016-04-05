@@ -10,6 +10,7 @@ public interface InitService {
 
     public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException;
 
-    public void generateVotes() throws RestClientException;
+    public void generateVotes();
 
+    public void deleteVotes();
 }

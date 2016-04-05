@@ -83,10 +83,14 @@ public class AllVotesAnswerDTOService {
             allVotesAnswerDTO.getVoteCommittees().add(allVoteCommittee);
         }
 
+        int totalperipheralCommittees = peripheralCommitteeRepository.findAll().size();
+        int totalProtocolsFromPeripheralCommittees = protocolRepository.findAll().size();
+
         allVotesAnswerDTO.setAllVotersNumber(totalVotes);
-        allVotesAnswerDTO.setProtocolAllNumber(100);
         allVotesAnswerDTO.setVotersVoteNumber(totalVotes);
-        allVotesAnswerDTO.setProtocolNumber(50);
+
+        allVotesAnswerDTO.setProtocolAllNumber(totalperipheralCommittees);
+        allVotesAnswerDTO.setProtocolNumber(totalProtocolsFromPeripheralCommittees);
 
         return allVotesAnswerDTO;
     }
