@@ -25,7 +25,7 @@ public class PeripheralVotesController {
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictVotesController.class);
 
     @Inject
-    RESTService restService;
+    private RESTService restService;
 
     @RequestMapping("peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}")
     public ResponseEntity<VotesAnswerDTO> getPeripheralVotes(

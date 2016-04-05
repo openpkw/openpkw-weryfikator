@@ -18,16 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.inject.Inject;
 
 /**
- * Created by mrozi on 14.01.16.
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @OpenPKWAPIController
 @RequestMapping("/database")
 public class InitController {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
+
     @Inject
     private InitService initService;
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
     @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<InitDTO> init() {

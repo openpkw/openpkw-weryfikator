@@ -24,7 +24,7 @@ public class VotesController {
     private final static Logger LOGGER = LoggerFactory.getLogger(VotesController.class);
 
     @Inject
-    RESTService restService;
+    private RESTService restService;
 
     @RequestMapping("/votes")
     public ResponseEntity<AllVotesAnswerDTO> getJson() {

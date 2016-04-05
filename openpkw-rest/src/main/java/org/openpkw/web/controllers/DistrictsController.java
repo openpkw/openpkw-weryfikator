@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author SzestKam (Kamil Szestowicki) 
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
  */
 @RestController
 public class DistrictsController {
@@ -20,7 +21,7 @@ public class DistrictsController {
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictsController.class);
 
     @Inject
-    RESTService restService;
+    private RESTService restService;
 
     /**
      * Zwraca listę wszystkich okręgów

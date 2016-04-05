@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * REST Web Service
  *
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
  */
 @RestController
 public class PeripheralsController {

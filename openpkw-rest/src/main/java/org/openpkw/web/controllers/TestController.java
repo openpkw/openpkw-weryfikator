@@ -16,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
 
+/**
+ * @author Saldenford
+ * @author Sebastian Pogorzelski
+ * @author Sebastian Celejewski
+ * @author Remigiusz Mrozek *
+ */
 @OpenPKWAPIController
 @RequestMapping("/test")
 public class TestController {
@@ -25,7 +31,7 @@ public class TestController {
     private PeripheralCommitteeRepository pcRepository;
 
     @Inject
-    TestService testService;
+    private TestService testService;
 
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String addUser(@RequestBody Map<String, String> object) {
