@@ -15,13 +15,13 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
 
     //int selectSumFromBallotBox();
     @Query(value = "SELECT sum(p.fromBallotBox) FROM Protocol p")
-    public Optional<Long> getVotersVoteNumber();
+    Optional<Long> getVotersVoteNumber();
 
     @Query(value = "SELECT sum(p.totalEntitledToVote) FROM Protocol p")
-    public Optional<Long> getAllEntitledToVote();
+    Optional<Long> getAllEntitledToVote();
 
-    public List<Protocol> findByPeripheralCommittee(PeripheralCommittee peripheralCommittee);
+    List<Protocol> findByPeripheralCommittee(PeripheralCommittee peripheralCommittee);
 
     @Query(value = "SELECT count(p) from Protocol p where p.peripheralCommittee.districtCommittee = ?1")
-    public long getCountByDistrictCommittee(DistrictCommittee districtCommittee);
+    long getCountByDistrictCommittee(DistrictCommittee districtCommittee);
 }

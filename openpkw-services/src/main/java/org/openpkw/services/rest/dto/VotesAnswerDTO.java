@@ -3,28 +3,18 @@ package org.openpkw.services.rest.dto;
 import java.util.List;
 
 /**
- *
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 public class VotesAnswerDTO {
+
     private String errorMessage;
-    private int protocolNumber;
-    private int protocolAllNumber;
-    private int votersVoteNumber;
+    private long protocolNumber;
+    private long protocolAllNumber;
+    private long votersVoteNumber;
     private long allVotersNumber;
     private List<VoteCommitteeDTO> allVoteCommittees;
-
-    public VotesAnswerDTO() {
-    }
-
-    public VotesAnswerDTO(String errorMessage, int protocolNumber, int protocolAllNumber, int votersVoteNumber, int allVotersNumber, List<VoteCommitteeDTO> allVoteCommittees) {
-        this.errorMessage = errorMessage;
-        this.protocolNumber = protocolNumber;
-        this.protocolAllNumber = protocolAllNumber;
-        this.votersVoteNumber = votersVoteNumber;
-        this.allVotersNumber = allVotersNumber;
-        this.allVoteCommittees = allVoteCommittees;
-    }
 
     public List<VoteCommitteeDTO> getAllVoteCommittees() {
         return allVoteCommittees;
@@ -42,27 +32,27 @@ public class VotesAnswerDTO {
         this.errorMessage = errorMessage;
     }
 
-    public int getProtocolNumber() {
+    public long getProtocolNumber() {
         return protocolNumber;
     }
 
-    public void setProtocolNumber(int protocolNumber) {
+    public void setProtocolNumber(long protocolNumber) {
         this.protocolNumber = protocolNumber;
     }
 
-    public int getProtocolAllNumber() {
+    public long getProtocolAllNumber() {
         return protocolAllNumber;
     }
 
-    public void setProtocolAllNumber(int protocolAllNumber) {
+    public void setProtocolAllNumber(long protocolAllNumber) {
         this.protocolAllNumber = protocolAllNumber;
     }
 
-    public int getVotersVoteNumber() {
+    public long getVotersVoteNumber() {
         return votersVoteNumber;
     }
 
-    public void setVotersVoteNumber(int votersVoteNumber) {
+    public void setVotersVoteNumber(long votersVoteNumber) {
         this.votersVoteNumber = votersVoteNumber;
     }
 
@@ -73,5 +63,5 @@ public class VotesAnswerDTO {
     public void setAllVotersNumber(Long allVotersNumber) {
         this.allVotersNumber = allVotersNumber;
     }
-    
+
 }

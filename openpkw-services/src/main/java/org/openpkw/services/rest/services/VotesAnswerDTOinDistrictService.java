@@ -10,6 +10,8 @@ import org.openpkw.services.rest.dto.VoteCommitteeDTO;
 import org.openpkw.services.rest.dto.VotesAnswerDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by kamil on 07.02.16.
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Component
 public class VotesAnswerDTOinDistrictService {
@@ -38,35 +42,32 @@ public class VotesAnswerDTOinDistrictService {
     @Inject
     private CandidateRepository candidateRepository;
 
-    public VotesAnswerDTO generate(int districtCommitteeNumber) {
-        int protocolNumber;             //liczba przsłanych protokołów
-        int protocolAllNumber;          //liczba oczekiwana
-        int votersVoteNumber;           //liczba oddanych glosow
-        long allVotersNumber;            //liczba wszystich uprawnionych do glosowania
-        List<VoteCommitteeDTO> listVoteCommitteeDTO;
-        VotesAnswerDTO votesAnswerDTO = new VotesAnswerDTO();
+    @Transactional
+    public VotesAnswerDTO getVotes(int districtCommitteeNumber) {
+        VotesAnswerDTO result = new VotesAnswerDTO();
+
         Optional<DistrictCommittee> district = districtCommitteeRepository.findByDistrictCommitteeNumber(districtCommitteeNumber);
         if (district.isPresent()) {
-            Collection<PeripheralCommittee> peripherals = district.get().getPeripheralCommitteeCollection();
-            protocolAllNumber = getProtocolAllNumber(peripherals);
+            DistrictCommittee districtCommittee = district.get();
 
-            allVotersNumber = getAllAllowedToVoteBy(peripherals);
+            long totalNumberOfProtocols = districtCommittee.getPeripheralCommitteeCollection().size();
+            long actualNumberOfProtocols = protocolRepository.getCountByDistrictCommittee(districtCommittee);
+            Optional<Long> totalNumberOfVoters = districtCommitteeRepository.getNumberOfAllowedToVoteByDistrictCommittee(districtCommittee);
+            Optional<Long> actualNumberOfVoters = districtCommitteeRepository.getNumberOfVotersByDistrictCommittee(districtCommittee);
 
-            protocolNumber = getProtocolCountBy(peripherals);
+            List<VoteCommitteeDTO> listVoteCommitteeDTO = getListVoteCommittee(districtCommitteeNumber);
 
-            votersVoteNumber = getAllVotersVoteBy(peripherals);
-
-            listVoteCommitteeDTO = getListVoteCommittee(districtCommitteeNumber);
-
-
-            votesAnswerDTO.setAllVotersNumber(allVotersNumber);
-            votesAnswerDTO.setVotersVoteNumber(votersVoteNumber);
-            votesAnswerDTO.setProtocolAllNumber(protocolAllNumber);
-            votesAnswerDTO.setProtocolNumber(protocolNumber);
-            votesAnswerDTO.setAllVoteCommittees(listVoteCommitteeDTO);
+            if (totalNumberOfVoters.isPresent()) {
+                result.setAllVotersNumber(totalNumberOfVoters.get());
+            }
+            if (actualNumberOfVoters.isPresent()) {
+                result.setVotersVoteNumber(actualNumberOfVoters.get());
+            }
+            result.setProtocolAllNumber(totalNumberOfProtocols);
+            result.setProtocolNumber(actualNumberOfProtocols);
+            result.setAllVoteCommittees(listVoteCommitteeDTO);
         }
-        return votesAnswerDTO;
-
+        return result;
     }
 
     private List<VoteCommitteeDTO> getListVoteCommittee(int districtCommitteeNumber) {
@@ -128,45 +129,5 @@ public class VotesAnswerDTOinDistrictService {
         }
 
         return electionCommitteeVote;
-    }
-
-    private int getAllVotersVoteBy(Collection<PeripheralCommittee> peripherals) {
-        int votersVoteCount = 0;
-
-        for (PeripheralCommittee peripheral : peripherals) {
-            List<Protocol> protocolList = protocolRepository.findByPeripheralCommittee(
-                    peripheral);
-            for (Protocol protocol : protocolList) {
-                votersVoteCount += Integer.parseInt(protocol.getValidVotes());
-            }
-        }
-
-        return votersVoteCount;
-    }
-
-    private int getProtocolCountBy(Collection<PeripheralCommittee> peripherals) {
-        int protocolCount = 0;
-
-        for (PeripheralCommittee peripheral : peripherals) {
-            List<Protocol> protocolList = protocolRepository.findByPeripheralCommittee(
-                    peripheral);
-            protocolCount += protocolList.size();
-        }
-
-        return protocolCount;
-    }
-
-    private int getAllAllowedToVoteBy(Collection<PeripheralCommittee> peripherals) {
-        int allAllowedToVote = 0;
-
-        for (PeripheralCommittee peripheral : peripherals) {
-            allAllowedToVote += peripheral.getAllowedToVote();
-        }
-
-        return allAllowedToVote;
-    }
-
-    private int getProtocolAllNumber(Collection<PeripheralCommittee> peripherals) {
-        return peripherals.size();
     }
 }

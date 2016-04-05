@@ -14,13 +14,13 @@ import java.util.List;
  */
 public interface RESTService {
 
-    public AllVotesAnswerDTO getAllVotes();
+    AllVotesAnswerDTO getAllVotes();
 
-    public VotesAnswerDTO getVotes(int districtCommitteeNumber);
+    VotesAnswerDTO getVotes(int districtCommitteeNumber);
 
-    public VotesAnswerDTO getVotes(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber);
+    VotesAnswerDTO getVotes(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber);
 
-    public DistrictsDTO getDistricts();
+    DistrictsDTO getDistricts();
 
-    public List<PeripheralCommitteeDTO> getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street);
+    List<PeripheralCommitteeDTO> getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street);
 }

@@ -42,7 +42,7 @@ public class RESTServiceImpl implements RESTService {
     //+  /districtVotes/{districtCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotes(int districtCommitteeNumber) {
-        return votesAnswerDTOinDistrictService.generate(districtCommitteeNumber);
+        return votesAnswerDTOinDistrictService.getVotes(districtCommitteeNumber);
     }
 
     //+ /peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}
