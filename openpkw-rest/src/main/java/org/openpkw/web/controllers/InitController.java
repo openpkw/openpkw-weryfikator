@@ -52,7 +52,7 @@ public class InitController {
     @RequestMapping(value = "/generateVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> generateVotes() {
         initService.generateVotes();
-        return new ResponseEntity<>("Votes generation completed successfully..", HttpStatus.OK);
+        return new ResponseEntity<>("Votes generation completed successfully.", HttpStatus.OK);
     }
 
     @RequestMapping(value = "/deleteVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
