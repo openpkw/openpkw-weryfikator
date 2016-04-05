@@ -10,7 +10,9 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Service
 public class RESTServiceImpl implements RESTService {
@@ -36,8 +38,7 @@ public class RESTServiceImpl implements RESTService {
     //+ /peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
-        return new VotesAnswerDTOinPeripheralService().
-                generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
+        return new VotesAnswerDTOinPeripheralService().generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
     }
 
     //+ /districts
@@ -48,13 +49,7 @@ public class RESTServiceImpl implements RESTService {
 
     // /peripheral...
     @Override
-    public List<PeripheralCommitteeDTO> getPeripherals(
-            int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
-        return new PeripheralCommitteeDTOService().generate(districtCommitteeNumber,
-                peripheralCommitteeNumber,
-                teritorialCode,
-                town,
-                street);
+    public List<PeripheralCommitteeDTO> getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
+        return new PeripheralCommitteeDTOService().generate(districtCommitteeNumber, peripheralCommitteeNumber, teritorialCode, town, street);
     }
-
 }
