@@ -5,6 +5,7 @@ import org.openpkw.services.rest.dto.DistrictsDTO;
 import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
 import org.openpkw.services.rest.dto.VotesAnswerDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -52,8 +53,9 @@ public class RESTServiceImpl implements RESTService {
 
     //+ /districts
     @Override
+    @Transactional
     public DistrictsDTO getDistricts() {
-        return districtsDTOService.generate();
+        return districtsDTOService.getDistricts();
     }
 
     // /peripheral...
