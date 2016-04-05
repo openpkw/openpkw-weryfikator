@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
  * REST Web Service
  *
  * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @RestController
 public class VotesController {
@@ -28,11 +30,11 @@ public class VotesController {
     public ResponseEntity<AllVotesAnswerDTO> getJson() {
         ResponseEntity<AllVotesAnswerDTO> result;
         try {
-            result = new ResponseEntity<>(restService.getAllVotesAnswer(), HttpStatus.OK);
+            result = new ResponseEntity<>(restService.getAllVotes(), HttpStatus.OK);
         } catch (NullPointerException nex) {
             String errorMsg = "Can't get votes [NullPointerException]";
             LOGGER.warn(errorMsg, nex);
-            result = new ResponseEntity<>(restService.getAllVotesAnswer(), HttpStatus.NOT_FOUND);
+            result = new ResponseEntity<>(restService.getAllVotes(), HttpStatus.NOT_FOUND);
         }
         return result;
     }

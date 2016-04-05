@@ -17,7 +17,9 @@ import javax.inject.Inject;
 import java.util.*;
 
 /**
- * @author kamil on 02.02.16.
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Component
 @Transactional
@@ -43,7 +45,7 @@ public class AllVotesAnswerDTOService {
     public AllVotesAnswerDTOService() {
     }
 
-    public AllVotesAnswerDTO generate() {
+    public AllVotesAnswerDTO getAllVotes() {
         AllVotesAnswerDTO allVotesAnswerDTO = new AllVotesAnswerDTO();
         List<ElectionCommitteeDistrict> electionCommitteeDistrictAll = electionCommitteeDistrictRepository.findAll();
 

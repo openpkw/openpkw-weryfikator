@@ -41,7 +41,7 @@ public class SignService {
             return keyPairGenerator.generateKeyPair();
         }
         catch (InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchProviderException e) {
-            LOGGER.error("Can't generate key pair", e);
+            LOGGER.error("Can't getAllVotes key pair", e);
         }
         return null;
     }
