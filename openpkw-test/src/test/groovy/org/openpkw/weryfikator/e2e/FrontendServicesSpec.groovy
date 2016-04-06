@@ -8,7 +8,7 @@ import static org.openpkw.weryfikator.invoker.UserServicesInvoker.*
 class FrontendServicesSpec extends Specification {
 
     def static final OK_STATUS = 200;
-    def static final VOTES_URL = "votes";
+    def static final VOTES_URL = "/votes";
 
     def "should return data for the whole country"() {
 
