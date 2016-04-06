@@ -19,10 +19,4 @@ public interface DistrictCommitteeRepository extends JpaRepository<DistrictCommi
            + "pc.districtCommittee = ds and ds.districtCommitteeNumber = ?1 ")
    Optional<Long> getPeripheralNumber(int districtCommitteeNumber);
 
-   @Query ("select sum(pc.allowedToVote) from PeripheralCommittee pc where pc.districtCommittee = ?1")
-   Optional<Long> getNumberOfAllowedToVoteByDistrictCommittee(DistrictCommittee dc);
-
-   @Query ("select sum(v.candidatesVotesNumber) from Vote v where v.protocol.peripheralCommittee.districtCommittee = ?1")
-   Optional<Long> getNumberOfVotersByDistrictCommittee(DistrictCommittee dc);
-
 }

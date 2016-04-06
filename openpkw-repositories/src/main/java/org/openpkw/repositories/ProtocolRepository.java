@@ -22,6 +22,9 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
 
     List<Protocol> findByPeripheralCommittee(PeripheralCommittee peripheralCommittee);
 
+    @Query(value = "SELECT count(p) from Protocol p")
+    long getTotalCount();
+
     @Query(value = "SELECT count(p) from Protocol p where p.peripheralCommittee.districtCommittee = ?1")
     long getCountByDistrictCommittee(DistrictCommittee districtCommittee);
 }

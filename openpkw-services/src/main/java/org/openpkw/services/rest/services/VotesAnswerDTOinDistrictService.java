@@ -1,10 +1,7 @@
 package org.openpkw.services.rest.services;
 
 import org.openpkw.model.entity.*;
-import org.openpkw.repositories.CandidateRepository;
-import org.openpkw.repositories.DistrictCommitteeRepository;
-import org.openpkw.repositories.ElectionCommitteeDistrictRepository;
-import org.openpkw.repositories.ProtocolRepository;
+import org.openpkw.repositories.*;
 import org.openpkw.services.rest.dto.CandidateDTO;
 import org.openpkw.services.rest.dto.VoteCommitteeDTO;
 import org.openpkw.services.rest.dto.VotesAnswerDTO;
@@ -42,6 +39,9 @@ public class VotesAnswerDTOinDistrictService {
     @Inject
     private CandidateRepository candidateRepository;
 
+    @Inject
+    private VoteRepository voteRepository;
+
     @Transactional
     public VotesAnswerDTO getVotes(int districtCommitteeNumber) {
         VotesAnswerDTO result = new VotesAnswerDTO();
@@ -52,8 +52,8 @@ public class VotesAnswerDTOinDistrictService {
 
             long totalNumberOfProtocols = districtCommittee.getPeripheralCommitteeCollection().size();
             long actualNumberOfProtocols = protocolRepository.getCountByDistrictCommittee(districtCommittee);
-            Optional<Long> totalNumberOfVoters = districtCommitteeRepository.getNumberOfAllowedToVoteByDistrictCommittee(districtCommittee);
-            Optional<Long> actualNumberOfVoters = districtCommitteeRepository.getNumberOfVotersByDistrictCommittee(districtCommittee);
+            Optional<Long> totalNumberOfVoters = voteRepository.getNumberOfAllowedToVoteByDistrictCommittee(districtCommittee);
+            Optional<Long> actualNumberOfVoters = voteRepository.getNumberOfActualVotersByDistrictCommittee(districtCommittee);
 
             List<VoteCommitteeDTO> listVoteCommitteeDTO = getListVoteCommittee(districtCommitteeNumber);
 
