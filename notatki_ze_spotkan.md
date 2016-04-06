@@ -1,5 +1,14 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 5 kwietnia 2016 r.
+
+Obecni: Rafał Reguła, Sebastian Celejewski, Sebastian Pogorzelski, Kamil Szestowicki, Kamil Grabowski
+
+Tematy:
+
+1. Problemy w kodzie wykryte podczas implementowania generowania przykładowych wyników głosowania w backendzie dla front-endu.
+
+
 ## Wtorek, 8 marca 2016 r.
 
 Obecni: Sebastian Celejewski, Rafał Reguła, Sebastian Pogorzelski, Bartek Smok, Remigiusz Mrozek, Kamil Grabowski
