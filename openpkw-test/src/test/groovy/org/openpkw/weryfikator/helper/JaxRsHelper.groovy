@@ -17,7 +17,13 @@ class JaxRsHelper {
         configuration.property(ClientProperties.CONNECT_TIMEOUT, 5000);
         configuration.property(ClientProperties.READ_TIMEOUT, 5000);
         return ClientBuilder.newClient(configuration);
+    }
 
+    def static createClient(int timeout) {
+        def configuration = new ClientConfig();
+        configuration.property(ClientProperties.CONNECT_TIMEOUT, timeout * 1000);
+        configuration.property(ClientProperties.READ_TIMEOUT, timeout * 1000);
+        return ClientBuilder.newClient(configuration);
     }
 
     def static getResponseContent(Response response) {
