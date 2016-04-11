@@ -24,8 +24,8 @@ import java.util.Base64;
 import java.util.Optional;
 
 /**
- * QR Controller responsible for
- * Created by Sebastian on 06.11.2015.
+ * @author Sebastian Pogorzelski
+ * @author Remigiusz Mrozek
  */
 @OpenPKWAPIController
 @RequestMapping("/api")

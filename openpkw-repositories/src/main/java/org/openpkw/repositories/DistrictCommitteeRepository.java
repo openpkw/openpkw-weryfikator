@@ -1,6 +1,7 @@
 package org.openpkw.repositories;
 
 import org.openpkw.model.entity.DistrictCommittee;
+import org.openpkw.model.entity.PeripheralCommittee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,5 @@ public interface DistrictCommitteeRepository extends JpaRepository<DistrictCommi
                   + "DistrictCommittee ds where "
            + "pc.districtCommittee = ds and ds.districtCommitteeNumber = ?1 ")
    Optional<Long> getPeripheralNumber(int districtCommitteeNumber);
-
 
 }

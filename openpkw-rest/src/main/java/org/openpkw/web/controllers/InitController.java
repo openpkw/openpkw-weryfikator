@@ -18,15 +18,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.inject.Inject;
 
 /**
- * Created by mrozi on 14.01.16.
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
-@OpenPKWAPIController @RequestMapping("/database") public class InitController {
-
-    @Inject private InitService initService;
+@OpenPKWAPIController
+@RequestMapping("/database")
+public class InitController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(InitController.class);
 
-    @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> init() {
+    @Inject
+    private InitService initService;
+
+    @RequestMapping(value = "/init", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InitDTO> init() {
         try {
             return new ResponseEntity<>(initService.initDatabase(false), HttpStatus.OK);
         } catch (RestClientException exception) {
@@ -35,12 +40,25 @@ import javax.inject.Inject;
         }
     }
 
-    @RequestMapping(value = "/reinit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON) public ResponseEntity<InitDTO> reInit() {
+    @RequestMapping(value = "/reinit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<InitDTO> reInit() {
         try {
             return new ResponseEntity<>(initService.initDatabase(true), HttpStatus.OK);
         } catch (RestClientException exception) {
             LOGGER.warn("Can't reinit", exception);
             return new ResponseEntity<>(new InitDTO(exception.getErrorCode().getErrorMessage()), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @RequestMapping(value = "/generateVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<String> generateVotes() {
+        initService.generateVotes();
+        return new ResponseEntity<>("Votes generation completed successfully.", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/deleteVotes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<String> deleteVotes() {
+        initService.deleteVotes();
+        return new ResponseEntity<>("Votes deleted successfully.", HttpStatus.OK);
     }
 }

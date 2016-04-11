@@ -1,5 +1,6 @@
 package org.openpkw.repositories;
 
+import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.openpkw.model.entity.Protocol;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +21,10 @@ public interface ProtocolRepository extends JpaRepository<Protocol, Long> {
     Optional<Long> getAllEntitledToVote();
 
     List<Protocol> findByPeripheralCommittee(PeripheralCommittee peripheralCommittee);
+
+    @Query(value = "SELECT count(p) from Protocol p")
+    long getTotalCount();
+
+    @Query(value = "SELECT count(p) from Protocol p where p.peripheralCommittee.districtCommittee = ?1")
+    long getCountByDistrictCommittee(DistrictCommittee districtCommittee);
 }

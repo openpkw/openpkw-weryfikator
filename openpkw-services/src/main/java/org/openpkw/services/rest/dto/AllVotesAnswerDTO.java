@@ -1,5 +1,6 @@
 package org.openpkw.services.rest.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class AllVotesAnswerDTO {
     private long protocolAllNumber;
     private long votersVoteNumber;
     private long allVotersNumber;
-    private List<AllVoteCommitteeDTO> voteCommittees;
+    private List<AllVoteCommitteeDTO> voteCommittees = new ArrayList<>();
 
     public String getErrorMessage() {
         return errorMessage;

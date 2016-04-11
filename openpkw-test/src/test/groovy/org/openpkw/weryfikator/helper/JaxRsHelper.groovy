@@ -12,12 +12,16 @@ class JaxRsHelper {
 
     def static jsonSlurper = new JsonSlurper()
 
-    def static createClient() {
+    /**
+     * Creates JAX-RS client and configures timeouts for establishing connection and for reading response
+     *
+     * @param timeout timeout in seconds
+     */
+    def static createClient(int timeout = 5) {
         def configuration = new ClientConfig();
-        configuration.property(ClientProperties.CONNECT_TIMEOUT, 5000);
-        configuration.property(ClientProperties.READ_TIMEOUT, 5000);
+        configuration.property(ClientProperties.CONNECT_TIMEOUT, timeout * 1000);
+        configuration.property(ClientProperties.READ_TIMEOUT, timeout * 1000);
         return ClientBuilder.newClient(configuration);
-
     }
 
     def static getResponseContent(Response response) {
@@ -32,5 +36,4 @@ class JaxRsHelper {
     def static toJson(content) {
         return JsonOutput.toJson(content)
     }
-
 }

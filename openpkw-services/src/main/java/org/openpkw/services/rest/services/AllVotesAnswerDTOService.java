@@ -3,22 +3,23 @@ package org.openpkw.services.rest.services;
 import org.openpkw.model.entity.ElectionCommittee;
 import org.openpkw.model.entity.ElectionCommitteeDistrict;
 import org.openpkw.model.entity.ElectionCommitteeVote;
-import org.openpkw.repositories.ElectionCommitteeDistrictRepository;
-import org.openpkw.repositories.ElectionCommitteeRepository;
-import org.openpkw.repositories.PeripheralCommitteeRepository;
-import org.openpkw.repositories.ProtocolRepository;
+import org.openpkw.repositories.*;
 import org.openpkw.services.rest.dto.AllVoteCommitteeDTO;
 import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.*;
 
 /**
- * @author kamil on 02.02.16.
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Component
+@Transactional
 public class AllVotesAnswerDTOService {
 
     @Qualifier("protocolRepository")
@@ -29,97 +30,69 @@ public class AllVotesAnswerDTOService {
     @Inject
     private PeripheralCommitteeRepository peripheralCommitteeRepository;
 
-
     @Qualifier("electionCommitteeRepository")
     @Inject
-    private ElectionCommitteeRepository  electionCommitteeRepository;
+    private ElectionCommitteeRepository electionCommitteeRepository;
 
     @Qualifier("electionCommitteeDistrictRepository")
     @Inject
     private ElectionCommitteeDistrictRepository electionCommitteeDistrictRepository;
 
+    @Inject
+    private VoteRepository voteRepository;
+
     public AllVotesAnswerDTOService() {
     }
 
-    public AllVotesAnswerDTO generate(){
-        Random r = new Random();
+    public AllVotesAnswerDTO getAllVotes() {
         AllVotesAnswerDTO allVotesAnswerDTO = new AllVotesAnswerDTO();
-        allVotesAnswerDTO.setProtocolAllNumber(100000+r.nextInt(100000));
-        allVotesAnswerDTO.setProtocolNumber(r.nextInt( (int)allVotesAnswerDTO.getProtocolAllNumber()));
-        allVotesAnswerDTO.setVoteCommittees(new ArrayList<>());
-        List<ElectionCommittee> electionCommitteeList = electionCommitteeRepository.findAll();
-        int i=0;
-        int votes=0;
-        for(ElectionCommittee electionCommittee:electionCommitteeList)
-        {
-            AllVoteCommitteeDTO allVoteCommittee  = new AllVoteCommitteeDTO();
-            allVoteCommittee.setName(electionCommittee.getName());
-            allVoteCommittee.setNumber(i++);
-            allVoteCommittee.setVotes(r.nextInt(1000000));
-            allVotesAnswerDTO.getVoteCommittees().add(allVoteCommittee);
-            votes+=allVoteCommittee.getVotes();
-        }
-        allVotesAnswerDTO.setVotersVoteNumber(votes);
-        allVotesAnswerDTO.setAllVotersNumber(allVotesAnswerDTO.getVotersVoteNumber()+r.nextInt(1000000));
+        List<ElectionCommitteeDistrict> electionCommitteeDistrictAll = electionCommitteeDistrictRepository.findAll();
 
+        Map<ElectionCommittee, Integer> votesForElectionCommittees = new HashMap<>();
 
-        /*
-
-        allVotesAnswerDTO.setProtocolNumber(getActualCountProtocol());
-        allVotesAnswerDTO.setAllVotersNumber(getAllCountProtocols());
-        allVotesAnswerDTO.setVotersVoteNumber(getActualCountVote());
-        allVotesAnswerDTO.setAllVotersNumber(getAllEntitledToVote());
-        allVotesAnswerDTO.setVoteCommittees(new ArrayList<>());
-        List<ElectionCommitteeDistrict> electionCommitteeDistrictAll =  electionCommitteeDistrictRepository.findAll();
-
-
-
+        Integer totalVotes = 0;
         for (ElectionCommitteeDistrict electionCommiteeInDistrinct : electionCommitteeDistrictAll) {
-            Integer voteSum = 0;
+
+            ElectionCommittee electionCommittee = electionCommiteeInDistrinct.getElectionCommitteeId();
+
+            if (!votesForElectionCommittees.containsKey(electionCommittee)) {
+                votesForElectionCommittees.put(electionCommittee, 0);
+            }
 
             Collection<ElectionCommitteeVote> voteCollection = electionCommiteeInDistrinct.getElectionCommitteeVoteCollection();
 
-            for (ElectionCommitteeVote ecv : voteCollection
-                    ) {
-                voteSum += ecv.getVoteNumber();
+            int electionCommitteeVotes = votesForElectionCommittees.get(electionCommittee);
+            if (voteCollection.size() > 0) {
+                for (ElectionCommitteeVote ecv : voteCollection) {
+                    electionCommitteeVotes += ecv.getVoteNumber();
+                    totalVotes += ecv.getVoteNumber();
+                }
+                votesForElectionCommittees.put(electionCommittee, electionCommitteeVotes);
             }
+        }
 
-            allVoteCommittee = new AllVoteCommitteeDTO();
-            String name = electionCommiteeInDistrinct.getElectionCommitteeId().getName();
-            Integer listNumber = electionCommiteeInDistrinct.getListNumber();
+        for (ElectionCommittee electionCommittee : votesForElectionCommittees.keySet()) {
+            AllVoteCommitteeDTO allVoteCommittee = new AllVoteCommitteeDTO();
+            String name = electionCommittee.getName();
+
+            int electionCommitteeVotes = votesForElectionCommittees.get(electionCommittee);
 
             allVoteCommittee.setName(name);
-            allVoteCommittee.setNumber(listNumber);
-            allVoteCommittee.setVotes(voteSum);
+            allVoteCommittee.setNumber(electionCommittee.getElectionCommitteeId());
+            allVoteCommittee.setVotes(electionCommitteeVotes);
 
             allVotesAnswerDTO.getVoteCommittees().add(allVoteCommittee);
         }
-        */
+
+        long totalNumberOfPeripheralCommittees = peripheralCommitteeRepository.getTotalNumberOfPeripheralCommittees();
+        long totalNumberOfProtocolsFromPeripheralCommittees = protocolRepository.getTotalCount();
+
+        allVotesAnswerDTO.setAllVotersNumber(voteRepository.getTotalNumberOfAllowedToVote().orElse(0L));
+        allVotesAnswerDTO.setVotersVoteNumber(voteRepository.getTotalNumberOfActualVoters().orElse(0L));
+
+        allVotesAnswerDTO.setProtocolAllNumber(totalNumberOfPeripheralCommittees);
+        allVotesAnswerDTO.setProtocolNumber(totalNumberOfProtocolsFromPeripheralCommittees);
 
         return allVotesAnswerDTO;
-    }
-
-
-    private long getActualCountProtocol() {
-        return  protocolRepository.count();
-    }
-
-    private long getAllCountProtocols() {
-        return  peripheralCommitteeRepository.count();
-    }
-
-    private long getActualCountVote() {
-        Optional<Long> votersVoteNumber = protocolRepository.getVotersVoteNumber();
-        if (votersVoteNumber.isPresent())
-            return votersVoteNumber.get();
-        return 0;
-    }
-
-    private long getAllEntitledToVote() {
-        //tutaj zmiana, trzeba zliczyc liczbe uprawnionych z tabeli PERIPHERAL_COMMITTEE.allowed_to_vote
-        Optional<Long> allEntitledToVote = protocolRepository.getAllEntitledToVote();
-        if (allEntitledToVote.isPresent())
-            return allEntitledToVote.get();
-        return 0;
     }
 }

@@ -11,8 +11,10 @@ import org.openpkw.services.init.parse.*;
 import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.List;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -89,6 +91,53 @@ import java.util.Optional;
         return getResult();
     }
 
+    @Override
+    @Transactional
+    public void generateVotes() {
+        Collection<DistrictCommittee> allDistrictCommittees = districtCommitteeRepository.findAll();
+
+        for (DistrictCommittee districtCommittee : allDistrictCommittees) {
+            log.info("Generating votes for district " + districtCommittee.getName());
+            Collection<PeripheralCommittee> peripheralCommittees = districtCommittee.getPeripheralCommitteeCollection();
+            Collection<ElectionCommitteeDistrict> electionCommittees = electionCommitteeDistrictRepository.findByDistrictCommittee(districtCommittee);
+
+            for (PeripheralCommittee peripheralCommittee : peripheralCommittees) {
+                if (Math.random() > 0.01) {
+                    continue;
+                }
+                log.info("  - generating votes for periphery " + peripheralCommittee.getName());
+
+                List<Protocol> protocols = protocolRepository.findByPeripheralCommittee(peripheralCommittee);
+                if (protocols == null || protocols.size() == 0) {
+                    protocols = new ArrayList<Protocol>();
+                    Protocol protocol = new Protocol();
+                    protocols.add(protocol);
+                    protocolRepository.save(protocol);
+                }
+
+                Protocol protocol = protocols.get(0);
+                protocol.setPeripheralCommittee(peripheralCommittee);
+
+                for (ElectionCommitteeDistrict electionCommitteeDistrict : electionCommittees) {
+                    ElectionCommitteeVote vote = new ElectionCommitteeVote();
+                    vote.setElectionCommitteeDistrict(electionCommitteeDistrict);
+                    vote.setProtocol(protocol);
+                    vote.setVoteNumber((int) (Math.random()*20));
+                    electionCommitteeVoteRepository.save(vote);
+                }
+
+                protocolRepository.save(protocol);
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteVotes() {
+        electionCommitteeVoteRepository.deleteAll();
+        protocolRepository.deleteAll();
+    }
+
     private void deleteDatabase() {
         electionCommitteeVoteRepository.deleteAllInBatch();
         voteRepository.deleteAllInBatch();
@@ -96,7 +145,6 @@ import java.util.Optional;
         protocolRepository.deleteAllInBatch();
         peripheralCommitteeRepository.deleteAllInBatch();
         peripherialCommitteeAddressRepository.deleteAllInBatch();
-        ;
         electionCommitteeDistrictRepository.deleteAllInBatch();
         electionCommitteeRepository.deleteAllInBatch();
         districtCommitteeRepository.deleteAllInBatch();

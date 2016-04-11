@@ -5,56 +5,62 @@ import org.openpkw.services.rest.dto.DistrictsDTO;
 import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
 import org.openpkw.services.rest.dto.VotesAnswerDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
 
 /**
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Service
 public class RESTServiceImpl implements RESTService {
 
     @Inject
-    DistrictsDTOService districtsDTOService;
+    private DistrictsDTOService districtsDTOService;
 
     @Inject
-    AllVotesAnswerDTOService allVotesAnswerDTOService;
+    private AllVotesAnswerDTOService allVotesAnswerDTOService;
+
+    @Inject
+    private VotesAnswerDTOinDistrictService votesAnswerDTOinDistrictService;
+
+    @Inject
+    private VotesAnswerDTOinPeripheralService votesAnswerDTOinPeripheralService;
+
+    @Inject
+    private PeripheralCommitteeDTOService peripheralCommitteeDTOService;
 
     //+ /votes
     @Override
-    public AllVotesAnswerDTO getAllVotesAnswer() {
-        return allVotesAnswerDTOService.generate();
+    public AllVotesAnswerDTO getAllVotes() {
+        return allVotesAnswerDTOService.getAllVotes();
     }
 
     //+  /districtVotes/{districtCommitteeNumber}
     @Override
-    public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber) {
-        return new VotesAnswerDTOinDistrictService().generate(districtCommitteeNumber);
+    public VotesAnswerDTO getVotes(int districtCommitteeNumber) {
+        return votesAnswerDTOinDistrictService.getVotes(districtCommitteeNumber);
     }
 
     //+ /peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}
     @Override
-    public VotesAnswerDTO getVotesAnswer(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
-        return new VotesAnswerDTOinPeripheralService().
-                generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
+    public VotesAnswerDTO getVotes(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
+        return votesAnswerDTOinPeripheralService.generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
     }
 
     //+ /districts
     @Override
+    @Transactional
     public DistrictsDTO getDistricts() {
-        return districtsDTOService.generate();
+        return districtsDTOService.getDistricts();
     }
 
     // /peripheral...
     @Override
-    public List<PeripheralCommitteeDTO> getPeripherals(
-            int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
-        return new PeripheralCommitteeDTOService().generate(districtCommitteeNumber,
-                peripheralCommitteeNumber,
-                teritorialCode,
-                town,
-                street);
+    public List<PeripheralCommitteeDTO> getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
+        return peripheralCommitteeDTOService.generate(districtCommitteeNumber, peripheralCommitteeNumber, teritorialCode, town, street);
     }
-
 }

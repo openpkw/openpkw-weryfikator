@@ -26,6 +26,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author Saldenford
+ * @author Sebastian Pogorzelski
+ * @author Sebastian Celejewski
+ * @author Waldek
+ * @author Remigiusz Mrozek
+ */
 @OpenPKWAPIController
 @Transactional
 @RequestMapping("/users")

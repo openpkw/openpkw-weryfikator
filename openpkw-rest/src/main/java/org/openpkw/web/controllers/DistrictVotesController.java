@@ -15,7 +15,9 @@ import javax.inject.Inject;
 /**
  * REST Web Service
  *
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @RestController
 public class DistrictVotesController {
@@ -23,15 +25,15 @@ public class DistrictVotesController {
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictVotesController.class);
 
     @Inject
-    RESTService restService;
+    private RESTService restService;
 
     @RequestMapping("/districtVotes/{districtCommitteeNumber}")
     public ResponseEntity<VotesAnswerDTO> getDistrictVotesInCommittee(@PathVariable("districtCommitteeNumber") int districtCommitteeNumber) {
         ResponseEntity<VotesAnswerDTO> result;
 
-        try{
-            result = new ResponseEntity<>(restService.getVotesAnswer(districtCommitteeNumber),HttpStatus.OK);
-        }catch (NullPointerException nex) {
+        try {
+            result = new ResponseEntity<>(restService.getVotes(districtCommitteeNumber), HttpStatus.OK);
+        } catch (NullPointerException nex) {
             String errorMsg = "Can't get districts [NullPointerException]";
             LOGGER.warn(errorMsg, nex);
             result = new ResponseEntity<>(new VotesAnswerDTO(), HttpStatus.NOT_FOUND);

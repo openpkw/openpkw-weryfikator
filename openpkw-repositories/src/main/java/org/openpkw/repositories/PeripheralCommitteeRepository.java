@@ -56,9 +56,15 @@ public interface PeripheralCommitteeRepository extends JpaRepository<PeripheralC
     );
 
 
+    @Query("SELECT pc FROM PeripheralCommittee pc where pc.districtCommittee = ?1 ")
+    public List<PeripheralCommittee> findByDistrictCommittee(DistrictCommittee districtCommittee);
+
     Optional<PeripheralCommittee> findByPeripheralCommitteeNumberAndTerritorialCodeAndDistrictCommittee_districtCommitteeNumber(int peripheralNumber, String territorialCode, int committeeNumber);
 
     Optional<PeripheralCommittee> findByDistrictCommitteeAndPeripheralCodeAndPeripheralCommitteeNumber(DistrictCommittee districtCommittee,
             String territorialCode , int peripheralNumber
             );
+
+    @Query("select count(*) from PeripheralCommittee pc")
+    long getTotalNumberOfPeripheralCommittees();
 }
