@@ -23,7 +23,7 @@ public enum RestClientErrorMessage {
     
     INVALID_PASSWORD (301, "Invalid password"),
 
-    DATABASE_ALREADY_INIT(401,"Database already init"),
+    DATABASE_ALREADY_INIT(401,"Database has been already initialized"),
 
     USER_ADD_ERROR(105,"Add user error");
 

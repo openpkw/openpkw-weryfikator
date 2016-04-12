@@ -237,17 +237,22 @@ import java.util.Optional;
         return Integer.parseInt(listAllFieldInFile.get(line)[column]);
     }
 
+    private static Long getLongFromCsv(List<String[]> listAllFieldInFile, int line, int column) {
+        return Long.parseLong(listAllFieldInFile.get(line)[column]);
+    }
+
     private PeripheralCommittee getPeripheralCommitte(int line, List<String[]> listAllFieldInFile, List<DistrictCommittee> districtCommitteeList) {
         PeripheralCommitteeAddress peripheralCommitteeAddress = new PeripheralCommitteeAddress();
-        peripheralCommitteeAddress.setName(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.AddressName.getLineNumber()));
+        peripheralCommitteeAddress.setName(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.Address.getColumnNumber()));
 
         PeripheralCommittee peripheralCommittee = new PeripheralCommittee();
         peripheralCommittee.setPeripheralCommitteeAddress(peripheralCommitteeAddress);
-        peripheralCommittee.setPeripheralCommitteeNumber(getIntFromCsv(listAllFieldInFile, line, PeripheralCsvLine.Number.getLineNumber()));
-        peripheralCommittee.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.TeritorialCode.getLineNumber()));
-        peripheralCommittee.setName(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.Name.getLineNumber()));
+        peripheralCommittee.setPeripheralCommitteeNumber(getIntFromCsv(listAllFieldInFile, line, PeripheralCsvLine.Number.getColumnNumber()));
+        peripheralCommittee.setTerritorialCode(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.TeritorialCode.getColumnNumber()));
+        peripheralCommittee.setName(getStringFromCsv(listAllFieldInFile, line, PeripheralCsvLine.Address.getColumnNumber()));
+        peripheralCommittee.setAllowedToVote(getLongFromCsv(listAllFieldInFile, line, PeripheralCsvLine.AllowedToVote.getColumnNumber()));
 
-        int committeeNumber = getIntFromCsv(listAllFieldInFile, line, PeripheralCsvLine.DistrictNumber.getLineNumber());
+        int committeeNumber = getIntFromCsv(listAllFieldInFile, line, PeripheralCsvLine.DistrictNumber.getColumnNumber());
         DistrictCommittee districtCommittee = districtCommitteeList.stream().filter(a -> a.getDistrictCommitteeNumber() == committeeNumber).findFirst().get();
 
         peripheralCommittee.setDistrictCommittee(districtCommittee);

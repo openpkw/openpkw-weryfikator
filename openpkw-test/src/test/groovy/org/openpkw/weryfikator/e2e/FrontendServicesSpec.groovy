@@ -27,6 +27,7 @@ class FrontendServicesSpec extends Specification {
         responseData.jsonObject.protocolNumber > 0
         responseData.jsonObject.protocolAllNumber > 0
         responseData.jsonObject.votersVoteNumber > 0
+        responseData.jsonObject.allVotersNumber > 0
         responseData.jsonObject.voteCommittees.size > 0
     }
 
@@ -46,6 +47,7 @@ class FrontendServicesSpec extends Specification {
         responseData.jsonObject.protocolNumber > 0
         responseData.jsonObject.protocolAllNumber > 0
         responseData.jsonObject.votersVoteNumber > 0
+        responseData.jsonObject.allVotersNumber > 0
         responseData.jsonObject.allVoteCommittees.size > 0
     }
 }
