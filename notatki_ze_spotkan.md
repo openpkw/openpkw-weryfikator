@@ -1,5 +1,26 @@
 # Notatki ze spotkań zespołu Java
 
+## Wtorek, 12 kwietnia 2016 r.
+
+Obecni: Sebastian Celejewski, Kamil Grabowski, Sebastian Pogorzelski, Remigiusz Mrozek
+
+Tematy:
+
+1. Uzupełnienie serwisu inicjującego bazę danych aby wrzucał do bazy liczbę uprawnionych do głosowania (Remek lub Sebastian).
+
+2. Uzupełnienie schemy bazy danych o krótkie nazwy komitetów wyborczych + wrzucanie ich init serwisem + wykorzystanie ich na wykresach.
+
+3. Przeprojektowanie wykresów tak, aby pomieściły się nazwy komitetów wyborczych (Remek).
+
+4. Jak pisać zapytania w Hibernate: JPA Query czy inne sposoby? JPA Query.
+
+5. Problemy we frontendzie Weryfikatora: dwa wykresy pokazują to samo, a powinny pokazywać co innego, inne wykresy nie pojawiają się wcale itd. - do przejrzenia przez Remka.
+
+6. Refaktoring w warstwie serwisów, w szczególności uporządkowanie nazewnictwa (Sebastian & Sebastian).
+
+7. Użycie Ecma Script we Frontendzie - nowoczesność (Remek) czy bariera technologiczna (Sebastian)?
+
+
 ## Wtorek, 5 kwietnia 2016 r.
 
 Obecni: Rafał Reguła, Sebastian Celejewski, Sebastian Pogorzelski, Kamil Szestowicki, Kamil Grabowski
