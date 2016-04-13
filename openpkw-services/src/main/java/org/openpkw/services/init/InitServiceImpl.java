@@ -14,14 +14,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Optional;
 
 /**
- * Created by mrozi on 12.01.16.
+ * @author Remigiusz Mrozek
+ * @author Sebastian Pogorzelski
+ * @author Sebastian Celejewski
  */
 @Service public class InitServiceImpl implements InitService {
 
@@ -29,6 +30,7 @@ import java.util.Optional;
     private final static String FILE_NAME_DISTRICTS = "/districts.csv";
     private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
     private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
+    private final static String FILE_NAME_ELECTION_COMMITTEES_NAMES = "/election_committees.csv";
 
     public static final String CHARSET_NAME = "UTF-8";
 
@@ -37,6 +39,8 @@ import java.util.Optional;
     private List<Candidate> candidateList;
     private List<ElectionCommittee> electionCommitteeList;
     private List<ElectionCommitteeDistrict> electionCommitteeDistrictList;
+    private Map<String, String> electionCommitteesShortNames = new HashMap<>();
+    private Map<String, String> electionCommitteesSymbols = new HashMap<>();
 
     @Qualifier("districtCommitteeRepository")
     @Inject
@@ -174,6 +178,7 @@ import java.util.Optional;
     }
 
     public void readCsvFiles() {
+        readElectionCommitteeNamesFromCsv(FILE_NAME_ELECTION_COMMITTEES_NAMES);
         readDistrictCommitteeListFromCsv(FILE_NAME_DISTRICTS);
         readPeripheralCommiteeFromCsv(FILE_NAME_PERIPHERALS);
         readCandidateListFromCsv(FILE_NAME_CANDIDATES);
@@ -297,11 +302,11 @@ import java.util.Optional;
     }
 
     private Candidate getCandidate(int line, List<String[]> listAllFieldInFile, List<DistrictCommittee> districtCommitteeList) {
-        ElectionCommittee electionCommittee = new ElectionCommittee();
-        electionCommittee.setName(getStringFromCsv(listAllFieldInFile, line, CandidateCsvLine.ElectionCommiteeListName.getLineNumber()));
+        String electionCommitteeLongName = getStringFromCsv(listAllFieldInFile, line, CandidateCsvLine.ElectionCommiteeListName.getLineNumber());
+        ElectionCommittee electionCommittee = createElectionCommittee(electionCommitteeLongName);
 
         ElectionCommitteeDistrict electionCommitteeDistrict = new ElectionCommitteeDistrict();
-        electionCommitteeDistrict.setElectionCommitteeId(electionCommittee);
+        electionCommitteeDistrict.setElectionCommittee(electionCommittee);
         electionCommitteeDistrict.setListNumber(getIntFromCsv(listAllFieldInFile, line, CandidateCsvLine.ElectionCommitteeListNumber.getLineNumber()));
         int committeeNumber = getIntFromCsv(listAllFieldInFile, line, CandidateCsvLine.DistrictNumber.getLineNumber());
         DistrictCommittee districtCommittee = districtCommitteeList.stream().filter(a -> a.getDistrictCommitteeNumber() == committeeNumber).findFirst().get();
@@ -316,6 +321,26 @@ import java.util.Optional;
         return candidate;
     }
 
+    private ElectionCommittee createElectionCommittee(String electionCommitteeLongName) {
+        if (!electionCommitteesShortNames.containsKey(electionCommitteeLongName)) {
+            throw new RuntimeException("Short name for election committee " + electionCommitteeLongName+" not found");
+        }
+
+        if (!electionCommitteesSymbols.containsKey(electionCommitteeLongName)) {
+            throw new RuntimeException("Symbol of election committee " + electionCommitteeLongName+" not found");
+        }
+
+        String electionCommitteeShortName = electionCommitteesShortNames.get(electionCommitteeLongName);
+        String electionCommitteeSymbol = electionCommitteesSymbols.get(electionCommitteeLongName);
+
+        ElectionCommittee electionCommittee = new ElectionCommittee();
+        electionCommittee.setLongName(electionCommitteeLongName);
+        electionCommittee.setShortName(electionCommitteeShortName);
+        electionCommittee.setSymbol(electionCommitteeSymbol);
+
+        return electionCommittee;
+    }
+
     private void extractCandidateList() {
         log.info("Extracting list of candidates");
         electionCommitteeList = new ArrayList<ElectionCommittee>();
@@ -326,12 +351,12 @@ import java.util.Optional;
             if (findDistrict.isPresent()) {
                 candidate.setElectionCommitteeDistrict(findDistrict.get());
             } else {
-                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getName().trim().equals(candidate.getElectionCommitteeDistrict().getElectionCommitteeId().getName().trim())).findFirst();
+                Optional<ElectionCommittee> find = electionCommitteeList.stream().filter(a -> a.getLongName().trim().equals(candidate.getElectionCommitteeDistrict().getElectionCommittee().getLongName().trim())).findFirst();
                 if (find.isPresent()) {
                     electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
-                    candidate.getElectionCommitteeDistrict().setElectionCommitteeId(find.get());
+                    candidate.getElectionCommitteeDistrict().setElectionCommittee(find.get());
                 } else {
-                    electionCommitteeList.add(candidate.getElectionCommitteeDistrict().getElectionCommitteeId());
+                    electionCommitteeList.add(candidate.getElectionCommitteeDistrict().getElectionCommittee());
                     electionCommitteeDistrictList.add(candidate.getElectionCommitteeDistrict());
                 }
             }
@@ -362,6 +387,24 @@ import java.util.Optional;
             }
         }
         log.info("Loaded " + candidateList.size() + " candidates.");
+    }
+
+    private void readElectionCommitteeNamesFromCsv(String fileName) {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream(fileName), CHARSET_NAME));
+            while (br.ready()) {
+                String line = br.readLine();
+                String[] tokens = line.split("\",\\s*\"");
+                String longName = tokens[0].substring(1);
+                String shortName = tokens[1];
+                String symbol = tokens[2].substring(0, tokens[2].length()-1);
+
+                electionCommitteesShortNames.put(longName, shortName);
+                electionCommitteesSymbols.put(longName, symbol);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to load election committees names from " + fileName+": "+ex.getMessage(), ex);
+        }
     }
 
     private void readDistrictCommitteeListFromCsv(String fileName) {

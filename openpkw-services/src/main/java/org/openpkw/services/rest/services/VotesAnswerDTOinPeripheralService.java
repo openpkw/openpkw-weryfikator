@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by kamil on 08.02.16.
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 @Component
 public class VotesAnswerDTOinPeripheralService {
 
-
     @Qualifier("districtCommitteeRepository")
     @Inject
     private DistrictCommitteeRepository districtCommitteeRepository;
-
 
     @Qualifier("peripheralCommitteeRepository")
     @Inject
@@ -40,11 +40,7 @@ public class VotesAnswerDTOinPeripheralService {
     @Inject
     private VoteRepository voteRepository;
 
-    public VotesAnswerDTO generate(
-            int districtCommitteeNumber,
-            String teritorialCode,
-            int peripheralCommitteeNumber
-    ) {
+    public VotesAnswerDTO generate(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
         VotesAnswerDTO answerDTO = new VotesAnswerDTO();
         PeripheralCommittee committee;
 
@@ -73,7 +69,9 @@ public class VotesAnswerDTOinPeripheralService {
                     ElectionCommitteeDistrict electionCommitteeDistrict = vote.getElectionCommitteeDistrict();
 
                     voteCommitteeDTO.setNumber(electionCommitteeDistrict.getListNumber());
-                    voteCommitteeDTO.setName(electionCommitteeDistrict.getElectionCommitteeId().getName());
+                    voteCommitteeDTO.setLongName(electionCommitteeDistrict.getElectionCommittee().getLongName());
+                    voteCommitteeDTO.setShortName(electionCommitteeDistrict.getElectionCommittee().getShortName());
+                    voteCommitteeDTO.setSymbol(electionCommitteeDistrict.getElectionCommittee().getSymbol());
 
                     Collection<Candidate> candidateCollection = electionCommitteeDistrict.getCandidateCollection();
 
@@ -95,5 +93,4 @@ public class VotesAnswerDTOinPeripheralService {
         }
         return answerDTO;
     }
-
 }

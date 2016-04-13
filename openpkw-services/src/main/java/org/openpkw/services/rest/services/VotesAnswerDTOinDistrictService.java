@@ -81,7 +81,9 @@ public class VotesAnswerDTOinDistrictService {
             for (ElectionCommitteeDistrict committeeDistrict : electionCommitteeDistricts) {
                 voteCommitteeDTO = new VoteCommitteeDTO();
 
-                voteCommitteeDTO.setName(committeeDistrict.getElectionCommitteeId().getName());
+                voteCommitteeDTO.setLongName(committeeDistrict.getElectionCommittee().getLongName());
+                voteCommitteeDTO.setShortName(committeeDistrict.getElectionCommittee().getShortName());
+                voteCommitteeDTO.setSymbol(committeeDistrict.getElectionCommittee().getSymbol());
                 voteCommitteeDTO.setNumber(committeeDistrict.getListNumber());
 
                 voteCommitteeDTO.setVotes(getVotesElectionCommittee(committeeDistrict));

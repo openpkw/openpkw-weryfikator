@@ -123,11 +123,11 @@ class QrResultControllerSpec extends Specification {
 
         (1..10).each { listNumber ->
 
-            ElectionCommittee electionCommittee = new ElectionCommittee(name: "Commitee + ${listNumber}")
+            ElectionCommittee electionCommittee = new ElectionCommittee(longName: "Commitee + ${listNumber}", shortName: "Commitee + ${listNumber}", symbol: "Commitee + ${listNumber}")
 
             ElectionCommitteeDistrict electionCommitteeDistrict = new ElectionCommitteeDistrict(
                     listNumber: listNumber,
-                    electionCommitteeId: electionCommittee,
+                    electionCommittee: electionCommittee,
                     districtCommittee: districtCommittee
             )
             electionCommitteeDistrict.candidateCollection = (1..10).collect { numberOnList ->

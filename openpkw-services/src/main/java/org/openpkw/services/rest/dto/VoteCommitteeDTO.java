@@ -3,27 +3,19 @@ package org.openpkw.services.rest.dto;
 import java.util.List;
 
 /**
- *
- * @author kamil
+ * @author Kamil Szestowicki
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
  */
 public class VoteCommitteeDTO {
 
     private String errorMessage;
-    private String name;                //nazwa komitetu wyborczego
-    private int number;                 //numer na liście
-    private int votes;                  //liczba oddanych głosów
+    private String longName;
+    private String shortName;
+    private String symbol;
+    private int number;
+    private int votes;
     private List<CandidateDTO> candidates;
-
-    public VoteCommitteeDTO() {
-    }
-
-    public VoteCommitteeDTO(String errorMessage, String name, int number, int votes, List<CandidateDTO> candidates) {
-        this.errorMessage = errorMessage;
-        this.name = name;
-        this.number = number;
-        this.votes = votes;
-        this.candidates = candidates;
-    }
 
     public List<CandidateDTO> getCandidates() {
         return candidates;
@@ -41,13 +33,25 @@ public class VoteCommitteeDTO {
         this.errorMessage = errorMessage;
     }
 
-    public String getName() {
-        return name;
+    public String getShortName() {
+        return shortName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
+
+    public String getLongName() {
+        return longName;
+    }
+
+    public void setLongName(String longName) {
+        this.longName = longName;
+    }
+
+    public void setSymbol(String symbol) { this.symbol = symbol; }
+
+    public String getSymbol() { return symbol; }
 
     public int getNumber() {
         return number;

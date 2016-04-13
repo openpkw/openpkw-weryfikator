@@ -53,7 +53,7 @@ public class AllVotesAnswerDTOService {
         Integer totalVotes = 0;
         for (ElectionCommitteeDistrict electionCommiteeInDistrinct : electionCommitteeDistrictAll) {
 
-            ElectionCommittee electionCommittee = electionCommiteeInDistrinct.getElectionCommitteeId();
+            ElectionCommittee electionCommittee = electionCommiteeInDistrinct.getElectionCommittee();
 
             if (!votesForElectionCommittees.containsKey(electionCommittee)) {
                 votesForElectionCommittees.put(electionCommittee, 0);
@@ -73,11 +73,12 @@ public class AllVotesAnswerDTOService {
 
         for (ElectionCommittee electionCommittee : votesForElectionCommittees.keySet()) {
             AllVoteCommitteeDTO allVoteCommittee = new AllVoteCommitteeDTO();
-            String name = electionCommittee.getName();
 
             int electionCommitteeVotes = votesForElectionCommittees.get(electionCommittee);
 
-            allVoteCommittee.setName(name);
+            allVoteCommittee.setLongName(electionCommittee.getLongName());
+            allVoteCommittee.setShortName(electionCommittee.getShortName());
+            allVoteCommittee.setSymbol(electionCommittee.getSymbol());
             allVoteCommittee.setNumber(electionCommittee.getElectionCommitteeId());
             allVoteCommittee.setVotes(electionCommitteeVotes);
 

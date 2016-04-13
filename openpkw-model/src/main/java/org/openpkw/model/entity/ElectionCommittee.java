@@ -6,33 +6,39 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Łukasz Franczuk
+ * @author Remigiusz Mrozek
+ * @author Sebastian Pogorzelski
+ * @author Sebastian Celejewski
+ */
 @Entity
 @Table(name = "ELECTION_COMMITTEE")
 public class ElectionCommittee implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ELECTION_COMMITTEE_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer electionCommitteeId;
+    @Id
+    @Column(name = "ELECTION_COMMITTEE_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer electionCommitteeId;
 
     @NotNull
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "LONG_NAME")
+    private String longName;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeId")
+    @NotNull
+    @Column(name = "SHORT_NAME")
+    private String shortName;
+
+    @NotNull
+    @Column(name = "SYMBOL")
+    private String symbol;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommittee")
     private Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection = new ArrayList<>();
 
     public ElectionCommittee() {
-    }
-
-    public ElectionCommittee(Integer electionCommitteeId) {
-        this.electionCommitteeId = electionCommitteeId;
-    }
-
-    public ElectionCommittee(Integer electionCommitteeId, String name) {
-        this.electionCommitteeId = electionCommitteeId;
-        this.name = name;
     }
 
     public Integer getElectionCommitteeId() {
@@ -43,20 +49,27 @@ public class ElectionCommittee implements Serializable {
         this.electionCommitteeId = electionCommitteeId;
     }
 
-    public String getName() {
-        return name;
+    public String getLongName() {
+        return longName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLongName(String longName) {
+        this.longName = longName;
     }
+
+    public String getShortName() { return shortName; }
+
+    public void setShortName(String shortName) { this.shortName = shortName; }
+
+    public String getSymbol() { return symbol; }
+
+    public void setSymbol(String symbol) { this.symbol = symbol; }
 
     public Collection<ElectionCommitteeDistrict> getElectionCommitteeDistrictCollection() {
         return electionCommitteeDistrictCollection;
     }
 
-    public void setElectionCommitteeDistrictCollection(
-            Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection) {
+    public void setElectionCommitteeDistrictCollection(Collection<ElectionCommitteeDistrict> electionCommitteeDistrictCollection) {
         this.electionCommitteeDistrictCollection = electionCommitteeDistrictCollection;
     }
 
