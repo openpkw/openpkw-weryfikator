@@ -16,51 +16,45 @@ import java.util.List;
  * @author Sebastian Celejewski
  */
 @Service
-public class RESTServiceImpl implements RESTService {
+public class RESTServiceFacadeImpl implements RESTServiceFacade {
 
     @Inject
-    private DistrictsDTOService districtsDTOService;
+    private DistrictsService districtsService;
 
     @Inject
-    private AllVotesAnswerDTOService allVotesAnswerDTOService;
+    private VotesService votesService;
 
     @Inject
-    private VotesAnswerDTOinDistrictService votesAnswerDTOinDistrictService;
-
-    @Inject
-    private VotesAnswerDTOinPeripheralService votesAnswerDTOinPeripheralService;
-
-    @Inject
-    private PeripheralCommitteeDTOService peripheralCommitteeDTOService;
+    private PeripheralCommitteeService peripheralCommitteeService;
 
     //+ /votes
     @Override
     public AllVotesAnswerDTO getAllVotes() {
-        return allVotesAnswerDTOService.getAllVotes();
+        return votesService.getAllVotes();
     }
 
     //+  /districtVotes/{districtCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotes(int districtCommitteeNumber) {
-        return votesAnswerDTOinDistrictService.getVotes(districtCommitteeNumber);
+        return votesService.getVotesInDistrict(districtCommitteeNumber);
     }
 
     //+ /peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}
     @Override
     public VotesAnswerDTO getVotes(int districtCommitteeNumber, String teritorialCode, int peripheralCommitteeNumber) {
-        return votesAnswerDTOinPeripheralService.generate(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
+        return votesService.getVotesInPeripheral(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber);
     }
 
     //+ /districts
     @Override
     @Transactional
     public DistrictsDTO getDistricts() {
-        return districtsDTOService.getDistricts();
+        return districtsService.getDistricts();
     }
 
     // /peripheral...
     @Override
     public List<PeripheralCommitteeDTO> getPeripherals(int districtCommitteeNumber, int peripheralCommitteeNumber, String teritorialCode, String town, String street) {
-        return peripheralCommitteeDTOService.generate(districtCommitteeNumber, peripheralCommitteeNumber, teritorialCode, town, street);
+        return peripheralCommitteeService.generate(districtCommitteeNumber, peripheralCommitteeNumber, teritorialCode, town, street);
     }
 }

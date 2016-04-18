@@ -3,7 +3,7 @@ package org.openpkw.web.controllers;
 import javax.inject.Inject;
 
 import org.openpkw.services.rest.dto.AllVotesAnswerDTO;
-import org.openpkw.services.rest.services.RESTService;
+import org.openpkw.services.rest.services.RESTServiceFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,17 +24,17 @@ public class VotesController {
     private final static Logger LOGGER = LoggerFactory.getLogger(VotesController.class);
 
     @Inject
-    private RESTService restService;
+    private RESTServiceFacade restServiceFacade;
 
     @RequestMapping("/votes")
     public ResponseEntity<AllVotesAnswerDTO> getJson() {
         ResponseEntity<AllVotesAnswerDTO> result;
         try {
-            result = new ResponseEntity<>(restService.getAllVotes(), HttpStatus.OK);
+            result = new ResponseEntity<>(restServiceFacade.getAllVotes(), HttpStatus.OK);
         } catch (NullPointerException nex) {
             String errorMsg = "Can't get votes [NullPointerException]";
             LOGGER.warn(errorMsg, nex);
-            result = new ResponseEntity<>(restService.getAllVotes(), HttpStatus.NOT_FOUND);
+            result = new ResponseEntity<>(restServiceFacade.getAllVotes(), HttpStatus.NOT_FOUND);
         }
         return result;
     }
