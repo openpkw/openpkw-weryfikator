@@ -35,7 +35,6 @@ public class DataLoader {
 
     @PostConstruct
     public void prepareData() throws RestClientException {
-        System.out.println("\n\n\nprepareData\n\n\n");
         initService.initDatabase(false);
         createUser();
     }
