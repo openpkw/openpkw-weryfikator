@@ -8,8 +8,15 @@ import org.openpkw.repositories.ElectionCommitteeRepository
 import org.openpkw.repositories.PeripheralCommitteeRepository
 import org.openpkw.repositories.UserRepository
 import org.openpkw.services.init.InitService
+import org.openpkw.web.config.TestAppConfig
+import org.openpkw.web.config.TestJpaConfig
+import org.openpkw.web.configuration.MVCConfig
+import org.openpkw.web.configuration.OAuth2ServerConfiguration
+import org.openpkw.web.configuration.SecurityConfig
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
@@ -23,6 +30,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 /**
  * @author Sebastian Pogorzelski
  */
+@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig ])
+@WebAppConfiguration
 class AbstractOpenPKWSpec extends Specification {
 
     static final String ADMIN_USER = "admin@openpkw.pl"
@@ -63,7 +72,7 @@ class AbstractOpenPKWSpec extends Specification {
                 .webAppContextSetup(context)
                 .addFilters(springSecurityFilterChain)
                 .build()
-        prepareData()
+
     }
 
 
@@ -93,7 +102,7 @@ class AbstractOpenPKWSpec extends Specification {
         return JsonPath.read(content, "access_token")
     }
 
-    private prepareData() {
+    def prepareData() {
 
         initService.initDatabase(true)
         createUser()

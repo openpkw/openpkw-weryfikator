@@ -5,13 +5,6 @@ import org.openpkw.model.entity.Candidate
 import org.openpkw.repositories.CandidateRepository
 import org.openpkw.services.qr.dto.QrDTO
 import org.openpkw.services.sign.SignService
-import org.openpkw.web.config.TestAppConfig
-import org.openpkw.web.config.TestJpaConfig
-import org.openpkw.web.configuration.MVCConfig
-import org.openpkw.web.configuration.OAuth2ServerConfiguration
-import org.openpkw.web.configuration.SecurityConfig
-import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.web.WebAppConfiguration
 import org.springframework.test.web.servlet.MvcResult
 
 import javax.inject.Inject
@@ -20,8 +13,6 @@ import javax.ws.rs.core.MediaType
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig ])
-@WebAppConfiguration
 class QrResultControllerSpec extends AbstractOpenPKWSpec {
 
     static final String QR_CODE = '146519,332,19,2086,1760,103,1657,1,18,0,0,0,0,0,0,0,1656,0,0,1656,12,1644,,0101;272,0102;38,0103;16,0104;6,0105;8,0106;6,0107;7,0108;4,0109;2,0201;366,0202;31,0203;21,0204;12,0205;7,0206;1,0207;33,0208;2,0209;6,0210;3,0301;78,0302;2,0303;1,0304;4,0305;1,0306;1,0310;2,0401;58,0402;3,0403;8,0404;1,0501;50,0504;5,0505;2,0510;1,0601;249,0602;13,0603;1,0605;2,0609;1,0610;7,0701;1,0702;1'
@@ -32,7 +23,12 @@ class QrResultControllerSpec extends AbstractOpenPKWSpec {
 
 
     @Inject
-    SignService signService;
+    SignService signService
+
+    @Override
+    def setup() {
+        prepareData()
+    }
 
     def "should save result to database"() {
         given:
