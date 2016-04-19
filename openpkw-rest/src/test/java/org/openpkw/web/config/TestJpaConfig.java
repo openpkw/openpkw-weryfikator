@@ -59,7 +59,6 @@ public class TestJpaConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-//                .addDefaultScripts()
                 .build();
     }
 

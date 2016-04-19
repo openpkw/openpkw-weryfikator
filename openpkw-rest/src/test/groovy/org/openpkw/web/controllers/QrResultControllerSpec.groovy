@@ -5,6 +5,7 @@ import org.openpkw.model.entity.Candidate
 import org.openpkw.repositories.CandidateRepository
 import org.openpkw.services.qr.dto.QrDTO
 import org.openpkw.services.sign.SignService
+import org.openpkw.web.utils.DataLoader
 import org.springframework.test.web.servlet.MvcResult
 
 import javax.inject.Inject
@@ -25,14 +26,10 @@ class QrResultControllerSpec extends AbstractOpenPKWSpec {
     @Inject
     SignService signService
 
-    @Override
-    def setup() {
-        prepareData()
-    }
 
     def "should save result to database"() {
         given:
-        def signature = java.util.Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(PRIVATE_KEY)))
+        def signature = java.util.Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(DataLoader.PRIVATE_KEY)))
         def dto = new QrDTO(QR_CODE, signature)
 
         def content = JsonOutput.toJson(dto)
