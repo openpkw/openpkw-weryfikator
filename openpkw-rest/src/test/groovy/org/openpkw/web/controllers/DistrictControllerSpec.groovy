@@ -1,7 +1,9 @@
 package org.openpkw.web.controllers
 
 import com.jayway.jsonpath.JsonPath
+import org.openpkw.web.utils.SpringProfileHelper
 import org.springframework.test.web.servlet.MvcResult
+import spock.lang.IgnoreIf
 
 import javax.ws.rs.core.MediaType
 
@@ -13,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 class DistrictControllerSpec extends AbstractOpenPKWSpec {
 
+    @IgnoreIf({ SpringProfileHelper.integrationTestsEnabled() })
     def "should get all districts"(){
         //given:
 
@@ -30,7 +33,6 @@ class DistrictControllerSpec extends AbstractOpenPKWSpec {
 
         def districts = JsonPath.read(content, "districts")
         districts != null
-        print(districts.length)
     }
 
 }

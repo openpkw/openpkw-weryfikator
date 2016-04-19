@@ -6,7 +6,9 @@ import org.openpkw.repositories.CandidateRepository
 import org.openpkw.services.qr.dto.QrDTO
 import org.openpkw.services.sign.SignService
 import org.openpkw.web.utils.DataLoader
+import org.openpkw.web.utils.SpringProfileHelper
 import org.springframework.test.web.servlet.MvcResult
+import spock.lang.IgnoreIf
 
 import javax.inject.Inject
 import javax.ws.rs.core.MediaType
@@ -26,7 +28,7 @@ class QrResultControllerSpec extends AbstractOpenPKWSpec {
     @Inject
     SignService signService
 
-
+    @IgnoreIf({ SpringProfileHelper.integrationTestsEnabled() })
     def "should save result to database"() {
         given:
         def signature = java.util.Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(DataLoader.PRIVATE_KEY)))

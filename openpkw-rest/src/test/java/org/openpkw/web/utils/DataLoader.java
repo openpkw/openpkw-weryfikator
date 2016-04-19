@@ -4,6 +4,7 @@ import org.openpkw.model.entity.User;
 import org.openpkw.repositories.UserRepository;
 import org.openpkw.services.init.InitService;
 import org.openpkw.validation.RestClientException;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
  * @author Sebastian Pogorzelski
  */
 @Component
+@Profile("integration-tests")
 public class DataLoader {
 
     public static final String ADMIN_USER = "admin@openpkw.pl";
