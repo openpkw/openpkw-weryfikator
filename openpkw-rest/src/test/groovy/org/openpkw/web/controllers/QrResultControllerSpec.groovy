@@ -28,10 +28,10 @@ class QrResultControllerSpec extends AbstractOpenPKWSpec {
     @Inject
     SignService signService
 
-    @IgnoreIf({ SpringProfileHelper.integrationTestsEnabled() })
+    @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
     def "should save result to database"() {
         given:
-        def signature = java.util.Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(DataLoader.PRIVATE_KEY)))
+        def signature = Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(DataLoader.PRIVATE_KEY)))
         def dto = new QrDTO(QR_CODE, signature)
 
         def content = JsonOutput.toJson(dto)

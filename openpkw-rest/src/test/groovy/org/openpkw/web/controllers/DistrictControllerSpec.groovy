@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 class DistrictControllerSpec extends AbstractOpenPKWSpec {
 
-    @IgnoreIf({ SpringProfileHelper.integrationTestsEnabled() })
+    @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
     def "should get all districts"(){
         //given:
 
