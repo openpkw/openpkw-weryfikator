@@ -3,6 +3,7 @@ package org.openpkw.repositories;
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
@@ -11,7 +12,7 @@ import java.util.Optional;
  * @author Sebastian Pogorzelski
  */
 @Repository
-public interface DistrictCommitteeRepository extends JpaRepository<DistrictCommittee, Long> {
+public interface DistrictCommitteeRepository extends JpaRepository<DistrictCommittee, Long>, JpaSpecificationExecutor {
    Optional<DistrictCommittee> findByDistrictCommitteeNumber(int districtCommitteeNumber);
 
    @Query( "select count(pc.peripheralCommitteeID) from PeripheralCommittee pc , "

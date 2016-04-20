@@ -3,7 +3,7 @@ package org.openpkw.web.controllers;
 import javax.inject.Inject;
 
 import org.openpkw.services.rest.dto.DistrictsDTO;
-import org.openpkw.services.rest.services.RESTService;
+import org.openpkw.services.rest.services.RESTServiceFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,22 +21,15 @@ public class DistrictsController {
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictsController.class);
 
     @Inject
-    private RESTService restService;
+    private RESTServiceFacade restServiceFacade;
 
     /**
      * Zwraca listę wszystkich okręgów
      */
     @RequestMapping("/districts")
     public ResponseEntity<DistrictsDTO> getDistricts() {
-        ResponseEntity<DistrictsDTO> result;
+        ResponseEntity<DistrictsDTO> result = new ResponseEntity<>(restServiceFacade.getDistricts(), HttpStatus.OK);
 
-        try {
-            result = new ResponseEntity<>(restService.getDistricts(), HttpStatus.OK);
-        } catch (NullPointerException nex) {
-            String errorMsg = "Can't get districts [NullPointerException]";
-            LOGGER.warn(errorMsg, nex);
-            result = new ResponseEntity<>(restService.getDistricts(), HttpStatus.NOT_FOUND);
-        }
         return result;
     }
 }

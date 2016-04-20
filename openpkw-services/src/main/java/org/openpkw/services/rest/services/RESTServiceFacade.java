@@ -12,7 +12,7 @@ import java.util.List;
  * @author Remigiusz Mrozek
  * @author Sebastian Celejewski
  */
-public interface RESTService {
+public interface RESTServiceFacade {
 
     AllVotesAnswerDTO getAllVotes();
 
