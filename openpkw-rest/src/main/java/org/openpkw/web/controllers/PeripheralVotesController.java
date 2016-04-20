@@ -1,7 +1,7 @@
 package org.openpkw.web.controllers;
 
 import org.openpkw.services.rest.dto.VotesAnswerDTO;
-import org.openpkw.services.rest.services.RESTService;
+import org.openpkw.services.rest.services.RESTServiceFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,7 +25,7 @@ public class PeripheralVotesController {
     private final static Logger LOGGER = LoggerFactory.getLogger(DistrictVotesController.class);
 
     @Inject
-    private RESTService restService;
+    private RESTServiceFacade restServiceFacade;
 
     @RequestMapping("peripheralVotes/{districtCommitteeNumber}/{teritorialCode}/{peripheralCommitteeNumber}")
     public ResponseEntity<VotesAnswerDTO> getPeripheralVotes(
@@ -36,7 +36,7 @@ public class PeripheralVotesController {
         ResponseEntity<VotesAnswerDTO> result;
 
         try {
-            result = new ResponseEntity<>(restService.getVotes(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber), HttpStatus.OK);
+            result = new ResponseEntity<>(restServiceFacade.getVotes(districtCommitteeNumber, teritorialCode, peripheralCommitteeNumber), HttpStatus.OK);
         } catch (NullPointerException nex) {
             String errorMsg = "Can't get districtsVotes [NullPointerException]";
             LOGGER.warn(errorMsg, nex);

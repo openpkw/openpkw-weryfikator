@@ -32,7 +32,7 @@ public class TestJpaConfig {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(Boolean.TRUE);
-        vendorAdapter.setShowSql(Boolean.TRUE);
+        vendorAdapter.setShowSql(Boolean.FALSE);
         factory.setDataSource(dataSource());
         factory.setJpaVendorAdapter(vendorAdapter);
         factory.setPackagesToScan("org.openpkw.model.entity");
@@ -59,7 +59,6 @@ public class TestJpaConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-//                .addDefaultScripts()
                 .build();
     }
 
