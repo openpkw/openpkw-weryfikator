@@ -56,7 +56,7 @@ public class VotesService {
         Integer totalVotes = 0;
         for (ElectionCommitteeDistrict electionCommiteeInDistrinct : electionCommitteeDistrictAll) {
 
-            ElectionCommittee electionCommittee = electionCommiteeInDistrinct.getElectionCommitteeId();
+            ElectionCommittee electionCommittee = electionCommiteeInDistrinct.getElectionCommittee();
 
             if (!votesForElectionCommittees.containsKey(electionCommittee)) {
                 votesForElectionCommittees.put(electionCommittee, 0);
@@ -76,11 +76,15 @@ public class VotesService {
 
         for (ElectionCommittee electionCommittee : votesForElectionCommittees.keySet()) {
             AllVoteCommitteeDTO allVoteCommittee = new AllVoteCommitteeDTO();
-            String name = electionCommittee.getName();
+            String longName = electionCommittee.getLongName();
+            String shortName = electionCommittee.getShortName();
+            String symbol = electionCommittee.getSymbol();
 
             int electionCommitteeVotes = votesForElectionCommittees.get(electionCommittee);
 
-            allVoteCommittee.setName(name);
+            allVoteCommittee.setLongName(longName);
+            allVoteCommittee.setShortName(shortName);
+            allVoteCommittee.setSymbol(symbol);
             allVoteCommittee.setNumber(electionCommittee.getElectionCommitteeId());
             allVoteCommittee.setVotes(electionCommitteeVotes);
 
@@ -153,7 +157,9 @@ public class VotesService {
                     ElectionCommitteeDistrict electionCommitteeDistrict = vote.getElectionCommitteeDistrict();
 
                     voteCommitteeDTO.setNumber(electionCommitteeDistrict.getListNumber());
-                    voteCommitteeDTO.setName(electionCommitteeDistrict.getElectionCommitteeId().getName());
+                    voteCommitteeDTO.setLongName(electionCommitteeDistrict.getElectionCommittee().getLongName());
+                    voteCommitteeDTO.setShortName(electionCommitteeDistrict.getElectionCommittee().getShortName());
+                    voteCommitteeDTO.setSymbol(electionCommitteeDistrict.getElectionCommittee().getSymbol());
 
                     Collection<Candidate> candidateCollection = electionCommitteeDistrict.getCandidateCollection();
 
@@ -187,7 +193,9 @@ public class VotesService {
             for (ElectionCommitteeDistrict committeeDistrict : electionCommitteeDistricts) {
                 voteCommitteeDTO = new VoteCommitteeDTO();
 
-                voteCommitteeDTO.setName(committeeDistrict.getElectionCommitteeId().getName());
+                voteCommitteeDTO.setLongName(committeeDistrict.getElectionCommittee().getLongName());
+                voteCommitteeDTO.setShortName(committeeDistrict.getElectionCommittee().getShortName());
+                voteCommitteeDTO.setSymbol(committeeDistrict.getElectionCommittee().getSymbol());
                 voteCommitteeDTO.setNumber(committeeDistrict.getListNumber());
 
                 voteCommitteeDTO.setVotes(getVotesElectionCommittee(committeeDistrict));

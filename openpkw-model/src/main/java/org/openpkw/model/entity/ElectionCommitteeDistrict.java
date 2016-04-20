@@ -6,6 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * @author Łukasz Franczuk
+ * @author Remigiusz Mrozek
+ * @author Sebastian Celejewski
+ * @author Sebastian Pogorzelski
+ */
 @Entity
 @Table(name = "ELECTION_COMMITTEE_DISTRICT")
 public class ElectionCommitteeDistrict implements Serializable {
@@ -17,21 +23,17 @@ public class ElectionCommitteeDistrict implements Serializable {
     @Column(name = "ELECTION_COMMITTEE_DISTRICT_ID")
     private Integer electionCommitteeDistrictId;
 
-    
     @Column(name = "LIST_NUMBER")
     private Integer listNumber;
 
-    
     @JoinColumn(name = "ELECTION_COMMITTEE_ID", referencedColumnName = "ELECTION_COMMITTEE_ID")
     @ManyToOne(optional = false)
-    private ElectionCommittee electionCommitteeId;
+    private ElectionCommittee electionCommittee;
 
-    
     @JoinColumn(name = "DISTRICT_COMMITTEE_ID", referencedColumnName = "DISTRICT_COMMITTEE_ID")
     @ManyToOne(optional = false)
     private DistrictCommittee districtCommittee;
 
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "electionCommitteeDistrict")
     private Collection<ElectionCommitteeVote> electionCommitteeVoteCollection;
     
@@ -61,12 +63,12 @@ public class ElectionCommitteeDistrict implements Serializable {
         this.listNumber = listNumber;
     }
 
-    public ElectionCommittee getElectionCommitteeId() {
-        return electionCommitteeId;
+    public ElectionCommittee getElectionCommittee() {
+        return electionCommittee;
     }
 
-    public void setElectionCommitteeId(ElectionCommittee electionCommitteeId) {
-        this.electionCommitteeId = electionCommitteeId;
+    public void setElectionCommittee(ElectionCommittee electionCommittee) {
+        this.electionCommittee = electionCommittee;
     }
 
     public DistrictCommittee getDistrictCommittee() {
