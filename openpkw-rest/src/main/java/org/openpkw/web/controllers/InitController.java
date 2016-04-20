@@ -36,7 +36,7 @@ public class InitController {
             return new ResponseEntity<>(initService.initDatabase(false), HttpStatus.OK);
         } catch (RestClientException exception) {
             LOGGER.warn("Can't init", exception);
-            return new ResponseEntity<>(new InitDTO(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new InitDTO(exception.getErrorCode().getErrorMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 
