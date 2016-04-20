@@ -5,18 +5,15 @@ import org.openpkw.repositories.PeripheralCommitteeRepository;
 import org.openpkw.services.rest.dto.PeripheralCommitteeDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by kamil on 09.02.16.
- */
-@Component
-public class PeripheralCommitteeDTOService {
+@Service
+public class PeripheralCommitteeService {
 
-    @Qualifier("peripheralCommitteeRepository")
     @Inject
     private PeripheralCommitteeRepository peripheralCommitteeRepository;
 

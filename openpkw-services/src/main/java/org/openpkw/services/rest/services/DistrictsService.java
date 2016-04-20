@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Transactional
-public class DistrictsDTOService {
+public class DistrictsService {
 
     @Qualifier("districtCommitteeRepository")
     @Inject
