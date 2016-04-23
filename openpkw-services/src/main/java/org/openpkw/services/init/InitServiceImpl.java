@@ -265,12 +265,16 @@ import java.io.InputStreamReader;
     }
 
     private DistrictCommittee getDistrictCommittee(int line, List<String[]> listAllFieldInFile) {
+        int number = getIntFromCsv(listAllFieldInFile, line, DistrictCsvLine.Number.getLineNumber());
+        String city = getStringFromCsv(listAllFieldInFile, line, DistrictCsvLine.City.getLineNumber());
+        String name = "Okręgowa Komisja Wyborcza nr " + number + " - " + city;
+
         DistrictCommitteeAddress districtCommitteeAddress = new DistrictCommitteeAddress();
-        districtCommitteeAddress.setCity(getStringFromCsv(listAllFieldInFile, line, DistrictCsvLine.City.getLineNumber()));
+        districtCommitteeAddress.setCity(city);
         DistrictCommittee districtCommittee = new DistrictCommittee();
         districtCommittee.setDistrictCommitteeAddress(districtCommitteeAddress);
-        districtCommittee.setDistrictCommitteeNumber(getIntFromCsv(listAllFieldInFile, line, DistrictCsvLine.Number.getLineNumber()));
-        districtCommittee.setName(getStringFromCsv(listAllFieldInFile, line, DistrictCsvLine.Name.getLineNumber()));
+        districtCommittee.setDistrictCommitteeNumber(number);
+        districtCommittee.setName(name);
         return districtCommittee;
     }
 

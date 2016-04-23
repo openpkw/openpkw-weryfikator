@@ -53,13 +53,7 @@ public class DistrictsService {
 
     private List<String> getCities(DistrictCommittee districtCommittee) {
         List<String> cities = new ArrayList<>();
-        Collection<PeripheralCommittee> peripheralCommittees = districtCommittee.getPeripheralCommitteeCollection();
-
-        cities.addAll(peripheralCommittees.stream().map(
-                committee -> committee.getPeripheralCommitteeAddress().getCity()).
-                filter(a -> a != null).
-                collect(Collectors.toList()));
-
+        cities.add(districtCommittee.getDistrictCommitteeAddress().getCity());
         return cities;
     }
 }
