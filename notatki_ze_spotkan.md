@@ -1,4 +1,15 @@
-# Notatki ze spotkań zespołu Java
+# Notatki ze spotkań zespołu OpenPKW Weryfikator
+
+## Wtorek, 26 kwietnia 2016 r.
+
+Obecni: Rafał Reguła, Kamil Grabowski, Sebastian Celejewski
+
+Tematy:
+
+1. Postępy we frontendzie Weryfikatora (działający ekran piewszy, dla kraju, oraz część ekranu drugiego, dla okręgu) i dalsze kroki (pilnie potrzebni frontendowcy!).
+
+2. Postępy w aplikacji mobilnej Weryfikatora.
+
 
 ## Wtorek, 12 kwietnia 2016 r.
 
