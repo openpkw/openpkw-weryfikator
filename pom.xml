@@ -26,7 +26,7 @@
         <hibernate.version>4.3.10.Final</hibernate.version>
 		<commons-dbcp.version>1.2.2</commons-dbcp.version>
 	
-	<target.server.url>http://rumcajs.open-pkw.pl:9080/openpkw</target.server.url>
+	<target.server.url>http://rumcajs.openpkw.pl:9080/openpkw</target.server.url>
     </properties>
 
 
@@ -72,7 +72,7 @@
                 </property>
             </activation>
             <properties>
-                <wildfly.management.host>rumcajs.open-pkw.pl</wildfly.management.host>
+                <wildfly.management.host>rumcajs.openpkw.pl</wildfly.management.host>
                 <wildfly.management.port>9999</wildfly.management.port>
                 <wildfly.management.user>jenkins</wildfly.management.user>
                 <wildfly.management.password></wildfly.management.password>

@@ -49,8 +49,8 @@ GitHub: https://github.com/openpkw/openpkw/tree/master/java
 |  Draw.io |    https://www.draw.io  |
 | Dillinger.io  |  http://dillinger.io |
 |  GitHub  |  https://github.com/openpkw|
-| Serwer buildów | http://cypisek.open-pkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
-| Środowisko TEST | http://rumcajs.open-pkw.pl:9080/openpkw/ |
+| Serwer buildów | http://cypisek.openpkw.pl:8080/view/openpkw-weryfikator-backend%20pipeline/ |
+| Środowisko TEST | http://rumcajs.openpkw.pl:9080/openpkw/ |
 | Środowisko UAT | http://dobromir.openpkw.pl:9080/openpkw/ |
 | Środowisko STAGE | (jeszcze nie ma) |
 | Środowisko PROD | (jeszcze nie ma) |
