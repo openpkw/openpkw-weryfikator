@@ -1,5 +1,13 @@
 # Notatki ze spotkań zespołu OpenPKW Weryfikator
 
+## Wtorek, 24 maja 2016 r.
+
+Obecni: Rafał Reguła, Remigiusz Mrozek, Sebastian Celejewski
+
+1. Nowa wersja aplikacji mobilnej OpenPKW Weryfikator jest gotowa do testowania.
+2. Postępy przy przepisywaniu frontendu OpenPKW Weryfikatora.
+3. Co robimy dalej z OpenPKW? Kontynuujemy plan spięcia razem wszystkich komponentów.
+
 ## Wtorek, 17 maja 2016 r.
 
 Obecni: Sebastian Celejewski, Rafał Reguła, Kamil Grabowski
