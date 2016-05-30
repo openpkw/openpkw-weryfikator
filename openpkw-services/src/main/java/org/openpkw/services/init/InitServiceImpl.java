@@ -1,30 +1,37 @@
 package org.openpkw.services.init;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
 import org.openpkw.model.entity.*;
 import org.openpkw.repositories.*;
 import org.openpkw.services.init.dto.InitDTO;
+import org.openpkw.services.init.parse.*;
 import org.openpkw.validation.RestClientErrorMessage;
 import org.openpkw.validation.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openpkw.services.init.parse.*;
-import au.com.bytecode.opencsv.CSVReader;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.*;
-import java.io.InputStreamReader;
+import au.com.bytecode.opencsv.CSVReader;
 
 /**
  * @author Remigiusz Mrozek
  * @author Sebastian Pogorzelski
  * @author Sebastian Celejewski
  */
-@Service public class InitServiceImpl implements InitService {
+@Service
+public class InitServiceImpl implements InitService {
 
     private final static Logger log = (Logger) LoggerFactory.getLogger(InitServiceImpl.class);
     private final static String FILE_NAME_DISTRICTS = "/districts.csv";
@@ -82,7 +89,8 @@ import java.io.InputStreamReader;
     @Inject
     private VoteRepository voteRepository;
 
-    @Override public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException {
+    @Override
+    public InitDTO initDatabase(boolean deleteDatabase) throws RestClientException {
 
         if (deleteDatabase) {
             deleteDatabase();
@@ -109,7 +117,7 @@ import java.io.InputStreamReader;
                 if (Math.random() > 0.01) {
                     continue;
                 }
-                log.info("  - generating votes for periphery " + peripheralCommittee.getName());
+                log.info("  - generating votes for periphery " + peripheralCommittee.getName() + " (" + peripheralCommittee.getTerritorialCode() + " - " + peripheralCommittee.getPeripheralCommitteeNumber() + ")");
 
                 List<Protocol> protocols = protocolRepository.findByPeripheralCommittee(peripheralCommittee);
                 if (protocols == null || protocols.size() == 0) {
@@ -122,13 +130,24 @@ import java.io.InputStreamReader;
                 Protocol protocol = protocols.get(0);
                 protocol.setPeripheralCommittee(peripheralCommittee);
 
+                int validVotesForPeriphery = 0;
+
                 for (ElectionCommitteeDistrict electionCommitteeDistrict : electionCommittees) {
+                    int votesForElectionCommittee = (int) (Math.random() * 20);
+                    validVotesForPeriphery += votesForElectionCommittee;
                     ElectionCommitteeVote vote = new ElectionCommitteeVote();
                     vote.setElectionCommitteeDistrict(electionCommitteeDistrict);
                     vote.setProtocol(protocol);
-                    vote.setVoteNumber((int) (Math.random()*20));
+                    vote.setVoteNumber(votesForElectionCommittee);
                     electionCommitteeVoteRepository.save(vote);
                 }
+
+                int cardsGiven = (int) ((1 + Math.random()) * validVotesForPeriphery);
+                int invalidVotes = cardsGiven - validVotesForPeriphery;
+
+                protocol.setValidVotes(Integer.toString(validVotesForPeriphery));
+                protocol.setCardsGiven(new Long(cardsGiven));
+                protocol.setInvalidVotes(Integer.toString(invalidVotes));
 
                 protocolRepository.save(protocol);
             }
@@ -168,13 +187,7 @@ import java.io.InputStreamReader;
     }
 
     private boolean isAlreadyInit() {
-        return districtCommitteeRepository.count() > 0 ||
-                districtCommitteeAddressRepository.count() > 0 ||
-                peripheralCommitteeRepository.count() > 0 ||
-                peripherialCommitteeAddressRepository.count() > 0 ||
-                electionCommitteeRepository.count() > 0 ||
-                electionCommitteeDistrictRepository.count() > 0 ||
-                candidateRepository.count() > 0;
+        return districtCommitteeRepository.count() > 0 || districtCommitteeAddressRepository.count() > 0 || peripheralCommitteeRepository.count() > 0 || peripherialCommitteeAddressRepository.count() > 0 || electionCommitteeRepository.count() > 0 || electionCommitteeDistrictRepository.count() > 0 || candidateRepository.count() > 0;
     }
 
     public void readCsvFiles() {
@@ -208,7 +221,7 @@ import java.io.InputStreamReader;
     private void writeToDatabaseDistrictPeripheralCommitteeAndAdress() {
         log.info("Writing list of district peripheral committees to the database");
         for (PeripheralCommittee peripheralCommittee : this.peripheralCommitteeList) {
-            //peripherialCommitteeAddressRepository.save(peripheralCommittee.getPeripheralCommitteeAddress());
+            // peripherialCommitteeAddressRepository.save(peripheralCommittee.getPeripheralCommitteeAddress());
             peripheralCommitteeRepository.save(peripheralCommittee);
         }
     }
@@ -327,11 +340,11 @@ import java.io.InputStreamReader;
 
     private ElectionCommittee createElectionCommittee(String electionCommitteeLongName) {
         if (!electionCommitteesShortNames.containsKey(electionCommitteeLongName)) {
-            throw new RuntimeException("Short name for election committee " + electionCommitteeLongName+" not found");
+            throw new RuntimeException("Short name for election committee " + electionCommitteeLongName + " not found");
         }
 
         if (!electionCommitteesSymbols.containsKey(electionCommitteeLongName)) {
-            throw new RuntimeException("Symbol of election committee " + electionCommitteeLongName+" not found");
+            throw new RuntimeException("Symbol of election committee " + electionCommitteeLongName + " not found");
         }
 
         String electionCommitteeShortName = electionCommitteesShortNames.get(electionCommitteeLongName);
@@ -401,13 +414,13 @@ import java.io.InputStreamReader;
                 String[] tokens = line.split("\",\\s*\"");
                 String longName = tokens[0].substring(1);
                 String shortName = tokens[1];
-                String symbol = tokens[2].substring(0, tokens[2].length()-1);
+                String symbol = tokens[2].substring(0, tokens[2].length() - 1);
 
                 electionCommitteesShortNames.put(longName, shortName);
                 electionCommitteesSymbols.put(longName, symbol);
             }
         } catch (Exception ex) {
-            throw new RuntimeException("Failed to load election committees names from " + fileName+": "+ex.getMessage(), ex);
+            throw new RuntimeException("Failed to load election committees names from " + fileName + ": " + ex.getMessage(), ex);
         }
     }
 
@@ -435,26 +448,4 @@ import java.io.InputStreamReader;
         }
         log.info("Loaded " + districtCommitteeList.size() + " district committees.");
     }
-
-        /*private void verifyUpload() {
-            log.info("Verifying data upload");
-            em = factory.createEntityManager();
-            getNumberOfRows("candidates", "from Candidate c");
-            getNumberOfRows("peripheral committees", "from PeripheralCommittee pc");
-            getNumberOfRows("district committees", "from DistrictCommittee dc");
-            getNumberOfRows("election committees", "from ElectionCommittee ec");
-            log.info("Data upload verification complete.");
-        }
-
-        private void getNumberOfRows(String entityName, String queryText) {
-            log.info("Loading " + entityName + ".");
-            try {
-                Query query = em.createQuery(queryText);
-                List<?> result = query.getResultList();
-                log.info("Loaded " + result.size() + " " + entityName + ".");
-            } catch (Exception ex) {
-                log.error("Failed to read " + entityName + ": " + ex.getMessage(), ex);
-            }
-        }*/
-
 }
