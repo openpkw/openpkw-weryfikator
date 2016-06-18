@@ -11,10 +11,30 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.openpkw.model.entity.*;
-import org.openpkw.repositories.*;
+import org.openpkw.model.entity.Candidate;
+import org.openpkw.model.entity.DistrictCommittee;
+import org.openpkw.model.entity.DistrictCommitteeAddress;
+import org.openpkw.model.entity.ElectionCommittee;
+import org.openpkw.model.entity.ElectionCommitteeDistrict;
+import org.openpkw.model.entity.ElectionCommitteeVote;
+import org.openpkw.model.entity.PeripheralCommittee;
+import org.openpkw.model.entity.PeripheralCommitteeAddress;
+import org.openpkw.model.entity.Protocol;
+import org.openpkw.model.entity.Vote;
+import org.openpkw.repositories.CandidateRepository;
+import org.openpkw.repositories.DistrictCommitteeAddressRepository;
+import org.openpkw.repositories.DistrictCommitteeRepository;
+import org.openpkw.repositories.ElectionCommitteeDistrictRepository;
+import org.openpkw.repositories.ElectionCommitteeRepository;
+import org.openpkw.repositories.ElectionCommitteeVoteRepository;
+import org.openpkw.repositories.PeripheralCommitteeRepository;
+import org.openpkw.repositories.PeripherialCommitteeAddressRepository;
+import org.openpkw.repositories.ProtocolRepository;
+import org.openpkw.repositories.VoteRepository;
 import org.openpkw.services.init.dto.InitDTO;
-import org.openpkw.services.init.parse.*;
+import org.openpkw.services.init.parse.CandidateCsvLine;
+import org.openpkw.services.init.parse.DistrictCsvLine;
+import org.openpkw.services.init.parse.PeripheralCsvLine;
 import org.openpkw.validation.RestClientErrorMessage;
 import org.openpkw.validation.RestClientException;
 import org.slf4j.Logger;
@@ -133,13 +153,26 @@ public class InitServiceImpl implements InitService {
                 int validVotesForPeriphery = 0;
 
                 for (ElectionCommitteeDistrict electionCommitteeDistrict : electionCommittees) {
-                    int votesForElectionCommittee = (int) (Math.random() * 20);
+                    int votesForElectionCommittee = 0;
+                    int numberOfCandidatesThatWillReceiveVotes = (int) (Math.random() * electionCommitteeDistrict.getCandidateCollection().size() / 4);
+                    Candidate[] candidates = electionCommitteeDistrict.getCandidateCollection().toArray(new Candidate[electionCommitteeDistrict.getCandidateCollection().size()]);
+                    for (int i = 0; i < numberOfCandidatesThatWillReceiveVotes; i++) {
+                        Candidate candidate = candidates[i];
+                        int votesForCandidate = (int) (Math.random() * 20);
+                        votesForElectionCommittee += votesForCandidate;
+                        Vote candidateVote = new Vote();
+                        candidateVote.setCandidate(candidate);
+                        candidateVote.setCandidatesVotesNumber(votesForCandidate);
+                        candidateVote.setProtocol(protocol);
+                        voteRepository.save(candidateVote);
+                        System.out.println("    - " + candidate.getName()+" " + candidate.getSurname()+" got " + votesForCandidate + " votes");
+                    }
                     validVotesForPeriphery += votesForElectionCommittee;
-                    ElectionCommitteeVote vote = new ElectionCommitteeVote();
-                    vote.setElectionCommitteeDistrict(electionCommitteeDistrict);
-                    vote.setProtocol(protocol);
-                    vote.setVoteNumber(votesForElectionCommittee);
-                    electionCommitteeVoteRepository.save(vote);
+                    ElectionCommitteeVote electionCommitteeVote = new ElectionCommitteeVote();
+                    electionCommitteeVote.setElectionCommitteeDistrict(electionCommitteeDistrict);
+                    electionCommitteeVote.setProtocol(protocol);
+                    electionCommitteeVote.setVoteNumber(votesForElectionCommittee);
+                    electionCommitteeVoteRepository.save(electionCommitteeVote);
                 }
 
                 int cardsGiven = (int) ((1 + Math.random()) * validVotesForPeriphery);
