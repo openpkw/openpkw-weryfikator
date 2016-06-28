@@ -6,6 +6,7 @@ Tematy:
 
 1. Aplikacja mobilna: na którą wersję Androida? Będzie to min. 4.4 ze względów bezpieczeństwa.
 2. Propozycja: rozbicie backendu na mniejsze, niezależne komponenty. Jedna aplikacja dla frontendu, druga dla aplikacji moblilnej, trzecia do inicjalnego ładowania danych do bazy itd.
+3. Nowa wersja frontendu Weryfikatora jest gotowa do testowania. Nie działa mapka, bo nie wiemy jak ją napisać.
 
 
 # Notatki ze spotkań zespołu OpenPKW Weryfikator
