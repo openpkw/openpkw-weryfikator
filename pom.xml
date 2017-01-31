@@ -151,6 +151,11 @@
                 <artifactId>spring-data-jpa</artifactId>
                 <version>${spring.data.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
 
             <!-- Spring Batch -->
             <dependency>
@@ -243,7 +248,16 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${org.slf4j-version}</version>
-
+            </dependency>
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>1.7</version>
             </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>

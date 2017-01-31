@@ -23,7 +23,7 @@ public class DataLoader {
     public static final String ADMIN_PASSWORD = "admin";
 
     public static final String PRIVATE_KEY = "MIIBCQIBADAQBgcqhkjOPQIBBgUrgQQAJwSB8TCB7gIBAQRIAie7ReLT9TUheJy5S+h77VoMl1SIOFRkOmrTzrAWcXHeo4q5JhifwHAELPlO9wfiqfKvSQHszINFkJCN/8qBHpUHxPvN4AUAoAcGBSuBBAAnoYGVA4GSAAQESuzfne0O40uBLgBHwJ5oBMSZusvPX0XfkU8KoJ6PywEQSNjNSQ4z2z6Tqra32TMKh8RR1bGH/eWVIm759aoZE4xBZ1sI7+4BQMdC5/ErCUkCxlRPkNYoWTmCMGkHeUWI2vhJwgChdMVFsEYE7W3ZRbFkT9EvULQwnRBZLOlGTlIweyZ8Pn5bK1SUmywaflc=";
-    private static final String PUBLIC_KEY = "MIGnMBAGByqGSM49AgEGBSuBBAAnA4GSAAQESuzfne0O40uBLgBHwJ5oBMSZusvPX0XfkU8KoJ6PywEQSNjNSQ4z2z6Tqra32TMKh8RR1bGH/eWVIm759aoZE4xBZ1sI7+4BQMdC5/ErCUkCxlRPkNYoWTmCMGkHeUWI2vhJwgChdMVFsEYE7W3ZRbFkT9EvULQwnRBZLOlGTlIweyZ8Pn5bK1SUmywaflc=";
+    public static final String PUBLIC_KEY = "MIGnMBAGByqGSM49AgEGBSuBBAAnA4GSAAQESuzfne0O40uBLgBHwJ5oBMSZusvPX0XfkU8KoJ6PywEQSNjNSQ4z2z6Tqra32TMKh8RR1bGH/eWVIm759aoZE4xBZ1sI7+4BQMdC5/ErCUkCxlRPkNYoWTmCMGkHeUWI2vhJwgChdMVFsEYE7W3ZRbFkT9EvULQwnRBZLOlGTlIweyZ8Pn5bK1SUmywaflc=";
 
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -38,15 +38,15 @@ public class DataLoader {
     @PostConstruct
     public void prepareData() throws RestClientException {
         initService.initDatabase(false);
-        createUser();
+        createUser(ADMIN_USER, ADMIN_PASSWORD, PUBLIC_KEY);
     }
 
-    private void createUser() {
+    public void createUser(String email, String password, String publicKey) {
         User user = new User();
         user.setIsActive(true);
-        user.setEmail(ADMIN_USER);
-        user.setPassword(passwordEncoder.encode(ADMIN_PASSWORD));
-        user.setPublicKey(PUBLIC_KEY);
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setPublicKey(publicKey);
         userRepository.save(user);
     }
 

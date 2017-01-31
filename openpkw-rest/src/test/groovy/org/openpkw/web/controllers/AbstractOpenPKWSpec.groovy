@@ -8,6 +8,7 @@ import org.openpkw.repositories.PeripheralCommitteeRepository
 import org.openpkw.web.config.TestAppConfig
 import org.openpkw.web.config.TestJpaConfig
 import org.openpkw.web.configuration.MVCConfig
+import org.openpkw.web.configuration.MailConfig
 import org.openpkw.web.configuration.OAuth2ServerConfiguration
 import org.openpkw.web.configuration.SecurityConfig
 import org.openpkw.web.utils.DataLoader
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 /**
  * @author Sebastian Pogorzelski
  */
-@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig ])
+@ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig, MailConfig ])
 @WebAppConfiguration
 class AbstractOpenPKWSpec extends Specification {
 

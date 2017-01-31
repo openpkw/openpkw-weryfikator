@@ -26,6 +26,10 @@
 			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.batch</groupId>
 			<artifactId>spring-batch-core</artifactId>
 		</dependency>
@@ -43,10 +47,10 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.assertj</groupId>-->
-			<!--<artifactId>assertj-core</artifactId>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -108,6 +112,10 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
 		</dependency>
 	</dependencies>
 
