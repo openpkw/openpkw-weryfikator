@@ -53,8 +53,7 @@ public class MailConfig {
     private Properties getVelocityProperties() {
         Properties properties = new Properties();
         properties.setProperty("resource.loader", "file");
-        properties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-        properties.setProperty("resourceLoaderPath", "/mail/");
+        properties.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         return properties;
     }
 

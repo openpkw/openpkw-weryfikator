@@ -25,7 +25,7 @@ public class ChangePasswordController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(value = "/api/account/password", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<Void> changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
         return null;
     }

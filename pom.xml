@@ -291,6 +291,13 @@
             </dependency>
 
             <dependency>
+                <groupId>com.icegreen</groupId>
+                <artifactId>greenmail</artifactId>
+                <version>1.5.3</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.1.2.Final</version>

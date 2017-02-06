@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.inject.Inject;
+import java.net.URL;
 import java.util.Map;
 
 @Service
@@ -23,7 +24,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendMail(String to, MailTemplate template, Map<String, Object> model) {
-        sendMail(to, template.getSubject(), VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "/WEB-INF/mail/" + template.getTemplate(), "UTF-8", model));
+        sendMail(to, template.getSubject(), VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "/mail/" + template.getTemplate(), "UTF-8", model));
     }
 
     @Override
