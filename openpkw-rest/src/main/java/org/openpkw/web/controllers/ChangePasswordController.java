@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.core.MediaType;
 
 @OpenPKWAPIController
@@ -25,8 +26,13 @@ public class ChangePasswordController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/api/account/password", method = RequestMethod.POST, headers = "Accept=application/json")
+    @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<Void> changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
         return null;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<ChangePasswordRequestDTO> getPasswordChange() {
+        return new ResponseEntity<>(new ChangePasswordRequestDTO(), HttpStatus.ACCEPTED);
     }
 }

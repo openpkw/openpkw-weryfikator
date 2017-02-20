@@ -22,13 +22,15 @@ public class PasswordChangeRequest {
     @Temporal(TemporalType.TIMESTAMP)
     private Date changeDate;
 
-    private boolean sent;
-
-    private boolean changed;
-
     @Column(name = "CREATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
+    @Column(name = "ACTIVE")
+    private boolean active;
+
+    @Column(name = "PASSWORD_CHANGED")
+    private boolean passwordChanged;
 
     public PasswordChangeRequest() {
     }
@@ -65,20 +67,28 @@ public class PasswordChangeRequest {
         this.createDate = createDate;
     }
 
-    public boolean isSent() {
-        return sent;
+    public Date getChangeDate() {
+        return changeDate;
     }
 
-    public void setSent(boolean sent) {
-        this.sent = sent;
+    public void setChangeDate(Date changeDate) {
+        this.changeDate = changeDate;
     }
 
-    public boolean isChanged() {
-        return changed;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setChanged(boolean changed) {
-        this.changed = changed;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isPasswordChanged() {
+        return passwordChanged;
+    }
+
+    public void setPasswordChanged(boolean passwordChanged) {
+        this.passwordChanged = passwordChanged;
     }
 
     public PasswordChangeRequest withUser(User user) {
@@ -90,4 +100,10 @@ public class PasswordChangeRequest {
         setToken(token);
         return this;
     }
+
+    public PasswordChangeRequest withActive(boolean active) {
+        setActive(active);
+        return this;
+    }
+
 }

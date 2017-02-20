@@ -30,18 +30,26 @@ public class ChangePasswordPasswordServiceImpl implements ChangePasswordService 
 
     @Override
     public void createChangePasswordRequest(ChangePasswordRequestDTO changePasswordRequest) {
+        Optional<PasswordChangeRequest> passwordChangeRequestOptional = passwordChangeRequestRepository.findByUser_EmailAndActiveTrue(changePasswordRequest.getEmail());
+        if (passwordChangeRequestOptional.isPresent()) {
+            PasswordChangeRequest passwordChangeRequest = passwordChangeRequestOptional.get();
+            passwordChangeRequest.setActive(false);
+            passwordChangeRequestRepository.save(passwordChangeRequest);
+        }
+
         Optional<User> userOptional = userService.get(changePasswordRequest.getEmail());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             PasswordChangeRequest passwordChangeRequest = new PasswordChangeRequest()
                     .withUser(user)
-                    .withToken(createToken());
+                    .withToken(createToken())
+                    .withActive(true);
 
             passwordChangeRequestRepository.save(passwordChangeRequest);
 
             mailService.sendMail(user.getEmail(), MailTemplate.PASSWORD_CHANGE, createModel(passwordChangeRequest));
         } else {
-
+            //TODO throw excption
         }
 
     }

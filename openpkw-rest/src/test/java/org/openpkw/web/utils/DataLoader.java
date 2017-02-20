@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import java.util.Optional;
 
 /**
  * @author Sebastian Pogorzelski
@@ -38,16 +39,19 @@ public class DataLoader {
     @PostConstruct
     public void prepareData() throws RestClientException {
         initService.initDatabase(false);
-        createUser(ADMIN_USER, ADMIN_PASSWORD, PUBLIC_KEY);
+        createUserIfNotExists(ADMIN_USER, ADMIN_PASSWORD, PUBLIC_KEY);
     }
 
-    public void createUser(String email, String password, String publicKey) {
-        User user = new User();
-        user.setIsActive(true);
-        user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
-        user.setPublicKey(publicKey);
-        userRepository.save(user);
+    public void createUserIfNotExists(String email, String password, String publicKey) {
+        Optional<User> userOptional = userRepository.findByEmailAddress(email);
+        if(!userOptional.isPresent()) {
+            User user = new User();
+            user.setIsActive(true);
+            user.setEmail(email);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setPublicKey(publicKey);
+            userRepository.save(user);
+        }
     }
 
 }
