@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.MediaType;
 
 @OpenPKWAPIController
@@ -23,14 +24,26 @@ public class ChangePasswordController {
 
     @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<Void> createChangePasswordRequest(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
-        changePasswordService.createChangePasswordRequest(changePasswordRequestDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        ResponseEntity<Void> result;
+        try {
+            changePasswordService.createChangePasswordRequest(changePasswordRequestDTO);
+            result = new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (NotFoundException e) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
-        changePasswordService.changePassword(changePasswordRequestDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
+        ResponseEntity<Void> result;
+        try {
+            changePasswordService.changePassword(changePasswordRequestDTO);
+            result = new ResponseEntity<>(HttpStatus.OK);
+        } catch (NotFoundException e) {
+            result = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return result;
     }
 
 }

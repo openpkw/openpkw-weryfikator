@@ -10,6 +10,7 @@ import org.openpkw.services.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import javax.ws.rs.NotFoundException;
 import java.util.*;
 
 @Service
@@ -46,7 +47,7 @@ public class ChangePasswordPasswordServiceImpl implements ChangePasswordService 
 
             mailService.sendMail(user.getEmail(), MailTemplate.PASSWORD_CHANGE, createModel(passwordChangeRequest));
         } else {
-            //TODO throw exception
+            throw new NotFoundException();
         }
 
     }
@@ -62,7 +63,7 @@ public class ChangePasswordPasswordServiceImpl implements ChangePasswordService 
             passwordChangeRequestRepository.save(passwordChangeRequest);
             userService.setNewPassword(changePasswordRequestDTO.getEmail(), changePasswordRequestDTO.getPassword());
         } else {
-            //TODO throw exception
+            throw new NotFoundException();
         }
     }
 
