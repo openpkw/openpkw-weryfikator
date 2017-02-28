@@ -75,4 +75,15 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    public void setNewPassword(String email, String password) {
+        Optional<User> userOptional = get(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setPassword(passwordEncoder.encode(password));
+        } else {
+            //TODO throw exception
+        }
+    }
+
 }

@@ -40,4 +40,14 @@ public class ChangePasswordRequestDTO {
         this.email = email;
         return this;
     }
+
+    public ChangePasswordRequestDTO withToken(String token) {
+        this.token = token;
+        return this;
+    }
+
+    public ChangePasswordRequestDTO withPassword(String password) {
+        this.password = password;
+        return this;
+    }
 }

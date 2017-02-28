@@ -7,4 +7,6 @@ public interface ChangePasswordService {
 
     void createChangePasswordRequest(ChangePasswordRequestDTO changePasswordRequest);
 
+    void changePassword(ChangePasswordRequestDTO changePasswordRequestDTO);
+
 }

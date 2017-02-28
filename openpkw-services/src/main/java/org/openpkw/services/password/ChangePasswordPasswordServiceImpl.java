@@ -10,10 +10,7 @@ import org.openpkw.services.user.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ChangePasswordPasswordServiceImpl implements ChangePasswordService {
@@ -49,9 +46,24 @@ public class ChangePasswordPasswordServiceImpl implements ChangePasswordService 
 
             mailService.sendMail(user.getEmail(), MailTemplate.PASSWORD_CHANGE, createModel(passwordChangeRequest));
         } else {
-            //TODO throw excption
+            //TODO throw exception
         }
 
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
+        Optional<PasswordChangeRequest> passwordChangeRequestOptional = passwordChangeRequestRepository.findByUser_EmailAndActiveTrue(changePasswordRequestDTO.getEmail());
+        if (passwordChangeRequestOptional.isPresent()) {
+            PasswordChangeRequest passwordChangeRequest = passwordChangeRequestOptional.get();
+            passwordChangeRequest.setActive(false);
+            passwordChangeRequest.setChangeDate(new Date());
+            passwordChangeRequest.setPasswordChanged(true);
+            passwordChangeRequestRepository.save(passwordChangeRequest);
+            userService.setNewPassword(changePasswordRequestDTO.getEmail(), changePasswordRequestDTO.getPassword());
+        } else {
+            //TODO throw exception
+        }
     }
 
     private Map<String, Object> createModel(PasswordChangeRequest passwordChangeRequest) {

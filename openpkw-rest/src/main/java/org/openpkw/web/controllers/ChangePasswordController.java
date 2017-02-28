@@ -5,6 +5,7 @@ import org.openpkw.services.password.ChangePasswordService;
 import org.openpkw.services.password.dto.ChangePasswordRequestDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,12 +28,9 @@ public class ChangePasswordController {
     }
 
     @RequestMapping(method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity<Void> changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
-        return null;
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
+        changePasswordService.changePassword(changePasswordRequestDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<ChangePasswordRequestDTO> getPasswordChange() {
-        return new ResponseEntity<>(new ChangePasswordRequestDTO(), HttpStatus.ACCEPTED);
-    }
 }

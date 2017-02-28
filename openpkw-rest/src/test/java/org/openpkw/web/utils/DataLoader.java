@@ -50,6 +50,8 @@ public class DataLoader {
             user.setEmail(email);
             user.setPassword(passwordEncoder.encode(password));
             user.setPublicKey(publicKey);
+            user.setFirstName(email);
+            user.setLastName("");
             userRepository.save(user);
         }
     }

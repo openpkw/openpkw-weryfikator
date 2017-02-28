@@ -14,6 +14,7 @@ import javax.inject.Inject
 import javax.ws.rs.core.MediaType
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -62,30 +63,46 @@ class ChangePasswordControllerSpec extends AbstractOpenPKWSpec {
 
     }
 
-    @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
-    def "should get data to change password form"() {
-        given:
-        def dto = new ChangePasswordRequestDTO().withEmail(TEST_EMAIL)
-        def content = JsonOutput.toJson(dto)
-        createChangePasswordRequest(content)
-        def changeReqOptional = changeRequestRepository.findByUser_EmailAndActiveTrue(TEST_EMAIL)
-        def token = changeReqOptional.get().token
-
-        when:
-        def mvcResult = mockMvc.perform(get('/api/account/password/' + token)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated()).andReturn()
-
-        then:
-        mvcResult.response.contentAsString == ''
-
-    }
+//    @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
+//    def "should get data to change password form"() {
+//        given:
+//        def dto = new ChangePasswordRequestDTO().withEmail(TEST_EMAIL)
+//        def content = JsonOutput.toJson(dto)
+//        createChangePasswordRequest(content)
+//        def changeReqOptional = changeRequestRepository.findByUser_EmailAndActiveTrue(TEST_EMAIL)
+//        def token = changeReqOptional.get().token
+//
+//        when:
+//        def mvcResult = mockMvc.perform(get('/api/account/password/' + token)
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isCreated()).andReturn()
+//
+//        then:
+//        mvcResult.response.contentAsString == ''
+//    }
 
 
 
     @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
     def "should change password"() {
+        given:
+        def dto = new ChangePasswordRequestDTO().withEmail(TEST_EMAIL)
+        def content = JsonOutput.toJson(dto)
+        createChangePasswordRequest(content)
 
+        def changeReqOptional = changeRequestRepository.findByUser_EmailAndActiveTrue(TEST_EMAIL)
+        def token = changeReqOptional.get().token
+
+        def passwordChangeDto = new ChangePasswordRequestDTO().withEmail(TEST_EMAIL).withToken(token).withPassword("NewPassword")
+
+        when:
+        def mvcResult = mockMvc.perform(post('/api/account/password/' + token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonOutput.toJson(passwordChangeDto)))
+                .andExpect(status().isOk()).andReturn()
+
+        then:
+        mvcResult.response.contentAsString == ''
     }
 
     def createChangePasswordRequest(String content) {

@@ -16,4 +16,6 @@ public interface UserService {
     void register(UserDTO userRegister) throws RestClientException;
     Optional<User> get(String email);
     Optional<User> delete(String email);
+
+    void setNewPassword(String email, String password);
 }
