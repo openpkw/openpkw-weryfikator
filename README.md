@@ -1,4 +1,4 @@
-# OpenPKW JAVA
+# OpenPKW JAVA [![Build Status](https://travis-ci.org/openpkw/openpkw-weryfikator.svg?branch=master)](https://travis-ci.org/openpkw/openpkw-weryfikator)
 
 W obecnej chwili podstawowym celem zespołu developerów Java jest stworzenie rozwiązania umożliwiającego niezależne i obiektywne zweryfikowanie wyników wyborów. Rozwiązanie to przeznaczone będzie dla ok. 27800 ochotników będących mężami zaufania w obwodowych komisjach wyborczych. Użytkownicy ci mają za zadanie za pomocą aplikacji mobilnych przesłać dane z udostępnionych publicznie protokołów wyborczych do zbiorczego systemu agregacji danych (backend). System ten prócz zbierania danych ma zadanie wizualizować pozyskane informacje w postaci diagramów wyborczych z podziałem na województwa. 
  
