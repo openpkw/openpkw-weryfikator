@@ -4,4 +4,8 @@ jdk:
 after_success: | 
   cd "$TRAVIS_BUILD_DIR"
   git clone https://github.com/openpkw/openpkw-weryfikator-docker.git
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/.gradle
  
