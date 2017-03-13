@@ -8,8 +8,9 @@ after_success: |
   eval "$(ssh-agent -s)" 
   echo $DEPLOY_KEY > deploy_key.pem
   ssh-add deploy_key.pem
-  chmod 0644 deploy_key.pem
-  git -c user.name='travis' -c user.email='travis@openpkw.org' commit -a -m "Committed by Travis-CI build number: $TRAVIS_JOB_ID"
+  chmod 600 deploy_key.pem
+  cd openpkw-weryfikator-docker
+  git -c push.default=current -c user.name='travis' -c user.email='travis@openpkw.org' commit -a -m "Committed by Travis-CI build number: $TRAVIS_JOB_ID"
   git push
 cache:
   directories:
