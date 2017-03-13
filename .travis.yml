@@ -6,9 +6,10 @@ after_success: |
   git clone https://github.com/openpkw/openpkw-weryfikator-docker.git
   cp /home/travis/build/openpkw/openpkw-weryfikator/openpkw-rest/target/openpkw.war openpkw-weryfikator-docker/bin
   eval "$(ssh-agent -s)" 
-  cat $DEPLOY_KEY > deploy_key.pem
+  echo $DEPLOY_KEY > deploy_key.pem
   ssh-add deploy_key.pem
-  git commit -a -m "Committed by Travis-CI build number: $TRAVIS_JOB_ID"
+  chmod 0644 deploy_key.pem
+  git -c user.name='travis' -c user.email='travis@openpkw.org' commit -a -m "Committed by Travis-CI build number: $TRAVIS_JOB_ID"
   git push
 cache:
   directories:
