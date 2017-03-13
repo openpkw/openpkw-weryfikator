@@ -1,14 +1,15 @@
 language: java
 jdk:
   - oraclejdk8
+
+before_install:  openssl aes-256-cbc -K $encrypted_2c430460807a_key -iv $encrypted_2c430460807a_iv -in pub_key.pem.enc -out pub_key.pem -d
 after_success: | 
   cd "$TRAVIS_BUILD_DIR"
   git clone https://github.com/openpkw/openpkw-weryfikator-docker.git
   cp /home/travis/build/openpkw/openpkw-weryfikator/openpkw-rest/target/openpkw.war openpkw-weryfikator-docker/bin
   eval "$(ssh-agent -s)" 
-  echo $DEPLOY_KEY > deploy_key.pem
-  chmod 600 deploy_key.pem
-  ssh-add deploy_key.pem
+  chmod 600 pub_key.pem
+  ssh-add pub_key.pem
   cd openpkw-weryfikator-docker
   git -c user.name='travis' -c user.email='travis@openpkw.org' commit -a -m "Committed by Travis-CI build number: $TRAVIS_JOB_ID"
   git push
