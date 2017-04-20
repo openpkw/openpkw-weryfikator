@@ -3,6 +3,8 @@ jdk:
   - oraclejdk8
 
 before_install:  openssl aes-256-cbc -K $encrypted_2c430460807a_key -iv $encrypted_2c430460807a_iv -in pub_key.pem.enc -out pub_key.pem -d
+script:
+  - mvn clean install -Dspring.profiles.active=integration-tests
 after_success: | 
   cd "$TRAVIS_BUILD_DIR"
   eval "$(ssh-agent -s)" 
