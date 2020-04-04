@@ -1,21 +1,18 @@
 package org.openpkw.web.controllers;
 
+import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.services.init.InitService;
 import org.openpkw.services.init.dto.InitDTO;
-
-import org.openpkw.qualifier.OpenPKWAPIController;
 import org.openpkw.validation.RestClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Remigiusz Mrozek

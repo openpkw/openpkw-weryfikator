@@ -20,7 +20,6 @@ import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
 import javax.inject.Inject
-import javax.servlet.Filter
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 
@@ -30,8 +29,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ContextConfiguration(classes = [TestJpaConfig, MVCConfig, SecurityConfig, OAuth2ServerConfiguration,TestAppConfig ])
 @WebAppConfiguration
 class AbstractOpenPKWSpec extends Specification {
-
-
 
     @Inject
     PeripheralCommitteeRepository peripheralCommitteeRepository
@@ -45,16 +42,11 @@ class AbstractOpenPKWSpec extends Specification {
     @Inject
     WebApplicationContext context
 
-    @Inject
-    Filter springSecurityFilterChain
-
-
     MockMvc mockMvc
 
     def setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
-                .addFilters(springSecurityFilterChain)
                 .build()
 
     }

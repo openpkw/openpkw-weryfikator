@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static java.math.RoundingMode.HALF_UP;
+
 public class SeatsInParliamentCalculatorServiceImpl implements SeatsInParliamentCalculatorService {
 
     @Override
@@ -22,14 +24,14 @@ public class SeatsInParliamentCalculatorServiceImpl implements SeatsInParliament
         String maxKey;
         Set<String> politicalPartys = calcTemp.keySet();
         for (String politicalParty : politicalPartys) {
-            mandates.put(politicalParty, new Integer(0));
+            mandates.put(politicalParty, Integer.valueOf(0));
         }
 
         for (int i = 0; i < mandateInConstituency; i++) {
             max = new BigDecimal(-1);
             maxKey = null;
             for (String politicalParty : politicalPartys) {
-                BigDecimal voices = (BigDecimal) calcTemp.get(politicalParty);
+                BigDecimal voices = calcTemp.get(politicalParty);
                 if ((i + 1) == mandateInConstituency && max.compareTo(voices) == 0) {
                     if (maxKey == null) {
                         maxKey = politicalParty;
@@ -39,14 +41,14 @@ public class SeatsInParliamentCalculatorServiceImpl implements SeatsInParliament
                         maxKey = (voicesMax > voicesTemp) ? maxKey : politicalParty;
                     }
                 } else if (max.compareTo(voices) < 0) {
-                    max = (BigDecimal) voices;
+                    max = voices;
                     maxKey = politicalParty;
                 }
             }
             mandates.put(maxKey, mandates.get(maxKey) + 1);
             BigDecimal a = new BigDecimal(politicalPartyVoices.get(maxKey));
             BigDecimal b = new BigDecimal(mandates.get(maxKey) + 1);
-            calcTemp.replace(maxKey, (a.divide(b, 4, BigDecimal.ROUND_HALF_UP)));
+            calcTemp.replace(maxKey, (a.divide(b, 4, HALF_UP)));
         }
 
         return mandates;

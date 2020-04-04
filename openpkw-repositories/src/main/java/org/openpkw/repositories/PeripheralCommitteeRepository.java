@@ -1,6 +1,5 @@
 package org.openpkw.repositories;
 
-import jdk.nashorn.internal.runtime.options.Option;
 import org.openpkw.model.entity.DistrictCommittee;
 import org.openpkw.model.entity.PeripheralCommittee;
 import org.springframework.data.jpa.repository.JpaRepository;

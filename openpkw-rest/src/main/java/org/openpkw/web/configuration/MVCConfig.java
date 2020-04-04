@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.*;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = "org.openpkw.web.controllers")
-public class MVCConfig extends WebMvcConfigurerAdapter {
+public class MVCConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

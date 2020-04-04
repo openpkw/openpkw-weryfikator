@@ -53,7 +53,7 @@ import au.com.bytecode.opencsv.CSVReader;
 @Service
 public class InitServiceImpl implements InitService {
 
-    private final static Logger log = (Logger) LoggerFactory.getLogger(InitServiceImpl.class);
+    private final static Logger log = LoggerFactory.getLogger(InitServiceImpl.class);
     private final static String FILE_NAME_DISTRICTS = "/districts.csv";
     private final static String FILE_NAME_PERIPHERALS = "/peripherals.csv";
     private final static String FILE_NAME_CANDIDATES = "/candidates.csv";
@@ -179,7 +179,7 @@ public class InitServiceImpl implements InitService {
                 int invalidVotes = cardsGiven - validVotesForPeriphery;
 
                 protocol.setValidVotes(Integer.toString(validVotesForPeriphery));
-                protocol.setCardsGiven(new Long(cardsGiven));
+                protocol.setCardsGiven(Long.valueOf(cardsGiven));
                 protocol.setInvalidVotes(Integer.toString(invalidVotes));
 
                 protocolRepository.save(protocol);
