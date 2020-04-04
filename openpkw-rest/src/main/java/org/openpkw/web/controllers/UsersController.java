@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -69,7 +70,7 @@ public class UsersController {
      */
     @RequestMapping(value = "/{email:.+}", method = RequestMethod.GET, headers = "Accept=application/json")
     @Transactional
-    public ResponseEntity<UserDTO> get(@PathVariable String email) throws InstantiationException, IllegalAccessException {
+    public ResponseEntity<UserDTO> get(@PathVariable String email) throws InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Optional<User> user = userService.get(email);
         if (user.isPresent()) {
             return new ResponseEntity<>(userToJson(user.get()), HttpStatus.OK);

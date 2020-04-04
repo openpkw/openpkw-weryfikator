@@ -1,4 +1,4 @@
-	package org.openpkw.web.configuration;
+package org.openpkw.web.configuration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

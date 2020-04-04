@@ -28,7 +28,7 @@ class QrResultControllerSpec extends AbstractOpenPKWSpec {
     @Inject
     SignService signService
 
-    @IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
+    //@IgnoreIf({ SpringProfileHelper.integrationTestsDisabled() })
     def "should save result to database"() {
         given:
         def signature = Base64.getEncoder().encodeToString(signService.generateSignature(QR_CODE, signService.getPrivateKeyFromBase64(DataLoader.PRIVATE_KEY)))

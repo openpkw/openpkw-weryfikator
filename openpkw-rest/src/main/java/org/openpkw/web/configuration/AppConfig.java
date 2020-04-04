@@ -1,7 +1,6 @@
 package org.openpkw.web.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
